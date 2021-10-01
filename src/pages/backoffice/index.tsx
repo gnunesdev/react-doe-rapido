@@ -4,7 +4,7 @@ import { Header } from '~/components/Header';
 
 import { Sidebar } from './components/Sidebar';
 
-const Backoffice: NextPage = () => {
+const BackofficePage: NextPage = () => {
   return (
     <>
       <Header />
@@ -13,4 +13,4 @@ const Backoffice: NextPage = () => {
   );
 };
 
-export default Backoffice;
+export default BackofficePage;
