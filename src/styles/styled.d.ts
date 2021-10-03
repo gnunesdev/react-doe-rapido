@@ -12,6 +12,11 @@ declare module 'styled-components' {
 
       white: string;
       black: string;
+      red: string;
+    };
+
+    containers: {
+      desktop: string;
     };
   }
 }

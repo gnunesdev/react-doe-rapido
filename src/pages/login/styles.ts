@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import { Title } from '~/components/Title';
+import { InputContainer } from '~/components/Input/styles';
 
 export const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  height: 100vh;
+  height: ${(props) => props.theme.containers.desktop};
 `;
 
 export const FormContainer = styled.div`
@@ -17,4 +17,23 @@ export const FormContainer = styled.div`
 
 export const FormStyled = styled.form`
   margin-top: 1.8rem;
+  width: 480px;
+
+  ${InputContainer} {
+    margin-bottom: 1.4rem;
+  }
+`;
+
+export const ButtonsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 3.2rem;
+
+  button {
+    width: 50%;
+
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
 `;

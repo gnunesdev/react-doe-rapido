@@ -1,11 +1,6 @@
-import { login, logout } from '~/features/user';
-import { useAppDispatch } from '~/hooks/redux';
-
 import { LinksSection, SidebarContainer } from './styles';
 
 export function Sidebar() {
-  const dispatch = useAppDispatch();
-
   return (
     <SidebarContainer>
       <LinksSection>
@@ -23,14 +18,6 @@ export function Sidebar() {
           <li>Entre em contato conosco</li>
         </ul>
       </LinksSection>
-      <button
-        onClick={() =>
-          dispatch(login({ name: 'Guilheme', email: 'gnunesinf@gmail.com' }))
-        }
-      >
-        Login teste
-      </button>
-      <button onClick={() => dispatch(logout())}>Logout</button>
     </SidebarContainer>
   );
 }

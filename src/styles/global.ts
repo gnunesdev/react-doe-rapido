@@ -18,6 +18,7 @@ export default createGlobalStyle`
   textarea,
   select,
   button {
+    border: none;
     font: 400 1rem "Roboto", sans-serif;
   }
   button {
