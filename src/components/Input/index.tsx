@@ -47,7 +47,6 @@ export const Input: React.VFC<InputProps> = ({
           id={name}
           value={value}
           mask={mask}
-          maxLength={3}
           {...props}
         />
       )}

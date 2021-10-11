@@ -8,7 +8,6 @@ export const UploadImage: React.VFC = () => {
   const inputRef = useRef(null);
 
   function handleFileSelected(event: any) {
-    console.log('teste');
     setSelectedFile(event.target.files[0]);
   }
 

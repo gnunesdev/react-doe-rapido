@@ -16,12 +16,15 @@ import {
   ConfirmContactFormContainer,
   ConfirmContactFormStyled,
 } from './styles';
+import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();
 
   const [timeToResend, setTimeToResend] = useState(5);
   const [codeSent, setCodeSent] = useState(true);
+
+  const { goToNextStep } = useOnboardingSteps();
 
   useEffect(() => {
     if (codeSent) {
@@ -37,8 +40,8 @@ export function ConfirmContactForm() {
       confirmationCode: '',
     },
     onSubmit: (values) => {
-      console.log(values);
       setCodeSent(true);
+      goToNextStep();
     },
   });
 

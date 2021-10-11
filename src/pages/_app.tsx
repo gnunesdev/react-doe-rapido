@@ -7,14 +7,17 @@ import { Header } from '~/components/Header';
 import { store } from '~/store';
 import GlobalStyle from '~/styles/global';
 import light from '~/styles/themes/light';
+import { OnboardingStepsProvider } from './onboarding/hooks/useOnboardingSteps';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={light}>
-        <Header />
-        <GlobalStyle />
-        <Component {...pageProps} />
+      <OnboardingStepsProvider>
+          <Header />
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </OnboardingStepsProvider>
       </ThemeProvider>
     </Provider>
   );

@@ -7,6 +7,7 @@ import { Title } from '~/components/Title';
 import { getAddressByCep } from '~/services/cep';
 
 import { STATE_LISTS } from '../../constants';
+import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanyFirstFormValidationSchema } from '../../utils';
 import {
   ButtonsContainer,
@@ -25,6 +26,8 @@ interface Address {
 }
 
 export function CompanyFirstForm() {
+  const { goToNextStep } = useOnboardingSteps();
+
   const formik = useFormik({
     initialValues: {
       tradingName: '',
@@ -37,7 +40,9 @@ export function CompanyFirstForm() {
       city: '',
       state: '',
     },
-    onSubmit: () => console.log('teste'),
+    onSubmit: () => {
+      goToNextStep()
+    },
     validationSchema: CompanyFirstFormValidationSchema,
   });
 

@@ -1,7 +1,9 @@
 export const STEPS = {
   contact: 'contact',
+  confirmContact: 'confirm-contact',
   company1: 'company1',
   company2: 'company2',
+  finished: 'finished'
 };
 
 export const STATE_LISTS = [

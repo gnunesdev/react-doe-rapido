@@ -6,6 +6,7 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { cleanPhone } from '~/utils';
+import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 
 import { CompanySecondFormValidationSchema } from '../../utils';
 import { InputRow } from '../CompanyFirstForm/styles';
@@ -17,17 +18,19 @@ import {
 } from './styles';
 
 export function CompanySecondForm() {
+  const { goToNextStep } = useOnboardingSteps();
+
   const formik = useFormik({
     initialValues: {
       phone: '',
       email: '',
       needs: [],
     },
-    onSubmit: () => console.log('submitted'),
+    onSubmit: () => {
+      goToNextStep();
+    },
     validationSchema: CompanySecondFormValidationSchema,
   });
-
-  console.log('formik', cleanPhone(formik.values.phone));
 
   return (
     <CompanySecondFormContainer>
