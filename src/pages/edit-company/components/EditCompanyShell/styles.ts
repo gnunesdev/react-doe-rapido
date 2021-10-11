@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: ${(props) => props.theme.spacing.space400};
+  padding: 6.4rem;
 `;
 export const Form = styled.form``;
