@@ -3,7 +3,7 @@ export const STEPS = {
   confirmContact: 'confirm-contact',
   company1: 'company1',
   company2: 'company2',
-  finished: 'finished'
+  finished: 'finished',
 };
 
 export const STATE_LISTS = [

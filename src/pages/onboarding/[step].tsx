@@ -1,5 +1,8 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useEffect, useState } from 'react';
+
+import Cookie from 'js-cookie';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Router from 'next/router';
 
 import { CompanyFirstForm } from './components/CompanyFirstForm';
 import { CompanySecondForm } from './components/CompanySecondForm';
@@ -8,9 +11,6 @@ import { ContactForm } from './components/ContactForm';
 import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
-
-import Router from 'next/router'
-import Cookie from 'js-cookie';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;
@@ -21,22 +21,22 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   const [stepToRender, setStepToRender] = useState(step);
 
   useEffect(() => {
-    if (currentStep === STEPS.finished){
-      Router.push('/backoffice')
+    if (currentStep === STEPS.finished) {
+      Router.push('/backoffice');
     }
     currentStep != stepToRender && setStepToRender(currentStep);
-  }, [currentStep])
+  }, [currentStep]);
 
   const cookiedStep = Cookie.get('onboardingStep');
-  console.log('cookied', cookiedStep)
+  console.log('cookied', cookiedStep);
 
   return (
-      <OnboardingContainer>
-        {stepToRender === STEPS.contact && <ContactForm />}
-        {stepToRender === STEPS.confirmContact && <ConfirmContactForm />}
-        {stepToRender === STEPS.company1 && <CompanyFirstForm />}
-        {stepToRender === STEPS.company2 && <CompanySecondForm />}
-      </OnboardingContainer>
+    <OnboardingContainer>
+      {stepToRender === STEPS.contact && <ContactForm />}
+      {stepToRender === STEPS.confirmContact && <ConfirmContactForm />}
+      {stepToRender === STEPS.company1 && <CompanyFirstForm />}
+      {stepToRender === STEPS.company2 && <CompanySecondForm />}
+    </OnboardingContainer>
   );
 };
 

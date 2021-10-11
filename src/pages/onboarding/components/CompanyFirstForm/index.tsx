@@ -41,7 +41,7 @@ export function CompanyFirstForm() {
       state: '',
     },
     onSubmit: () => {
-      goToNextStep()
+      goToNextStep();
     },
     validationSchema: CompanyFirstFormValidationSchema,
   });

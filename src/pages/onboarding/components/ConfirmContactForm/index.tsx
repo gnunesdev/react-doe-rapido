@@ -10,13 +10,13 @@ import { Link as ButtonLink } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 
+import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import {
   ButtonsContainer,
   CodeLinkContainer,
   ConfirmContactFormContainer,
   ConfirmContactFormStyled,
 } from './styles';
-import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();
