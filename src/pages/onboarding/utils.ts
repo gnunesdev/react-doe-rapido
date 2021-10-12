@@ -13,22 +13,6 @@ export const LoginFormValidationSchema = Yup.object({
     .oneOf([Yup.ref('password')], 'As senhas não conferem'),
 });
 
-export const CompanyFirstFormValidationSchema = Yup.object({
-  tradingName: Yup.string().required('Esse campo é obrigatório'),
-  name: Yup.string().required('Esse campo é obrigatório'),
-  cnpj: Yup.string()
-    .required('Esse campo é obrigatório')
-    .matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, 'Insira um CNPJ válido'),
-  cep: Yup.string()
-    .required('Esse campo é obrigatório')
-    .matches(/^\d{5}-\d{3}$/, 'Insira um CEP válido'),
-  street: Yup.string().required('Esse campo é obrigatório'),
-  number: Yup.string().required('Esse campo é obrigatório'),
-  district: Yup.string().required('Esse campo é obrigatório'),
-  city: Yup.string().required('Esse campo é obrigatório'),
-  state: Yup.string().required('Esse campo é obrigatório'),
-});
-
 export const CompanySecondFormValidationSchema = Yup.object({
   phone: Yup.string().required('Esse campo é obrigatório'),
   email: Yup.string()
