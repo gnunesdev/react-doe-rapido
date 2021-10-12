@@ -5,12 +5,10 @@ interface SelectProps {
   name: string;
   value: string;
   setValue: (field: string, value: string) => void;
-  options: [
-    {
-      value: string;
-      description: string;
-    }
-  ];
+  options: {
+    value: string;
+    description: string;
+  }[];
   size: 'big' | 'medium';
   error: string;
 }
