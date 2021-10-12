@@ -18,10 +18,10 @@ export const CompanyFirstFormValidationSchema = Yup.object({
   name: Yup.string().required('Esse campo é obrigatório'),
   cnpj: Yup.string()
     .required('Esse campo é obrigatório')
-    .matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/, 'Insira um CNPJ válido'),
+    .matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, 'Insira um CNPJ válido'),
   cep: Yup.string()
     .required('Esse campo é obrigatório')
-    .matches(/^\d{5}\-\d{3}$/, 'Insira um CEP válido'),
+    .matches(/^\d{5}-\d{3}$/, 'Insira um CEP válido'),
   street: Yup.string().required('Esse campo é obrigatório'),
   number: Yup.string().required('Esse campo é obrigatório'),
   district: Yup.string().required('Esse campo é obrigatório'),
