@@ -4,26 +4,17 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
-import { getAddressByCep } from '~/services/cep';
+import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
 import { STATE_LISTS } from '~/utils/address';
+import { CompanyFirstFormValidator } from '~/utils/validation';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
-import { CompanyFirstFormValidationSchema } from '../../utils';
 import {
   ButtonsContainer,
   CompanyFirstFormContainer,
   CompanyFirstFormStyled,
   InputRow,
 } from './styles';
-
-interface Address {
-  cep: string;
-  logradouro: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  [key: string]: string;
-}
 
 export function CompanyFirstForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -43,7 +34,7 @@ export function CompanyFirstForm() {
     onSubmit: () => {
       goToNextStep();
     },
-    validationSchema: CompanyFirstFormValidationSchema,
+    validationSchema: CompanyFirstFormValidator,
   });
 
   async function handleBlurCep() {
@@ -55,7 +46,11 @@ export function CompanyFirstForm() {
       const cepData = await getAddressByCep(formik.values.cep);
 
       if (cepData) {
-        const address: Address = cepData.data;
+        if (!isAddress(cepData.data)) {
+          console.log('not found');
+          return;
+        }
+        const address: ViacepAddress = cepData.data;
 
         if (address) {
           formik.setFieldValue('street', address?.logradouro);
