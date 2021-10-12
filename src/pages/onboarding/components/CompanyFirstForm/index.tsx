@@ -5,8 +5,8 @@ import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { getAddressByCep } from '~/services/cep';
+import { STATE_LISTS } from '~/utils/address';
 
-import { STATE_LISTS } from '../../constants';
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanyFirstFormValidationSchema } from '../../utils';
 import {
