@@ -7,12 +7,10 @@ import { EditCompanyContainer } from './styles';
 
 const EditCompany: NextPage = () => {
   return (
-    <>
-      <EditCompanyContainer>
-        <Sidebar />
-        <EditCompanyShell />
-      </EditCompanyContainer>
-    </>
+    <EditCompanyContainer>
+      <Sidebar />
+      <EditCompanyShell />
+    </EditCompanyContainer>
   );
 };
 
