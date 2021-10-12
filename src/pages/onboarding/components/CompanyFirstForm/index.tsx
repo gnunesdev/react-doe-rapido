@@ -184,7 +184,7 @@ export function CompanyFirstForm() {
             options={STATE_LISTS}
             value={formik.values.state}
             setValue={formik.setFieldValue}
-            hasError={
+            error={
               formik.touched.state && formik.errors.state
                 ? formik.errors.state
                 : ''
