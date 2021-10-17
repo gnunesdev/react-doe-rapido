@@ -4,9 +4,9 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
+import { CompanyFirstFormValidator } from '~/pages/onboarding/utils';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { STATE_LISTS } from '~/utils/address';
-import { CompanyFirstFormValidator } from '~/utils/validation';
 
 import { ButtonsContainer, Container, Form, InputRow } from './styles';
 

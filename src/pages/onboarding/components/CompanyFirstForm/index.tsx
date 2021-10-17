@@ -6,9 +6,9 @@ import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
 import { STATE_LISTS } from '~/utils/address';
-import { CompanyFirstFormValidator } from '~/utils/validation';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
+import { CompanyFirstFormValidator } from '../../utils';
 import {
   ButtonsContainer,
   CompanyFirstFormContainer,
