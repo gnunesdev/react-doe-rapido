@@ -4,21 +4,13 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
-import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
+import { CompanyFirstFormValidator } from '~/pages/onboarding/utils';
+import { getAddressByCep, isAddress } from '~/services/cep';
 import { STATE_LISTS } from '~/utils/address';
 
-import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
-import { CompanyFirstFormValidator } from '../../utils';
-import {
-  ButtonsContainer,
-  CompanyFirstFormContainer,
-  CompanyFirstFormStyled,
-  InputRow,
-} from './styles';
+import { ButtonsContainer, Container, Form, InputRow } from './styles';
 
-export function CompanyFirstForm() {
-  const { goToNextStep } = useOnboardingSteps();
-
+export const EditCompanyShell: React.VFC = () => {
   const formik = useFormik({
     initialValues: {
       tradingName: '',
@@ -32,42 +24,37 @@ export function CompanyFirstForm() {
       state: '',
     },
     onSubmit: () => {
-      goToNextStep();
+      console.log('OPA!');
     },
     validationSchema: CompanyFirstFormValidator,
   });
 
-  async function handleBlurCep() {
-    if (formik.values.cep.length < 8) {
+  async function onCepBlur() {
+    const cep = formik.values.cep.replace(/\D+/g, '');
+    if (cep.length < 8) {
       return;
     }
 
     try {
-      const cepData = await getAddressByCep(formik.values.cep);
-
-      if (cepData) {
-        if (!isAddress(cepData.data)) {
-          console.log('not found');
-          return;
-        }
-        const address: ViacepAddress = cepData.data;
-
-        if (address) {
-          formik.setFieldValue('street', address?.logradouro);
-          formik.setFieldValue('district', address?.bairro);
-          formik.setFieldValue('city', address?.localidade);
-          formik.setFieldValue('state', address?.uf);
-        }
+      console.log('loading...', cep);
+      const cepData = await getAddressByCep(cep);
+      if (!isAddress(cepData.data)) {
+        console.log('not found');
+        return;
       }
-    } catch (error) {
-      console.error(error);
+      console.log(cepData.data.logradouro);
+      formik.setFieldValue('street', cepData.data.logradouro);
+      formik.setFieldValue('district', cepData.data.bairro);
+      formik.setFieldValue('city', cepData.data.localidade);
+      formik.setFieldValue('state', cepData.data.uf);
+    } catch (e) {
+      console.log('erro:', e);
     }
   }
-
   return (
-    <CompanyFirstFormContainer>
-      <Title description="Cadastro de instituição" size="big" />
-      <CompanyFirstFormStyled onSubmit={formik.handleSubmit}>
+    <Container>
+      <Title description="Editar instituição" size="big" />
+      <Form onSubmit={formik.handleSubmit}>
         <Input
           name="tradingName"
           inputSize="big"
@@ -112,7 +99,7 @@ export function CompanyFirstForm() {
             name="cep"
             inputSize="big"
             onChange={formik.handleChange}
-            onBlur={handleBlurCep}
+            onBlur={onCepBlur}
             label="CEP:"
             mask="99999-999"
             value={formik.values.cep}
@@ -193,7 +180,7 @@ export function CompanyFirstForm() {
             type="submit"
           ></Button>
         </ButtonsContainer>
-      </CompanyFirstFormStyled>
-    </CompanyFirstFormContainer>
+      </Form>
+    </Container>
   );
-}
+};

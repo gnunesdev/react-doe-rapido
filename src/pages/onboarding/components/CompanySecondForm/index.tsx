@@ -6,8 +6,8 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { cleanPhone } from '~/utils';
-import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 
+import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanySecondFormValidationSchema } from '../../utils';
 import { InputRow } from '../CompanyFirstForm/styles';
 import {

@@ -1,8 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 
-import { useAppSelector } from '~/hooks/redux';
-
-import { Sidebar } from './components/Sidebar';
+import { Header } from '~/components/Header';
+import { Sidebar } from '~/components/Sidebar';
 
 const BackofficePage: NextPage = () => {
   return (
