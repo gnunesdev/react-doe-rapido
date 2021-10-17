@@ -7,7 +7,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
   }
   html {
-    font-size: 10px;
+    font-size: 62.5%;
     scroll-behavior: smooth;
   }
   body {
