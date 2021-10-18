@@ -1,4 +1,4 @@
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -87,18 +87,6 @@ export function LoginForm() {
           </Button>
         </ButtonsContainer>
       </LoginFormStyled>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </LoginFormContainer>
   );
 }

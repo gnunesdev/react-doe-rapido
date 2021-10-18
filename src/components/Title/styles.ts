@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface TitleStyledProps {
   size: 'big' | 'medium' | 'small';
+  color?: string;
 }
 
 export const TitleStyled = styled.h3<TitleStyledProps>`
@@ -16,5 +17,5 @@ export const TitleStyled = styled.h3<TitleStyledProps>`
     }
   }};
 
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.color || props.theme.colors.primary};
 `;
