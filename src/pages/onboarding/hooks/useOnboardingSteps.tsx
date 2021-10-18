@@ -1,5 +1,15 @@
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
 import { current } from '@reduxjs/toolkit';
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
+
 import usePersistedState from '~/hooks/usePersistedState';
 
 import { STEPS } from './../constants';
@@ -15,17 +25,24 @@ interface OnboardingStepsContextData {
 
 const OnboardingStepsContext = createContext({} as OnboardingStepsContextData);
 
-export const OnboardingStepsProvider = ({ children }: OnboardingStepsProviderProps) => {
+export const OnboardingStepsProvider = ({
+  children,
+}: OnboardingStepsProviderProps) => {
   /**
    * Set initial step to the first one in the contant Object
    */
-  const [currentStep, setCurrentStep] = usePersistedState('onboardingStep', STEPS.contact);
+  const [currentStep, setCurrentStep] = usePersistedState(
+    'onboardingStep',
+    STEPS.contact
+  );
 
   const Onboardingsteps = Object.values(STEPS);
-  const currentIndexStep = Onboardingsteps.findIndex(step => step === currentStep);
+  const currentIndexStep = Onboardingsteps.findIndex(
+    (step) => step === currentStep
+  );
 
-  function goToNextStep(){
-    setCurrentStep(Onboardingsteps[currentIndexStep + 1])
+  function goToNextStep() {
+    setCurrentStep(Onboardingsteps[currentIndexStep + 1]);
   }
 
   return (
@@ -38,5 +55,5 @@ export const OnboardingStepsProvider = ({ children }: OnboardingStepsProviderPro
 export const useOnboardingSteps = () => {
   const context = useContext(OnboardingStepsContext);
 
-  return context
-}
+  return context;
+};
