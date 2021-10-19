@@ -14,7 +14,7 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
     padding: 0 0.7rem;
 
     transition: all 0.175s ease-in;
-    margin-left: 0.6rem;
+    margin-right: 0.6rem;
   }
 
   label {
@@ -22,9 +22,9 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
     font-size: ${(props) => {
       switch (props.size) {
         case 'big':
-          return '1.8rem';
-        case 'medium':
           return '2.4rem';
+        case 'medium':
+          return '1.8rem';
       }
     }};
     font-weight: bold;

@@ -22,7 +22,6 @@ export const Checkbox: React.VFC<CheckboxProps> = ({
   return (
     <CheckboxContainer size={size}>
       <label>
-        {label}
         <input
           type="checkbox"
           name={name}
@@ -30,6 +29,7 @@ export const Checkbox: React.VFC<CheckboxProps> = ({
           onBlur={onBlur}
           value={value}
         />
+        {label}
       </label>
 
       {error && <span>{error}</span>}

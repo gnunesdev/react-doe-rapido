@@ -12,7 +12,11 @@ export async function getAddressByGeolocation(lat: string, long: string) {
   }
 }
 
-export async function getCompanysByNearbyAddress(lat: string, long: string) {
+export async function getCompanysByNearbyAddress(
+  lat: string,
+  long: string,
+  needs: string[]
+) {
   try {
     const result = await api.get('/company');
 

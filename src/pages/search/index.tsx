@@ -7,9 +7,12 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from 'use-places-autocomplete';
 
+import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
+import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
+import { CompanyNeedsMap, CompanyValueType } from '~/constants';
 import {
   getAddressByGeolocation,
   getCompanysByNearbyAddress,
@@ -18,7 +21,7 @@ import { CompanyListType } from '~/types/Company';
 
 import { AddressSuggestions } from './components/AddressSuggestions';
 import { CompanyList } from './components/CompanyList';
-import { AppContainer, SearchBar } from './styles';
+import { AppContainer, FiltersContainer, SearchBar } from './styles';
 
 const AppPage: NextPage = () => {
   const {
@@ -31,18 +34,18 @@ const AppPage: NextPage = () => {
 
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [companys, setCompanys] = useState<Array<CompanyListType>>([]);
+  const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
 
-  async function handleSelect(description: string) {
+  function handleSelect(description: string) {
     setValue(description, false);
     clearSuggestions();
 
-    await searchCompanys();
+    searchCompanys();
   }
 
   async function handleGetCurrentAddress() {
+    setIsAddressLoading(true);
     navigator.geolocation.getCurrentPosition(async (position) => {
-      setIsAddressLoading(true);
-
       try {
         const { data: geoAddress } = await getAddressByGeolocation(
           String(position.coords.latitude),
@@ -55,9 +58,10 @@ const AppPage: NextPage = () => {
         setIsAddressLoading(false);
       } catch (error) {
         console.error(error);
-        setIsAddressLoading(false);
       }
     });
+
+    setIsAddressLoading(false);
   }
 
   async function searchCompanys() {
@@ -67,9 +71,11 @@ const AppPage: NextPage = () => {
 
       const { data: companysData } = await getCompanysByNearbyAddress(
         String(lat),
-        String(lng)
+        String(lng),
+        needsFilters
       );
 
+      console.log(companysData);
       setCompanys(companysData);
     } catch (error) {
       console.error(error);
@@ -78,6 +84,16 @@ const AppPage: NextPage = () => {
 
   function handleInput(e: ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
+  }
+
+  function handleSelectNeedFilter(needId: string) {
+    const needAlreadayFiltered = needsFilters.find((need) => need === needId);
+
+    needAlreadayFiltered
+      ? setNeedsFilters((needs) => needs.filter((need) => need !== needId))
+      : setNeedsFilters((needs) => [...needs, needId]);
+
+    searchCompanys();
   }
 
   return (
@@ -95,15 +111,37 @@ const AppPage: NextPage = () => {
         {status === 'OK' && (
           <AddressSuggestions address={data} handleSelect={handleSelect} />
         )}
-        <Link
-          label={
-            isAddressLoading
-              ? 'Carregando localização...'
-              : 'Insira minha localização'
-          }
-          isButton={true}
-          handleClick={handleGetCurrentAddress}
-        />
+
+        {companys.length > 0 ? (
+          <FiltersContainer>
+            <Text
+              description="Instituições que precisam de:"
+              fontSize="1.8"
+              isBold={true}
+            />
+            <div>
+              {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
+                <Checkbox
+                  name={needValue}
+                  key={needId}
+                  label={needValue}
+                  size="medium"
+                  onChange={() => handleSelectNeedFilter(needId)}
+                />
+              ))}
+            </div>
+          </FiltersContainer>
+        ) : (
+          <Link
+            label={
+              isAddressLoading
+                ? 'Carregando localização...'
+                : 'Insira minha localização'
+            }
+            isButton={true}
+            handleClick={handleGetCurrentAddress}
+          />
+        )}
       </SearchBar>
       {companys.length > 0 ? <CompanyList companys={companys} /> : ''}
     </AppContainer>

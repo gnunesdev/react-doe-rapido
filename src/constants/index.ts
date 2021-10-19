@@ -4,3 +4,6 @@ export const CompanyNeedsMap = {
   3: 'Alimentos',
   4: 'Brinquedos',
 };
+
+export type CompanyValueType<CompanyNeedsMap> =
+  CompanyNeedsMap[keyof CompanyNeedsMap];
