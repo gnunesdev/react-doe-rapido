@@ -58,6 +58,7 @@ export function ContactForm() {
           label="Senha:"
           inputSize="big"
           onChange={formik.handleChange}
+          type="password"
           error={
             formik.touched.password && formik.errors.password
               ? formik.errors.password
@@ -68,6 +69,7 @@ export function ContactForm() {
           name="confirmPassword"
           label="Confirme sua senha:"
           inputSize="big"
+          type="password"
           onChange={formik.handleChange}
           error={
             formik.touched.confirmPassword && formik.errors.confirmPassword
@@ -77,9 +79,9 @@ export function ContactForm() {
         />
         <ButtonsContainer>
           <Button variant="primary" type="submit" description="Enviar" />
-          <Button variant="secondary">
-            <Link href="/login">Voltar para o login</Link>
-          </Button>
+          <Link href="/teste">
+            <Button variant="secondary" description="Voltar para o login" />
+          </Link>
         </ButtonsContainer>
       </ContactFormStyled>
     </ContactFormContainer>

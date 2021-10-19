@@ -9,7 +9,7 @@ import { store } from '~/store';
 import GlobalStyle from '~/styles/global';
 import light from '~/styles/themes/light';
 
-import { OnboardingStepsProvider } from './onboarding/hooks/useOnboardingSteps';
+import { OnboardingStepsProvider } from './backoffice/onboarding/hooks/useOnboardingSteps';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,18 +19,18 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Header />
           <GlobalStyle />
           <Component {...pageProps} />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </OnboardingStepsProvider>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </ThemeProvider>
     </Provider>
   );

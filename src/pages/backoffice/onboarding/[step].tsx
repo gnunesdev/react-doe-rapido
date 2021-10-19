@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import Cookie from 'js-cookie';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import Router from 'next/router';
+import { GetServerSideProps, NextPage } from 'next';
+
+import { getCookies } from '~/utils';
 
 import { CompanyFirstForm } from './components/CompanyFirstForm';
 import { CompanySecondForm } from './components/CompanySecondForm';
@@ -21,37 +21,23 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   const [stepToRender, setStepToRender] = useState(step);
 
   useEffect(() => {
-    if (currentStep === STEPS.finished) {
-      Router.push('/backoffice');
-    }
     currentStep != stepToRender && setStepToRender(currentStep);
   }, [currentStep]);
 
-  const cookiedStep = Cookie.get('onboardingStep');
-  console.log('cookied', cookiedStep);
-
   return (
     <OnboardingContainer>
-      {stepToRender === STEPS.contact && <ContactForm />}
-      {stepToRender === STEPS.confirmContact && <ConfirmContactForm />}
-      {stepToRender === STEPS.company1 && <CompanyFirstForm />}
-      {stepToRender === STEPS.company2 && <CompanySecondForm />}
+      {step === STEPS.contact && <ContactForm />}
+      {step === STEPS.confirmContact && <ConfirmContactForm />}
+      {step === STEPS.company1 && <CompanyFirstForm />}
+      {step === STEPS.company2 && <CompanySecondForm />}
     </OnboardingContainer>
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = Object.values(STEPS).map((step: string) => ({
-    params: { step },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  params,
+}) => {
   const currentStep = String(params?.step);
 
   if (!Object.values(STEPS).includes(currentStep)) {
@@ -63,14 +49,32 @@ export const getStaticProps: GetStaticProps = ({ params }) => {
     };
   }
 
-  // let validStep = currentStep;
-  // const cookiedStep = Cookie.get('onboardingStep');
+  const cookies = getCookies(req);
+  const realStep = cookies?.onboardingStep
+    ? JSON.parse(cookies.onboardingStep)
+    : '';
 
-  // console.log('cookied', cookiedStep)
+  if (
+    realStep &&
+    currentStep != realStep &&
+    Object.values(STEPS).includes(realStep)
+  ) {
+    return {
+      redirect: {
+        destination: `/backoffice/onboarding/${realStep}`,
+        permanent: false,
+      },
+    };
+  }
 
-  // if (currentStep != cookiedStep && Object.values(STEPS).includes(cookiedStep)) {
-  //   validStep = cookiedStep;
-  // }
+  if (realStep === STEPS.finished) {
+    return {
+      redirect: {
+        destination: `/backoffice`,
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {

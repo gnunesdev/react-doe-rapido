@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 
-import { current } from '@reduxjs/toolkit';
+import { useRouter } from 'next/router';
 
 import usePersistedState from '~/hooks/usePersistedState';
 
@@ -28,6 +28,8 @@ const OnboardingStepsContext = createContext({} as OnboardingStepsContextData);
 export const OnboardingStepsProvider = ({
   children,
 }: OnboardingStepsProviderProps) => {
+  const router = useRouter();
+
   /**
    * Set initial step to the first one in the contant Object
    */
@@ -36,13 +38,14 @@ export const OnboardingStepsProvider = ({
     STEPS.contact
   );
 
-  const Onboardingsteps = Object.values(STEPS);
-  const currentIndexStep = Onboardingsteps.findIndex(
+  const OnboardingSteps = Object.values(STEPS);
+  const currentIndexStep = OnboardingSteps.findIndex(
     (step) => step === currentStep
   );
 
   function goToNextStep() {
-    setCurrentStep(Onboardingsteps[currentIndexStep + 1]);
+    setCurrentStep(OnboardingSteps[currentIndexStep + 1]);
+    router.push(`/backoffice/onboarding/${currentStep}`);
   }
 
   return (
