@@ -45,7 +45,9 @@ export const OnboardingStepsProvider = ({
 
   function goToNextStep() {
     setCurrentStep(OnboardingSteps[currentIndexStep + 1]);
-    router.push(`/backoffice/onboarding/${currentStep}`);
+    router.push(
+      `/backoffice/onboarding/${OnboardingSteps[currentIndexStep + 1]}`
+    );
   }
 
   return (
