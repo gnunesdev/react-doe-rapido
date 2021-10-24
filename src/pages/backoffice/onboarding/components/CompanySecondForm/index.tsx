@@ -5,6 +5,7 @@ import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
+import { CompanyNeedsMap } from '~/constants';
 import { cleanPhone } from '~/utils';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -68,37 +69,23 @@ export function CompanySecondForm() {
         </InputRow>
         <NeedsContainer>
           <Title size="small" description="Principais necessidades" />
-          <Checkbox
-            label="Roupas"
-            size="big"
-            name="need"
-            value="Roupas"
-            onChange={formik.handleChange}
-          />
-          <Checkbox
-            label="Higiene pessoal"
-            size="big"
-            name="need"
-            value="Higiene pessoal"
-            onChange={formik.handleChange}
-          />
-          <Checkbox
-            label="Alimentos"
-            size="big"
-            name="need"
-            value="Alimentos"
-            onChange={formik.handleChange}
-          />
-          <Checkbox
-            label="Brinquedos"
-            size="big"
-            name="need"
-            value="Brinquedos"
-            onChange={formik.handleChange}
-          />
+          {Object.values(CompanyNeedsMap).map((need) => (
+            <Checkbox
+              key={need}
+              label={need}
+              size="medium"
+              name="needs"
+              value={need}
+              onChange={formik.handleChange}
+            />
+          ))}
         </NeedsContainer>
         <ButtonsContainer>
-          <Button variant="primary" description="Salvar informações" />
+          <Button
+            variant="primary"
+            description="Salvar informações"
+            type="submit"
+          />
         </ButtonsContainer>
       </CompanySecondFormStyled>
     </CompanySecondFormContainer>
