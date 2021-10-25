@@ -1,19 +1,6 @@
 import * as Yup from 'yup';
 
-export const LoginFormValidationSchema = Yup.object({
-  name: Yup.string().required('Esse campo é obrigatório'),
-  email: Yup.string()
-    .email('Digite um e-mail válido')
-    .required('Esse campo é obrigatório'),
-  password: Yup.string()
-    .required('Esse campo é obrigatório')
-    .min(6, 'A senha precisa ter no mínimo 6 dígitos'),
-  confirmPassword: Yup.string()
-    .required('Esse campo é obrigatório')
-    .oneOf([Yup.ref('password')], 'As senhas não conferem'),
-});
-
-export const CompanyFirstFormValidator = Yup.object({
+export const EditCompanyFormValidator = Yup.object({
   tradingName: Yup.string().required('Esse campo é obrigatório'),
   name: Yup.string().required('Esse campo é obrigatório'),
   cnpj: Yup.string()
@@ -27,9 +14,6 @@ export const CompanyFirstFormValidator = Yup.object({
   district: Yup.string().required('Esse campo é obrigatório'),
   city: Yup.string().required('Esse campo é obrigatório'),
   state: Yup.string().required('Esse campo é obrigatório'),
-});
-
-export const CompanySecondFormValidationSchema = Yup.object({
   phone: Yup.string().required('Esse campo é obrigatório'),
   email: Yup.string()
     .email('Digite um e-mail válido')

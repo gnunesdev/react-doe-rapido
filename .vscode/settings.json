@@ -1,4 +1,6 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.eol": "\n",
+  "explorer.compactFolders": false,
+  "remote.WSL.fileWatcher.polling": true,
 }

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { SelectContainer } from '~/components/Select/styles';
+import { TitleStyled } from '~/components/Title/styles';
 
 export const Container = styled.div`
   flex: 1;
@@ -28,4 +29,15 @@ export const InputRow = styled.div`
 
 export const ButtonsContainer = styled.div`
   margin-top: 3rem;
+`;
+
+export const NeedsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 2.4rem;
+
+  ${TitleStyled} {
+    margin-bottom: 1rem;
+  }
 `;
