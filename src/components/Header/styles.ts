@@ -34,10 +34,9 @@ export const UserName = styled.div`
   color: ${(props) => props.theme.foreground.primary};
 `;
 
-export const UserIcon = styled.div`
-  margin-left: 24px;
+export const UserIcon = styled.img`
+  margin-left: 8px;
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background-color: orange;
 `;
