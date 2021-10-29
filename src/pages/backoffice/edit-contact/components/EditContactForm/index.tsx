@@ -12,8 +12,7 @@ import { Container, InputRow, Form } from './styles';
 
 export function EditContactForm() {
   const [isChangeEmailModalOpen, toggleChangeEmailModalOpen] = useState(false);
-  const [isChangePasswordModalOpen, toggleChangePasswordModalOpen] =
-    useState(false);
+  const [isChangePasswordModalOpen, toggleChangePasswordModalOpen] = useState(false);
 
   function handleToggleEmailModalOpen() {
     toggleChangeEmailModalOpen((oldState) => !oldState);
@@ -43,11 +42,7 @@ export function EditContactForm() {
             inputSize="big"
             onChange={formik.handleChange}
             label="Nome"
-            error={
-              formik.touched.name && formik.errors.name
-                ? formik.errors.name
-                : ''
-            }
+            error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
           ></Input>
         </InputRow>
         <InputRow>

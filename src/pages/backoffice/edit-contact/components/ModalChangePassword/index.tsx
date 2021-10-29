@@ -9,10 +9,7 @@ import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
 
-import {
-  ChangeInputCodeValidator,
-  ChangePasswordValidator,
-} from '../../constants/utils';
+import { ChangeInputCodeValidator, ChangePasswordValidator } from '../../constants/utils';
 import { Form, ModalContainer } from './styles';
 
 interface CodeStepProps {
@@ -23,9 +20,7 @@ interface ModalChangePasswordProps {
   handleCloseModal: VoidFunction;
 }
 
-export function ModalChangePassword({
-  handleCloseModal,
-}: ModalChangePasswordProps) {
+export function ModalChangePassword({ handleCloseModal }: ModalChangePasswordProps) {
   const [codeValidated, setCodeValidated] = useState(false);
 
   function handleSetCodeValidated() {

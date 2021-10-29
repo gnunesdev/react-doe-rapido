@@ -9,10 +9,7 @@ import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
 
-import {
-  ChangeEmailValidator,
-  ChangeInputCodeValidator,
-} from '../../constants/utils';
+import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { Form, ModalContainer } from './styles';
 
 interface CodeStepProps {
@@ -100,9 +97,7 @@ function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
         inputSize="big"
         onChange={formik.handleChange}
         error={
-          formik.touched.oldEmail && formik.errors.oldEmail
-            ? formik.errors.oldEmail
-            : ''
+          formik.touched.oldEmail && formik.errors.oldEmail ? formik.errors.oldEmail : ''
         }
       />
       <Input
@@ -111,9 +106,7 @@ function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
         inputSize="big"
         onChange={formik.handleChange}
         error={
-          formik.touched.newEmail && formik.errors.newEmail
-            ? formik.errors.newEmail
-            : ''
+          formik.touched.newEmail && formik.errors.newEmail ? formik.errors.newEmail : ''
         }
       />
       <Button variant="primary" description="Confirmar edição" />

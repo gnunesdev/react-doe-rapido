@@ -8,10 +8,7 @@ export function Sidebar() {
         <h3>Cadastros</h3>
         <ul>
           <li>
-            <Link
-              label="Editar instituição"
-              href="/backoffice/edit-company"
-            ></Link>
+            <Link label="Editar instituição" href="/backoffice/edit-company"></Link>
           </li>
           <li>
             <Link label="Editar contato" href="/backoffice/edit-contact"></Link>
