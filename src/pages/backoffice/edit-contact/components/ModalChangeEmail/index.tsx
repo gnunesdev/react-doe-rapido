@@ -71,6 +71,7 @@ function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
           label="Código"
           inputSize="big"
           onChange={formik.handleChange}
+          error={formik.errors.code}
         />
         <Button variant="primary" description="Avançar" type="submit" />
       </Form>

@@ -20,7 +20,7 @@ export function EditContactForm() {
   }
 
   function handleTogglePasswordModalOpen() {
-    toggleChangeEmailModalOpen((oldState) => !oldState);
+    toggleChangePasswordModalOpen((oldState) => !oldState);
   }
 
   const formik = useFormik({

@@ -35,7 +35,7 @@ export function ModalChangePassword({
   return (
     <Modal>
       <ModalContainer>
-        <Title description="Editar e-mail" size="big" />
+        <Title description="Editar senha" size="big" />
         {!codeValidated ? (
           <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
         ) : (
@@ -69,6 +69,7 @@ function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
           label="Código"
           inputSize="big"
           onChange={formik.handleChange}
+          error={formik.errors.code}
         />
         <Button variant="primary" description="Avançar" type="submit" />
       </Form>
