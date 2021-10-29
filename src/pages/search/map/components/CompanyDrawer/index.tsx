@@ -41,7 +41,7 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
       <Modal>
         <CompanyDrawerContainer>
           <Header>
-            <Title description={company.name} size="medium" color={colors.white} />
+            <Title description={company.name} size="medium" color={colors.fore} />
           </Header>
           <CompanyInfoContainer>
             <strong>{company.name}</strong>

@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { mapStyle } from '../constants';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { CompanyButton } from './styles';
 import { getCompanysToRenderInMap } from '~/services/map';
@@ -12,11 +11,6 @@ import { CompanyMapType } from '~/types/Company';
 const containerStyle = {
   width: '100vw',
   height: 'calc(100vh - 6.2rem)',
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523,
 };
 
 interface MapPageProps {
@@ -129,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   if (drawerId) {
     const companyExists = companys.find((company) => company.id === drawerId);
-    console.log(companys);
+    // console.log(companys);
 
     if (!companyExists) {
       return {

@@ -1,6 +1,5 @@
 import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 import { AddressSuggestions } from './components/AddressSuggestions';
@@ -11,7 +10,7 @@ import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { CompanyNeedsMap, CompanyValueType } from '~/constants';
+import { CompanyNeedsMap } from '~/constants';
 import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
 import { CompanyListType } from '~/types/Company';
 
@@ -58,6 +57,7 @@ const AppPage: NextPage = () => {
 
   async function searchCompanys() {
     try {
+      // console.log(value);
       const result = await getGeocode({ address: value });
       const { lat, lng } = await getLatLng(result[0]);
 
@@ -67,7 +67,7 @@ const AppPage: NextPage = () => {
         needsFilters
       );
 
-      console.log(companysData);
+      // console.log(companysData);
       setCompanys(companysData);
     } catch (error) {
       console.error(error);

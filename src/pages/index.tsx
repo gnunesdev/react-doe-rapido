@@ -6,8 +6,9 @@ import { getCompanysToRenderInMap } from '~/services/map';
 
 const Home: NextPage = () => {
   async function get() {
-    const teste = await getCompanysToRenderInMap('138616983');
-    console.log('teste', teste);
+    await getCompanysToRenderInMap('138616983');
+    // const teste = await getCompanysToRenderInMap('138616983');
+    // console.log('teste', teste);
   }
 
   useEffect(() =>

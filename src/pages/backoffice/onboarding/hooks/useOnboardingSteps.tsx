@@ -1,13 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
 import { STEPS } from './../constants';
 import usePersistedState from '~/hooks/usePersistedState';

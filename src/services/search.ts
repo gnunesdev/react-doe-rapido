@@ -28,7 +28,7 @@ export async function getCompanysByNearbyAddress(
 
 export async function getCompanyById(id: string) {
   try {
-    const result = await api.get(`/companys/${id}`);
+    const result = await api.get(`/company/${id}`);
 
     return result;
   } catch (error) {
