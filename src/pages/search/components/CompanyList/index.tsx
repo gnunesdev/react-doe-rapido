@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router';
 
+import { CompanyListContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Text } from '~/components/Text';
 import { CompanyListType } from '~/types/Company';
-
-import { CompanyListContainer } from './styles';
 
 interface CompanyListProps {
   companys: Array<CompanyListType>;

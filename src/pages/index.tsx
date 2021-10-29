@@ -1,10 +1,8 @@
+import type { NextPage } from 'next';
 import { useEffect } from 'react';
 
-import type { NextPage } from 'next';
-
-import { getCompanysToRenderInMap } from '~/services/map';
-
 import VercelLogo from '../assets/vercel.svg';
+import { getCompanysToRenderInMap } from '~/services/map';
 
 const Home: NextPage = () => {
   async function get() {

@@ -1,15 +1,13 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
-
-import { getCompanysToRenderInMap } from '~/services/map';
-import { CompanyMapType } from '~/types/Company';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { mapStyle } from '../constants';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { CompanyButton } from './styles';
+import { getCompanysToRenderInMap } from '~/services/map';
+import { CompanyMapType } from '~/types/Company';
 
 const containerStyle = {
   width: '100vw',

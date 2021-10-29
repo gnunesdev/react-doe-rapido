@@ -1,14 +1,7 @@
-import { useEffect, useState } from 'react';
-
 import { useFormik } from 'formik';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
-
-import { Button } from '~/components/Button';
-import { Input } from '~/components/Input';
-import { Link as ButtonLink } from '~/components/Link';
-import { Text } from '~/components/Text';
-import { Title } from '~/components/Title';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import {
@@ -17,6 +10,11 @@ import {
   ConfirmContactFormContainer,
   ConfirmContactFormStyled,
 } from './styles';
+import { Button } from '~/components/Button';
+import { Input } from '~/components/Input';
+import { Link as ButtonLink } from '~/components/Link';
+import { Text } from '~/components/Text';
+import { Title } from '~/components/Title';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   createContext,
   Dispatch,
@@ -8,11 +9,8 @@ import {
   useState,
 } from 'react';
 
-import { useRouter } from 'next/router';
-
-import usePersistedState from '~/hooks/usePersistedState';
-
 import { STEPS } from './../constants';
+import usePersistedState from '~/hooks/usePersistedState';
 
 interface OnboardingStepsProviderProps {
   children: ReactNode;

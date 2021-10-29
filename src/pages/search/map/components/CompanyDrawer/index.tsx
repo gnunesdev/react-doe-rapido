@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import { useTheme } from 'styled-components';
 
+import { CompanyDrawerContainer, CompanyInfoContainer, Header, Overlay } from './styles';
 import Modal from '~/components/Modal';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
 import { getCompanyById } from '~/services/search';
 import { CompanyMapType } from '~/types/Company';
-
-import { CompanyDrawerContainer, CompanyInfoContainer, Header, Overlay } from './styles';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;

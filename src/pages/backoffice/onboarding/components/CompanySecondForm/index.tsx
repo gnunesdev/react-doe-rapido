@@ -1,13 +1,5 @@
 import { useFormik } from 'formik';
 
-import { Button } from '~/components/Button';
-import { Checkbox } from '~/components/Checkbox';
-import { Input } from '~/components/Input';
-import { Title } from '~/components/Title';
-import { UploadImage } from '~/components/UploadImage';
-import { CompanyNeedsMap } from '~/constants';
-import { cleanPhone } from '~/utils';
-
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanySecondFormValidationSchema } from '../../utils';
 import { InputRow } from '../CompanyFirstForm/styles';
@@ -17,6 +9,13 @@ import {
   CompanySecondFormStyled,
   NeedsContainer,
 } from './styles';
+import { Button } from '~/components/Button';
+import { Checkbox } from '~/components/Checkbox';
+import { Input } from '~/components/Input';
+import { Title } from '~/components/Title';
+import { UploadImage } from '~/components/UploadImage';
+import { CompanyNeedsMap } from '~/constants';
+import { cleanPhone } from '~/utils';
 
 export function CompanySecondForm() {
   const { goToNextStep } = useOnboardingSteps();
