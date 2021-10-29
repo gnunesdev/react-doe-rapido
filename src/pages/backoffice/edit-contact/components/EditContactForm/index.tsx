@@ -1,14 +1,12 @@
-import { useState } from 'react';
-
 import { useFormik } from 'formik';
-
-import { Input } from '~/components/Input';
-import { Title } from '~/components/Title';
+import { useState } from 'react';
 
 import { EditContactFormValidator } from '../../constants/utils';
 import { ModalChangeEmail } from '../ModalChangeEmail';
 import { ModalChangePassword } from '../ModalChangePassword';
 import { Container, InputRow, Form } from './styles';
+import { Input } from '~/components/Input';
+import { Title } from '~/components/Title';
 
 export function EditContactForm() {
   const [isChangeEmailModalOpen, toggleChangeEmailModalOpen] = useState(false);
@@ -27,7 +25,7 @@ export function EditContactForm() {
       name: '',
     },
     onSubmit: () => {
-      console.log('OPA!');
+      // console.log('OPA!');
     },
     validationSchema: EditContactFormValidator,
   });

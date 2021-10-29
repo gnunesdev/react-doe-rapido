@@ -1,16 +1,14 @@
+import { useFormik } from 'formik';
 import { useState } from 'react';
 
-import { useFormik } from 'formik';
-
+import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
+import { Form, ModalContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
-
-import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
-import { Form, ModalContainer } from './styles';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -84,7 +82,7 @@ function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
     },
     validationSchema: ChangeEmailValidator,
     onSubmit: () => {
-      console.log('123');
+      // console.log('123');
       handleCloseModal();
     },
   });

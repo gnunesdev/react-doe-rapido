@@ -1,16 +1,14 @@
+import { useFormik } from 'formik';
 import { useState } from 'react';
 
-import { useFormik } from 'formik';
-
+import { ChangeInputCodeValidator, ChangePasswordValidator } from '../../constants/utils';
+import { Form, ModalContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
-
-import { ChangeInputCodeValidator, ChangePasswordValidator } from '../../constants/utils';
-import { Form, ModalContainer } from './styles';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -79,7 +77,9 @@ function ChangeValueStep() {
       newPassword: '',
       confirmNewPassword: '',
     },
-    onSubmit: () => console.log('123'),
+    onSubmit: () => {
+      // console.log('123');
+    },
     validationSchema: ChangePasswordValidator,
   });
 

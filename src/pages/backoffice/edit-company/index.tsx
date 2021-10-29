@@ -1,9 +1,8 @@
 import { NextPage } from 'next';
 
-import { Sidebar } from '~/components/Sidebar';
-
 import { EditCompanyForm } from './components/EditCompanyForm';
 import { EditCompanyContainer } from './styles';
+import { Sidebar } from '~/components/Sidebar';
 
 const EditCompanyPage: NextPage = () => {
   return (
