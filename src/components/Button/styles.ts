@@ -8,10 +8,10 @@ interface ButtonContainerProps {
 const ButtonVariants = {
   primary: (theme: DefaultTheme) => css`
     background: ${theme.colors.primary};
-    color: ${theme.colors.white};
+    color: ${theme.foreground.primary};
   `,
   secondary: (theme: DefaultTheme) => css`
-    background: ${theme.colors.white};
+    background: ${theme.foreground.primary};
     color: ${theme.colors.primary};
     border: 1px solid ${theme.colors.primary};
   `,

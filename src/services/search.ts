@@ -1,14 +1,19 @@
 import { api } from './api';
 
+export interface Address {
+  results: unknown[];
+}
+
 export async function getAddressByGeolocation(lat: string, long: string) {
   try {
-    const result = await api.get(
+    const result = await api.get<Address>(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.NEXT_PUBLIC_MAPS_TOKEN}`
     );
 
     return result;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
