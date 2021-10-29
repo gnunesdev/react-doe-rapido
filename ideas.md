@@ -6,6 +6,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Uso de cookies nas rotas onboarding
 - [OK] Steps onboarding não mudando rotas
 - Edição contato
+- Botões de ação no drawer de instituição
 - Corrigir upload imagem
 - Autenticação usuário
 - Máxima renderização do mapa

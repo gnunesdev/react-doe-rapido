@@ -1,7 +1,10 @@
 import { InputHTMLAttributes } from 'react';
+import { FaPen } from 'react-icons/fa';
 import InputMask from 'react-input-mask';
 
-import { InputContainer } from './styles';
+import { useTheme } from 'styled-components';
+
+import { EditInputButton, InputContainer } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -12,6 +15,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputSize: 'big' | 'medium';
   value?: string;
   mask?: string;
+  handleChangeModalInput?: VoidFunction;
 }
 
 export const Input: React.VFC<InputProps> = ({
@@ -23,8 +27,11 @@ export const Input: React.VFC<InputProps> = ({
   value,
   error,
   mask,
+  handleChangeModalInput,
   ...props
 }) => {
+  const { colors } = useTheme();
+
   return (
     <InputContainer size={inputSize} hasError={Boolean(error)}>
       {label && <label htmlFor={name}>{label}</label>}
@@ -36,6 +43,7 @@ export const Input: React.VFC<InputProps> = ({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
+          disabled={Boolean(handleChangeModalInput)}
           {...props}
         />
       ) : (
@@ -47,8 +55,14 @@ export const Input: React.VFC<InputProps> = ({
           id={name}
           value={value}
           mask={mask}
+          disabled={Boolean(handleChangeModalInput)}
           {...props}
         />
+      )}
+      {Boolean(handleChangeModalInput) && (
+        <EditInputButton type="button" onClick={handleChangeModalInput}>
+          <FaPen color={colors.white} size={16} />
+        </EditInputButton>
       )}
       {error && <span>{error}</span>}
     </InputContainer>

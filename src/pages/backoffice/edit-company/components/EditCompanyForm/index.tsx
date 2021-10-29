@@ -19,7 +19,7 @@ import {
   NeedsContainer,
 } from './styles';
 
-export const EditCompanyShell: React.VFC = () => {
+export const EditCompanyForm: React.VFC = () => {
   const formik = useFormik({
     initialValues: {
       tradingName: '',

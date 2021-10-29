@@ -1,3 +1,4 @@
+import { Link } from '../Link';
 import { LinksSection, SidebarContainer } from './styles';
 
 export function Sidebar() {
@@ -6,8 +7,15 @@ export function Sidebar() {
       <LinksSection>
         <h3>Cadastros</h3>
         <ul>
-          <li>Editar instituição</li>
-          <li>Editar contato</li>
+          <li>
+            <Link
+              label="Editar instituição"
+              href="/backoffice/edit-company"
+            ></Link>
+          </li>
+          <li>
+            <Link label="Editar contato" href="/backoffice/edit-contact"></Link>
+          </li>
         </ul>
       </LinksSection>
       <LinksSection>

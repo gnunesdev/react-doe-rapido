@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const SidebarContainer = styled.nav`
-  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
   min-height: calc(100vh - 62px);
 
   background: ${(props) => props.theme.colors.primary};

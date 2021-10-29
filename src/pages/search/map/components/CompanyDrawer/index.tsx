@@ -30,8 +30,6 @@ export function CompanyDrawer({
 
   const [company, setCompany] = useState<CompanyMapType | null>(companyData);
 
-  console.log('company', company);
-
   useEffect(() => {
     if (!companyData) {
       getCompanyData();

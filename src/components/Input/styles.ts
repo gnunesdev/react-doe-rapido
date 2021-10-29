@@ -9,6 +9,8 @@ export const InputContainer = styled.div<InputContainerProps>`
   display: flex;
   flex-direction: column;
 
+  position: relative;
+
   input {
     height: ${(props) => {
       switch (props.size) {
@@ -57,4 +59,13 @@ export const InputContainer = styled.div<InputContainerProps>`
     display: block;
     margin-top: 0.6rem;
   }
+`;
+
+export const EditInputButton = styled.button`
+  background: ${(props) => props.theme.colors.primary};
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 3.6rem;
+  width: 3.6rem;
 `;

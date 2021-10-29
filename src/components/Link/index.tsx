@@ -4,7 +4,7 @@ interface LinkProps {
   isButton?: boolean;
   href?: string;
   label: string;
-  handleClick: VoidFunction;
+  handleClick?: VoidFunction;
 }
 
 export const Link: React.VFC<LinkProps> = ({
