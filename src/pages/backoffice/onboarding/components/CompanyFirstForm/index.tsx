@@ -87,11 +87,7 @@ export function CompanyFirstForm() {
             onChange={formik.handleChange}
             label="Razão social:"
             value={formik.values.name}
-            error={
-              formik.touched.name && formik.errors.name
-                ? formik.errors.name
-                : ''
-            }
+            error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
           />
           <Input
             name="cnpj"
@@ -100,11 +96,7 @@ export function CompanyFirstForm() {
             label="Cnpj:"
             value={formik.values.cnpj}
             mask="99.999.999/9999-99"
-            error={
-              formik.touched.cnpj && formik.errors.cnpj
-                ? formik.errors.cnpj
-                : ''
-            }
+            error={formik.touched.cnpj && formik.errors.cnpj ? formik.errors.cnpj : ''}
           />
         </InputRow>
         <InputRow>
@@ -116,9 +108,7 @@ export function CompanyFirstForm() {
             label="CEP:"
             mask="99999-999"
             value={formik.values.cep}
-            error={
-              formik.touched.cep && formik.errors.cep ? formik.errors.cep : ''
-            }
+            error={formik.touched.cep && formik.errors.cep ? formik.errors.cep : ''}
           />
           <Input
             name="street"
@@ -126,11 +116,7 @@ export function CompanyFirstForm() {
             onChange={formik.handleChange}
             label="Rua:"
             value={formik.values.street}
-            error={
-              formik.touched.street && formik.errors.street
-                ? formik.errors.street
-                : ''
-            }
+            error={formik.touched.street && formik.errors.street ? formik.errors.street : ''}
           />
         </InputRow>
         <InputRow>
@@ -140,11 +126,7 @@ export function CompanyFirstForm() {
             onChange={formik.handleChange}
             label="Número:"
             value={formik.values.number}
-            error={
-              formik.touched.number && formik.errors.number
-                ? formik.errors.number
-                : ''
-            }
+            error={formik.touched.number && formik.errors.number ? formik.errors.number : ''}
           />
           <Input
             name="district"
@@ -153,9 +135,7 @@ export function CompanyFirstForm() {
             label="Bairro:"
             value={formik.values.district}
             error={
-              formik.touched.district && formik.errors.district
-                ? formik.errors.district
-                : ''
+              formik.touched.district && formik.errors.district ? formik.errors.district : ''
             }
           />
         </InputRow>
@@ -166,11 +146,7 @@ export function CompanyFirstForm() {
             onChange={formik.handleChange}
             label="Cidade:"
             value={formik.values.city}
-            error={
-              formik.touched.city && formik.errors.city
-                ? formik.errors.city
-                : ''
-            }
+            error={formik.touched.city && formik.errors.city ? formik.errors.city : ''}
           />
           <Select
             name="state"
@@ -179,19 +155,11 @@ export function CompanyFirstForm() {
             options={STATE_LISTS}
             value={formik.values.state}
             setValue={formik.setFieldValue}
-            error={
-              formik.touched.state && formik.errors.state
-                ? formik.errors.state
-                : ''
-            }
+            error={formik.touched.state && formik.errors.state ? formik.errors.state : ''}
           />
         </InputRow>
         <ButtonsContainer>
-          <Button
-            variant="primary"
-            description="Salvar informações"
-            type="submit"
-          ></Button>
+          <Button variant="primary" description="Salvar informações" type="submit"></Button>
         </ButtonsContainer>
       </CompanyFirstFormStyled>
     </CompanyFirstFormContainer>

@@ -8,9 +8,7 @@ interface BackofficePageProps {
   componentToRender: string;
 }
 
-const BackofficePage: NextPage<BackofficePageProps> = ({
-  componentToRender,
-}) => {
+const BackofficePage: NextPage<BackofficePageProps> = ({ componentToRender }) => {
   return (
     <>
       <Sidebar />

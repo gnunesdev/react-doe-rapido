@@ -34,10 +34,7 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  params,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const currentStep = String(params?.step);
 
   if (!Object.values(STEPS).includes(currentStep)) {
@@ -50,15 +47,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const cookies = getCookies(req);
-  const realStep = cookies?.onboardingStep
-    ? JSON.parse(cookies.onboardingStep)
-    : '';
+  const realStep = cookies?.onboardingStep ? JSON.parse(cookies.onboardingStep) : '';
 
-  if (
-    realStep &&
-    currentStep != realStep &&
-    Object.values(STEPS).includes(realStep)
-  ) {
+  if (realStep && currentStep != realStep && Object.values(STEPS).includes(realStep)) {
     return {
       redirect: {
         destination: `/backoffice/onboarding/${realStep}`,
