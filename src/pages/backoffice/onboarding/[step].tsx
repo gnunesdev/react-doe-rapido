@@ -20,7 +20,7 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
 
   useEffect(() => {
     currentStep != stepToRender && setStepToRender(currentStep);
-  }, [currentStep]);
+  }, [currentStep, stepToRender]);
 
   return (
     <OnboardingContainer>

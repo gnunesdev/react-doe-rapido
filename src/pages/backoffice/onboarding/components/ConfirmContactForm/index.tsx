@@ -37,7 +37,7 @@ export function ConfirmContactForm() {
     initialValues: {
       confirmationCode: '',
     },
-    onSubmit: (values) => {
+    onSubmit: () => {
       setCodeSent(true);
       goToNextStep();
     },

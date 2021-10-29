@@ -7,7 +7,7 @@ interface ButtonActionProps {
   company: CompanyMapType;
 }
 
-export function ButtonAction({ type, company }: ButtonActionProps) {
+export function ButtonAction({ type }: ButtonActionProps) {
   return (
     <button>
       {type === 'whats' && <FaWhatsapp />}

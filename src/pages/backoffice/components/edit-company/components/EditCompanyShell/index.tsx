@@ -29,7 +29,7 @@ export const EditCompanyShell: React.VFC = () => {
       needs: [],
     },
     onSubmit: () => {
-      console.log('OPA!');
+      // console.log('OPA!');
     },
     validationSchema: EditCompanyFormValidator,
   });
@@ -50,7 +50,7 @@ export const EditCompanyShell: React.VFC = () => {
       formik.setFieldValue('city', cepData.data.localidade);
       formik.setFieldValue('state', cepData.data.uf);
     } catch (e) {
-      console.log('erro:', e);
+      // console.log('erro:', e);
     }
   }
   return (

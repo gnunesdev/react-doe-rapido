@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
-import { Title } from '~/components/Title';
 import { TitleStyled } from '~/components/Title/styles';
 
 export const CompanySecondFormContainer = styled.div`

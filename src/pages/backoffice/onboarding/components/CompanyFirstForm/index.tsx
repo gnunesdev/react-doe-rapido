@@ -46,7 +46,7 @@ export function CompanyFirstForm() {
 
       if (cepData) {
         if (!isAddress(cepData.data)) {
-          console.log('not found');
+          // console.log('not found');
           return;
         }
         const address: ViacepAddress = cepData.data;
