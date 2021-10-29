@@ -1,12 +1,5 @@
 import { useFormik } from 'formik';
 
-import { Button } from '~/components/Button';
-import { Input } from '~/components/Input';
-import { Select } from '~/components/Select';
-import { Title } from '~/components/Title';
-import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
-import { STATE_LISTS } from '~/utils/address';
-
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanyFirstFormValidator } from '../../utils';
 import {
@@ -15,6 +8,12 @@ import {
   CompanyFirstFormStyled,
   InputRow,
 } from './styles';
+import { Button } from '~/components/Button';
+import { Input } from '~/components/Input';
+import { Select } from '~/components/Select';
+import { Title } from '~/components/Title';
+import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
+import { STATE_LISTS } from '~/utils/address';
 
 export function CompanyFirstForm() {
   const { goToNextStep } = useOnboardingSteps();

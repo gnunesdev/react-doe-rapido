@@ -1,8 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 
-import { Sidebar } from '~/components/Sidebar';
-
 import EditCompany from './components/edit-company';
+import { Sidebar } from '~/components/Sidebar';
 
 interface BackofficePageProps {
   componentToRender: string;

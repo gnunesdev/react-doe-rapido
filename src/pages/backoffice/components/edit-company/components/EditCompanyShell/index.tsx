@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
 
+import { EditCompanyFormValidator } from '../../constants/utils';
+import { ButtonsContainer, Container, Form, InputRow, NeedsContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
@@ -9,9 +11,6 @@ import { CompanyNeedsMap } from '~/constants';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { cleanPhone } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
-
-import { EditCompanyFormValidator } from '../../constants/utils';
-import { ButtonsContainer, Container, Form, InputRow, NeedsContainer } from './styles';
 
 export const EditCompanyShell: React.VFC = () => {
   const formik = useFormik({

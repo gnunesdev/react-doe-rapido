@@ -1,13 +1,12 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
 
-import { Button } from '~/components/Button';
-import { Input } from '~/components/Input';
-import { Title } from '~/components/Title';
-
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { LoginFormValidationSchema } from '../../utils';
 import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './styles';
+import { Button } from '~/components/Button';
+import { Input } from '~/components/Input';
+import { Title } from '~/components/Title';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();

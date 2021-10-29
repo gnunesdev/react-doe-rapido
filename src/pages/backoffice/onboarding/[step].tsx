@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-
 import { GetServerSideProps, NextPage } from 'next';
-
-import { getCookies } from '~/utils';
+import { useEffect, useState } from 'react';
 
 import { CompanyFirstForm } from './components/CompanyFirstForm';
 import { CompanySecondForm } from './components/CompanySecondForm';
@@ -11,6 +8,7 @@ import { ContactForm } from './components/ContactForm';
 import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
+import { getCookies } from '~/utils';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;

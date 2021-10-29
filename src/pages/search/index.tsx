@@ -1,9 +1,11 @@
+import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-
-import { NextPage } from 'next';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
+import { AddressSuggestions } from './components/AddressSuggestions';
+import { CompanyList } from './components/CompanyList';
+import { AppContainer, FiltersContainer, SearchBar } from './styles';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
@@ -12,10 +14,6 @@ import { Title } from '~/components/Title';
 import { CompanyNeedsMap, CompanyValueType } from '~/constants';
 import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
 import { CompanyListType } from '~/types/Company';
-
-import { AddressSuggestions } from './components/AddressSuggestions';
-import { CompanyList } from './components/CompanyList';
-import { AppContainer, FiltersContainer, SearchBar } from './styles';
 
 const AppPage: NextPage = () => {
   const {
