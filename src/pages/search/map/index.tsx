@@ -33,9 +33,7 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
     return { lat: Number(companys[0].lat), lng: Number(companys[0].long) };
   }, [companys]);
 
-  const [selectedCompany, setSelectedCompany] = useState<CompanyMapType | null>(
-    null
-  );
+  const [selectedCompany, setSelectedCompany] = useState<CompanyMapType | null>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(Boolean(drawerId));
 
@@ -51,11 +49,9 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
 
   function handleOpenDrawer() {
     const { id } = routes.query;
-    router.push(
-      `/search/map?id=${id}&drawerId=${selectedCompany?.id}`,
-      undefined,
-      { shallow: true }
-    );
+    router.push(`/search/map?id=${id}&drawerId=${selectedCompany?.id}`, undefined, {
+      shallow: true,
+    });
     setIsDrawerOpen(true);
   }
 
@@ -95,9 +91,7 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
             setSelectedCompany(null);
           }}
         >
-          <CompanyButton onClick={handleOpenDrawer}>
-            {selectedCompany.name}
-          </CompanyButton>
+          <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
         </InfoWindow>
       )}
       {isDrawerOpen && (

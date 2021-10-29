@@ -8,12 +8,7 @@ import { CompanyNeedsMap } from '~/constants';
 import { getCompanyById } from '~/services/search';
 import { CompanyMapType } from '~/types/Company';
 
-import {
-  CompanyDrawerContainer,
-  CompanyInfoContainer,
-  Header,
-  Overlay,
-} from './styles';
+import { CompanyDrawerContainer, CompanyInfoContainer, Header, Overlay } from './styles';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;
@@ -21,11 +16,7 @@ interface CompanyDrawerProps {
   companyId: string | null;
 }
 
-export function CompanyDrawer({
-  closeModal,
-  companyData,
-  companyId,
-}: CompanyDrawerProps) {
+export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDrawerProps) {
   const { colors } = useTheme();
 
   const [company, setCompany] = useState<CompanyMapType | null>(companyData);
@@ -52,11 +43,7 @@ export function CompanyDrawer({
       <Modal>
         <CompanyDrawerContainer>
           <Header>
-            <Title
-              description={company.name}
-              size="medium"
-              color={colors.white}
-            />
+            <Title description={company.name} size="medium" color={colors.white} />
           </Header>
           <CompanyInfoContainer>
             <strong>{company.name}</strong>

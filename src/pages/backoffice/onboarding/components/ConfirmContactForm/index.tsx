@@ -59,11 +59,7 @@ export function ConfirmContactForm() {
           description="Enviamos um código para seu e-mail cadastrado, por favor insira-o abaixo
         para finalizar seu cadastro:"
         />
-        <Input
-          name="confirmationCode"
-          inputSize="big"
-          onChange={formik.handleChange}
-        />
+        <Input name="confirmationCode" inputSize="big" onChange={formik.handleChange} />
         {codeSent && (
           <CodeLinkContainer>
             {timeToResend > 0 ? (
@@ -82,11 +78,7 @@ export function ConfirmContactForm() {
           </CodeLinkContainer>
         )}
         <ButtonsContainer>
-          <Button
-            description="Confirme o código"
-            type="submit"
-            variant="primary"
-          />
+          <Button description="Confirme o código" type="submit" variant="primary" />
           <Button type="submit" variant="secondary">
             <Link href="/login">Voltar para o login</Link>
           </Button>

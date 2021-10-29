@@ -11,13 +11,7 @@ import { cleanPhone } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 
 import { EditCompanyFormValidator } from '../../constants/utils';
-import {
-  ButtonsContainer,
-  Container,
-  Form,
-  InputRow,
-  NeedsContainer,
-} from './styles';
+import { ButtonsContainer, Container, Form, InputRow, NeedsContainer } from './styles';
 
 export const EditCompanyForm: React.VFC = () => {
   const formik = useFormik({
@@ -83,11 +77,7 @@ export const EditCompanyForm: React.VFC = () => {
             onChange={formik.handleChange}
             label="Razão social:"
             value={formik.values.name}
-            error={
-              formik.touched.name && formik.errors.name
-                ? formik.errors.name
-                : ''
-            }
+            error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
           />
           <Input
             name="cnpj"
@@ -96,11 +86,7 @@ export const EditCompanyForm: React.VFC = () => {
             label="Cnpj:"
             value={formik.values.cnpj}
             mask="99.999.999/9999-99"
-            error={
-              formik.touched.cnpj && formik.errors.cnpj
-                ? formik.errors.cnpj
-                : ''
-            }
+            error={formik.touched.cnpj && formik.errors.cnpj ? formik.errors.cnpj : ''}
           />
         </InputRow>
         <InputRow>
@@ -112,9 +98,7 @@ export const EditCompanyForm: React.VFC = () => {
             label="CEP:"
             mask="99999-999"
             value={formik.values.cep}
-            error={
-              formik.touched.cep && formik.errors.cep ? formik.errors.cep : ''
-            }
+            error={formik.touched.cep && formik.errors.cep ? formik.errors.cep : ''}
           />
           <Input
             name="street"
@@ -122,11 +106,7 @@ export const EditCompanyForm: React.VFC = () => {
             onChange={formik.handleChange}
             label="Rua:"
             value={formik.values.street}
-            error={
-              formik.touched.street && formik.errors.street
-                ? formik.errors.street
-                : ''
-            }
+            error={formik.touched.street && formik.errors.street ? formik.errors.street : ''}
           />
         </InputRow>
         <InputRow>
@@ -136,11 +116,7 @@ export const EditCompanyForm: React.VFC = () => {
             onChange={formik.handleChange}
             label="Número:"
             value={formik.values.number}
-            error={
-              formik.touched.number && formik.errors.number
-                ? formik.errors.number
-                : ''
-            }
+            error={formik.touched.number && formik.errors.number ? formik.errors.number : ''}
           />
           <Input
             name="district"
@@ -149,9 +125,7 @@ export const EditCompanyForm: React.VFC = () => {
             label="Bairro:"
             value={formik.values.district}
             error={
-              formik.touched.district && formik.errors.district
-                ? formik.errors.district
-                : ''
+              formik.touched.district && formik.errors.district ? formik.errors.district : ''
             }
           />
         </InputRow>
@@ -162,11 +136,7 @@ export const EditCompanyForm: React.VFC = () => {
             onChange={formik.handleChange}
             label="Cidade:"
             value={formik.values.city}
-            error={
-              formik.touched.city && formik.errors.city
-                ? formik.errors.city
-                : ''
-            }
+            error={formik.touched.city && formik.errors.city ? formik.errors.city : ''}
           />
           <Select
             name="state"
@@ -175,11 +145,7 @@ export const EditCompanyForm: React.VFC = () => {
             options={STATE_LISTS}
             value={formik.values.state}
             setValue={formik.setFieldValue}
-            error={
-              formik.touched.state && formik.errors.state
-                ? formik.errors.state
-                : ''
-            }
+            error={formik.touched.state && formik.errors.state ? formik.errors.state : ''}
           />
         </InputRow>
         <InputRow>
@@ -193,22 +159,14 @@ export const EditCompanyForm: React.VFC = () => {
                 ? '(99)99999-9999'
                 : '(99)9999-9999'
             }
-            error={
-              formik.touched.phone && formik.errors.phone
-                ? formik.errors.phone
-                : ''
-            }
+            error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
           />
           <Input
             name="email"
             inputSize="big"
             onChange={formik.handleChange}
             label="E-mail:"
-            error={
-              formik.touched.email && formik.errors.email
-                ? formik.errors.email
-                : ''
-            }
+            error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
           />
         </InputRow>
         <NeedsContainer>
@@ -225,11 +183,7 @@ export const EditCompanyForm: React.VFC = () => {
           ))}
         </NeedsContainer>
         <ButtonsContainer>
-          <Button
-            variant="primary"
-            description="Salvar informações"
-            type="submit"
-          ></Button>
+          <Button variant="primary" description="Salvar informações" type="submit"></Button>
         </ButtonsContainer>
       </Form>
     </Container>

@@ -7,11 +7,7 @@ import { Title } from '~/components/Title';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { LoginFormValidationSchema } from '../../utils';
-import {
-  ContactFormStyled,
-  ContactFormContainer,
-  ButtonsContainer,
-} from './styles';
+import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './styles';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -38,20 +34,14 @@ export function ContactForm() {
           label="Nome:"
           inputSize="big"
           onChange={formik.handleChange}
-          error={
-            formik.touched.name && formik.errors.name ? formik.errors.name : ''
-          }
+          error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
         />
         <Input
           name="email"
           label="Email:"
           inputSize="big"
           onChange={formik.handleChange}
-          error={
-            formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : ''
-          }
+          error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
         />
         <Input
           name="password"
@@ -60,9 +50,7 @@ export function ContactForm() {
           onChange={formik.handleChange}
           type="password"
           error={
-            formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : ''
+            formik.touched.password && formik.errors.password ? formik.errors.password : ''
           }
         />
         <Input

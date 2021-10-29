@@ -17,12 +17,7 @@ export const Button: React.FC<React.ComponentProps<'button'> & ButtonProps> = ({
   children,
 }) => {
   return (
-    <ButtonContainer
-      variant={variant}
-      width={width}
-      onClick={onClick}
-      type={type}
-    >
+    <ButtonContainer variant={variant} width={width} onClick={onClick} type={type}>
       {description ? description : children}
     </ButtonContainer>
   );
