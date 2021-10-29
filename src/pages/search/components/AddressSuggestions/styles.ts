@@ -13,7 +13,7 @@ export const AddressSuggestionsContainer = styled.div`
   top: 6.3rem;
 
   li {
-    background-color: ${(props) => props.theme.colors.white};
+    background-color: #fff;
     padding: 1.2rem 1rem;
 
     font-size: 1.6rem;

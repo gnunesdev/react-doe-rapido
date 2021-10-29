@@ -43,7 +43,7 @@ const AppPage: NextPage = () => {
           String(position.coords.longitude)
         );
 
-        const address = geoAddress?.results[0]?.formatted_address;
+        const address = geoAddress.results[0]?.formatted_address;
         setValue(address);
 
         setIsAddressLoading(false);

@@ -16,7 +16,7 @@ export const LinksSection = styled.div`
   }
 
   h3 {
-    color: ${(props) => props.theme.colors.white};
+    color: #fff;
     font-size: 1.8rem;
   }
 
@@ -26,7 +26,7 @@ export const LinksSection = styled.div`
 
   li {
     font-size: 1.6rem;
-    color: ${(props) => props.theme.colors.white};
+    color: #fff;
 
     &:not(:first-child) {
       margin-top: 0.8rem;
