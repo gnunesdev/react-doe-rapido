@@ -19,6 +19,7 @@ declare module 'styled-components' {
       headline: string;
       title: string;
       body: string;
+      body2: string;
     };
   }
 }

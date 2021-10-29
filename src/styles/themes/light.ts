@@ -24,7 +24,11 @@ const theme: DefaultTheme = {
       font-weight: 900;
     `,
     body: `
-      font-size: 18px;
+      font-size: 1.8rem;
+      font-weight: 900;
+    `,
+    body2: `
+      font-size: 2.0rem;
       font-weight: 900;
     `,
   },
