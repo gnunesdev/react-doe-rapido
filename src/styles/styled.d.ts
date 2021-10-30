@@ -6,16 +6,20 @@ declare module 'styled-components' {
     colors: {
       primary: string;
       secondary: string;
-
       background: string;
-
-      white: string;
-      black: string;
       red: string;
     };
-
+    foreground: {
+      primary: string;
+    };
     containers: {
       desktop: string;
+    };
+    typography: {
+      headline: string;
+      title: string;
+      body: string;
+      body2: string;
     };
   }
 }

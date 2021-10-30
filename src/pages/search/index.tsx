@@ -1,27 +1,18 @@
-import { ChangeEvent, useState } from 'react';
-import { toast } from 'react-toastify';
-
 import { NextPage } from 'next';
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
+import { ChangeEvent, useState } from 'react';
+import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
+import { AddressSuggestions } from './components/AddressSuggestions';
+import { CompanyList } from './components/CompanyList';
+import { AppContainer, FiltersContainer, SearchBar } from './styles';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { CompanyNeedsMap, CompanyValueType } from '~/constants';
-import {
-  getAddressByGeolocation,
-  getCompanysByNearbyAddress,
-} from '~/services/search';
+import { CompanyNeedsMap } from '~/constants';
+import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
 import { CompanyListType } from '~/types/Company';
-
-import { AddressSuggestions } from './components/AddressSuggestions';
-import { CompanyList } from './components/CompanyList';
-import { AppContainer, FiltersContainer, SearchBar } from './styles';
 
 const AppPage: NextPage = () => {
   const {
@@ -52,7 +43,7 @@ const AppPage: NextPage = () => {
           String(position.coords.longitude)
         );
 
-        const address = geoAddress?.results[0]?.formatted_address;
+        const address = geoAddress.results[0]?.formatted_address;
         setValue(address);
 
         setIsAddressLoading(false);
@@ -66,6 +57,7 @@ const AppPage: NextPage = () => {
 
   async function searchCompanys() {
     try {
+      // console.log(value);
       const result = await getGeocode({ address: value });
       const { lat, lng } = await getLatLng(result[0]);
 
@@ -75,7 +67,7 @@ const AppPage: NextPage = () => {
         needsFilters
       );
 
-      console.log(companysData);
+      // console.log(companysData);
       setCompanys(companysData);
     } catch (error) {
       console.error(error);
@@ -114,11 +106,7 @@ const AppPage: NextPage = () => {
 
         {companys.length > 0 ? (
           <FiltersContainer>
-            <Text
-              description="Instituições que precisam de:"
-              fontSize="1.8"
-              isBold={true}
-            />
+            <Text description="Instituições que precisam de:" fontSize="1.8" isBold={true} />
             <div>
               {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
                 <Checkbox
@@ -134,9 +122,7 @@ const AppPage: NextPage = () => {
         ) : (
           <Link
             label={
-              isAddressLoading
-                ? 'Carregando localização...'
-                : 'Insira minha localização'
+              isAddressLoading ? 'Carregando localização...' : 'Insira minha localização'
             }
             isButton={true}
             handleClick={handleGetCurrentAddress}

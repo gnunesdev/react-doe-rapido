@@ -1,13 +1,5 @@
 import { useFormik } from 'formik';
 
-import { Button } from '~/components/Button';
-import { Checkbox } from '~/components/Checkbox';
-import { Input } from '~/components/Input';
-import { Title } from '~/components/Title';
-import { UploadImage } from '~/components/UploadImage';
-import { CompanyNeedsMap } from '~/constants';
-import { cleanPhone } from '~/utils';
-
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanySecondFormValidationSchema } from '../../utils';
 import { InputRow } from '../CompanyFirstForm/styles';
@@ -17,6 +9,13 @@ import {
   CompanySecondFormStyled,
   NeedsContainer,
 } from './styles';
+import { Button } from '~/components/Button';
+import { Checkbox } from '~/components/Checkbox';
+import { Input } from '~/components/Input';
+import { Title } from '~/components/Title';
+import { UploadImage } from '~/components/UploadImage';
+import { CompanyNeedsMap } from '~/constants';
+import { cleanPhone } from '~/utils';
 
 export function CompanySecondForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -49,22 +48,14 @@ export function CompanySecondForm() {
                 ? '(99)99999-9999'
                 : '(99)9999-9999'
             }
-            error={
-              formik.touched.phone && formik.errors.phone
-                ? formik.errors.phone
-                : ''
-            }
+            error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
           />
           <Input
             name="email"
             inputSize="big"
             onChange={formik.handleChange}
             label="E-mail:"
-            error={
-              formik.touched.email && formik.errors.email
-                ? formik.errors.email
-                : ''
-            }
+            error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
           />
         </InputRow>
         <NeedsContainer>
@@ -81,11 +72,7 @@ export function CompanySecondForm() {
           ))}
         </NeedsContainer>
         <ButtonsContainer>
-          <Button
-            variant="primary"
-            description="Salvar informações"
-            type="submit"
-          />
+          <Button variant="primary" description="Salvar informações" type="submit" />
         </ButtonsContainer>
       </CompanySecondFormStyled>
     </CompanySecondFormContainer>

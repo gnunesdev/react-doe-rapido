@@ -10,9 +10,7 @@ const Modal: React.FC = ({ children }) => {
     return () => setMounted(false);
   }, []);
 
-  return mounted
-    ? createPortal(children, document.querySelector('#portal'))
-    : null;
+  return mounted ? createPortal(children, document.querySelector('#portal')) : null;
 };
 
 export default Modal;

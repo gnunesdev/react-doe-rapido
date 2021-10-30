@@ -22,6 +22,5 @@ export async function getAddressByCep(cep: string) {
   return api.get<ViacepResponse>(`https://viacep.com.br/ws/${cep}/json/`);
 }
 
-export const isAddress = (
-  response: ViacepResponse
-): response is ViacepAddress => !(response as ViacepNotFound).erro;
+export const isAddress = (response: ViacepResponse): response is ViacepAddress =>
+  !(response as ViacepNotFound).erro;

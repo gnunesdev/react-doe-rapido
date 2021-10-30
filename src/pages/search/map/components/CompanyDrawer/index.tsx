@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import { useTheme } from 'styled-components';
 
+import { CompanyDrawerContainer, CompanyInfoContainer, Header, Overlay } from './styles';
 import Modal from '~/components/Modal';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
 import { getCompanyById } from '~/services/search';
 import { CompanyMapType } from '~/types/Company';
-
-import {
-  CompanyDrawerContainer,
-  CompanyInfoContainer,
-  Header,
-  Overlay,
-} from './styles';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;
@@ -21,11 +14,7 @@ interface CompanyDrawerProps {
   companyId: string | null;
 }
 
-export function CompanyDrawer({
-  closeModal,
-  companyData,
-  companyId,
-}: CompanyDrawerProps) {
+export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDrawerProps) {
   const { colors } = useTheme();
 
   const [company, setCompany] = useState<CompanyMapType | null>(companyData);
@@ -52,11 +41,7 @@ export function CompanyDrawer({
       <Modal>
         <CompanyDrawerContainer>
           <Header>
-            <Title
-              description={company.name}
-              size="medium"
-              color={colors.white}
-            />
+            <Title description={company.name} size="medium" color={colors.fore} />
           </Header>
           <CompanyInfoContainer>
             <strong>{company.name}</strong>

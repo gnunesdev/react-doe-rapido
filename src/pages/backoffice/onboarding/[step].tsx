@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-
 import { GetServerSideProps, NextPage } from 'next';
-
-import { getCookies } from '~/utils';
+import { useEffect, useState } from 'react';
 
 import { CompanyFirstForm } from './components/CompanyFirstForm';
 import { CompanySecondForm } from './components/CompanySecondForm';
@@ -11,6 +8,7 @@ import { ContactForm } from './components/ContactForm';
 import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
+import { getCookies } from '~/utils';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;
@@ -22,7 +20,7 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
 
   useEffect(() => {
     currentStep != stepToRender && setStepToRender(currentStep);
-  }, [currentStep]);
+  }, [currentStep, stepToRender]);
 
   return (
     <OnboardingContainer>
@@ -34,10 +32,7 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  req,
-  params,
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const currentStep = String(params?.step);
 
   if (!Object.values(STEPS).includes(currentStep)) {
@@ -50,15 +45,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const cookies = getCookies(req);
-  const realStep = cookies?.onboardingStep
-    ? JSON.parse(cookies.onboardingStep)
-    : '';
+  const realStep = cookies?.onboardingStep ? JSON.parse(cookies.onboardingStep) : '';
 
-  if (
-    realStep &&
-    currentStep != realStep &&
-    Object.values(STEPS).includes(realStep)
-  ) {
+  if (realStep && currentStep != realStep && Object.values(STEPS).includes(realStep)) {
     return {
       redirect: {
         destination: `/backoffice/onboarding/${realStep}`,

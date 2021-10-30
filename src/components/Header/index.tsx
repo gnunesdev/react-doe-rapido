@@ -1,21 +1,26 @@
 import { FaHandHoldingHeart } from 'react-icons/fa';
-
 import { useTheme } from 'styled-components';
 
+import { HeaderContainer, Icon, Logo, Title, UserArea, UserIcon, UserName } from './styles';
 import { useAppSelector } from '~/hooks/redux';
 
-import { HeaderContainer } from './styles';
-
 export function Header() {
-  const { colors } = useTheme();
+  const { foreground } = useTheme();
 
   const user = useAppSelector((state) => state.user.value);
 
   return (
     <HeaderContainer>
-      <h1>doe.rápido</h1>
-      <FaHandHoldingHeart color={colors.white} size={24} />
-      {user && <p>{user.email}</p>}
+      <Logo>
+        <Title>doe.rápido</Title>
+        <Icon>
+          <FaHandHoldingHeart color={foreground.primary} size={24} />
+        </Icon>
+      </Logo>
+      <UserArea>
+        <UserName>{(user && user.email) || 'Mestre Rato'}</UserName>
+        <UserIcon src="https://i.pinimg.com/originals/b5/66/ea/b566eae21682bc79e1918c24149b2578.gif" />
+      </UserArea>
     </HeaderContainer>
   );
 }

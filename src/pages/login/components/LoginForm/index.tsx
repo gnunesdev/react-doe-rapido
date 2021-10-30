@@ -1,22 +1,16 @@
-import { toast } from 'react-toastify';
-
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
+import { LoginFormValidationSchema } from '../../utils';
+import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { login } from '~/features/user';
 import { useAppDispatch } from '~/hooks/redux';
-
-import { LoginFormValidationSchema } from '../../utils';
-import {
-  ButtonsContainer,
-  LoginFormContainer,
-  LoginFormStyled,
-} from './styles';
 
 export function LoginForm() {
   const routes = useRouter();
@@ -46,9 +40,7 @@ export function LoginForm() {
         routes.push('backoffice');
       } catch (error) {
         console.error(error);
-        toast.error(
-          'Algum erro ocorreu, verifiique as informações e tente novamente'
-        );
+        toast.error('Algum erro ocorreu, verifiique as informações e tente novamente');
       }
     },
   });
@@ -62,11 +54,7 @@ export function LoginForm() {
           label="Email:"
           name="email"
           inputSize="big"
-          error={
-            formik.touched.email && formik.errors.email
-              ? formik.errors.email
-              : ''
-          }
+          error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
           onChange={formik.handleChange}
         />
         <Input
@@ -75,9 +63,7 @@ export function LoginForm() {
           inputSize="big"
           onChange={formik.handleChange}
           error={
-            formik.touched.password && formik.errors.password
-              ? formik.errors.password
-              : ''
+            formik.touched.password && formik.errors.password ? formik.errors.password : ''
           }
         />
         <ButtonsContainer>

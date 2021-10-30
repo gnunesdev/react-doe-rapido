@@ -7,12 +7,7 @@ interface LinkProps {
   handleClick?: VoidFunction;
 }
 
-export const Link: React.VFC<LinkProps> = ({
-  isButton,
-  href,
-  label,
-  handleClick,
-}) => {
+export const Link: React.VFC<LinkProps> = ({ isButton, href, label, handleClick }) => {
   return isButton ? (
     <LinkButton onClick={handleClick}>{label}</LinkButton>
   ) : (

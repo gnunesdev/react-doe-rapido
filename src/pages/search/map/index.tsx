@@ -1,24 +1,16 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { getCompanysToRenderInMap } from '~/services/map';
-import { CompanyMapType } from '~/types/Company';
-
-import { mapStyle } from '../constants';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { CompanyButton } from './styles';
+import { getCompanysToRenderInMap } from '~/services/map';
+import { CompanyMapType } from '~/types/Company';
 
 const containerStyle = {
   width: '100vw',
   height: 'calc(100vh - 6.2rem)',
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523,
 };
 
 interface MapPageProps {
@@ -33,9 +25,7 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
     return { lat: Number(companys[0].lat), lng: Number(companys[0].long) };
   }, [companys]);
 
-  const [selectedCompany, setSelectedCompany] = useState<CompanyMapType | null>(
-    null
-  );
+  const [selectedCompany, setSelectedCompany] = useState<CompanyMapType | null>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(Boolean(drawerId));
 
@@ -51,11 +41,9 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
 
   function handleOpenDrawer() {
     const { id } = routes.query;
-    router.push(
-      `/search/map?id=${id}&drawerId=${selectedCompany?.id}`,
-      undefined,
-      { shallow: true }
-    );
+    router.push(`/search/map?id=${id}&drawerId=${selectedCompany?.id}`, undefined, {
+      shallow: true,
+    });
     setIsDrawerOpen(true);
   }
 
@@ -95,9 +83,7 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
             setSelectedCompany(null);
           }}
         >
-          <CompanyButton onClick={handleOpenDrawer}>
-            {selectedCompany.name}
-          </CompanyButton>
+          <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
         </InfoWindow>
       )}
       {isDrawerOpen && (
@@ -137,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   if (drawerId) {
     const companyExists = companys.find((company) => company.id === drawerId);
-    console.log(companys);
+    // console.log(companys);
 
     if (!companyExists) {
       return {
