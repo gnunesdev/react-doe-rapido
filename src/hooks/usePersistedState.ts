@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-
 import Cookie from 'js-cookie';
+import { useState, useEffect } from 'react';
 
 export default function usePersistedState(key: string, initialState: any) {
   const [state, setState] = useState(() => {

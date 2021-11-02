@@ -1,15 +1,13 @@
 import { NextPage } from 'next';
 
+import { BackofficeContainer } from '../components/BackofficeContainer';
 import { EditContactForm } from './components/EditContactForm';
-import { EditContactContainer } from './styles';
-import { Sidebar } from '~/components/Sidebar';
 
 const EditContactPage: NextPage = () => {
   return (
-    <EditContactContainer>
-      <Sidebar />
+    <BackofficeContainer>
       <EditContactForm />
-    </EditContactContainer>
+    </BackofficeContainer>
   );
 };
 

@@ -29,8 +29,6 @@ export const Input: React.VFC<InputProps> = ({
   handleChangeModalInput,
   ...props
 }) => {
-  const { colors } = useTheme();
-
   return (
     <InputContainer size={inputSize} hasError={Boolean(error)}>
       {label && <label htmlFor={name}>{label}</label>}
@@ -60,7 +58,7 @@ export const Input: React.VFC<InputProps> = ({
       )}
       {Boolean(handleChangeModalInput) && (
         <EditInputButton type="button" onClick={handleChangeModalInput}>
-          <FaPen color={colors.white} size={16} />
+          <FaPen color="#fff" size={16} />
         </EditInputButton>
       )}
       {error && <span>{error}</span>}

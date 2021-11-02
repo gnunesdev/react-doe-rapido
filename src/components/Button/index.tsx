@@ -3,7 +3,7 @@ import { ButtonContainer } from './styles';
 interface ButtonProps {
   description?: string;
   variant: 'primary' | 'secondary';
-  width?: number;
+  width?: number | 'auto';
   type?: string;
   onClick?: VoidFunction;
 }

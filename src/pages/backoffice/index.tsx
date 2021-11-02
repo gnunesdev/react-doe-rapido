@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
 
-import { Sidebar } from '~/components/Sidebar';
+import { BackofficeContainer } from './components/BackofficeContainer';
 
 const BackofficePage: NextPage = () => {
   return (
     <>
-      <Sidebar />
+      <BackofficeContainer></BackofficeContainer>
     </>
   );
 };

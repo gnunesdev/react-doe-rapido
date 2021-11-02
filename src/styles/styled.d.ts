@@ -13,7 +13,7 @@ declare module 'styled-components' {
       primary: string;
     };
     containers: {
-      desktop: string;
+      page: string;
     };
     typography: {
       headline: string;

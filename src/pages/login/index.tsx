@@ -2,12 +2,15 @@ import { NextPage } from 'next';
 
 import { LoginForm } from './components/LoginForm';
 import { LoginContainer } from './styles';
+import { PageContainer } from '~/components/PageContainer';
 
 const LoginPage: NextPage = () => {
   return (
-    <LoginContainer>
-      <LoginForm />
-    </LoginContainer>
+    <PageContainer>
+      <LoginContainer>
+        <LoginForm />
+      </LoginContainer>
+    </PageContainer>
   );
 };
 

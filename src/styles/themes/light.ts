@@ -12,7 +12,7 @@ const theme: DefaultTheme = {
     primary: '#FFF',
   },
   containers: {
-    desktop: 'calc(100vh - 6.2rem)',
+    page: 'calc(100vh - 62px)',
   },
   typography: {
     headline: `
