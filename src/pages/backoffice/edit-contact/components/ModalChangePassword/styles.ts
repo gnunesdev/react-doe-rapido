@@ -4,12 +4,12 @@ import { ButtonContainer } from '~/components/Button/styles';
 import { InputContainer } from '~/components/Input/styles';
 import { TextStyled } from '~/components/Text/styles';
 import { TitleStyled } from '~/components/Title/styles';
+import { medium } from '~/styles/variables';
 
 export const Overlay = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 60%);
-
   position: absolute;
   top: 0;
   left: 0;
@@ -20,10 +20,10 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContainer = styled.div`
+  width: calc(100% - 48px);
+  max-width: 620px;
   background: ${(props) => props.theme.colors.background};
-  width: 620px;
-
-  padding: 50px;
+  padding: 24px;
 
   ${ButtonContainer} {
     margin-top: 3rem;
@@ -37,6 +37,10 @@ export const ModalContainer = styled.div`
 
   ${TextStyled} {
     margin-bottom: 1.8rem;
+  }
+
+  @media (min-width: ${medium}) {
+    padding: 48px;
   }
 `;
 

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { TitleStyled } from '~/components/Title/styles';
+import { medium } from '~/styles/variables';
 
 export const ConfirmContactFormContainer = styled.div`
   max-width: 480px;
@@ -21,13 +22,24 @@ export const ConfirmContactFormStyled = styled.form``;
 export const ButtonsContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   margin-top: 3.2rem;
 
   button {
-    width: 50%;
+    width: auto;
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
 
-    &:first-child {
-      margin-right: 1rem;
+  @media (min-width: ${medium}) {
+    flex-direction: row;
+    button {
+      flex: 1;
+      &:not(:first-child) {
+        margin-top: 0;
+        margin-left: 8px;
+      }
     }
   }
 `;

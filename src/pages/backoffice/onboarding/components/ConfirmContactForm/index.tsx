@@ -17,6 +17,8 @@ import { Input } from '~/components/Input';
 import { Link as ButtonLink } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();
@@ -24,6 +26,8 @@ export function ConfirmContactForm() {
   const [timeToResend, setTimeToResend] = useState(60);
 
   const { goToNextStep } = useOnboardingSteps();
+
+  const minWidth = useMinWidth();
 
   useEffect(() => {
     timeToResend > 0 &&
@@ -55,7 +59,10 @@ export function ConfirmContactForm() {
 
   return (
     <ConfirmContactFormContainer>
-      <Title description="Confirme seu e-mail" size="big" />
+      <Title
+        description="Confirme seu e-mail"
+        size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+      />
       <ConfirmContactFormStyled onSubmit={formik.handleSubmit}>
         <Text
           fontSize="1.8"

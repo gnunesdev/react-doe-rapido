@@ -6,7 +6,7 @@ import { medium } from '~/styles/variables';
 
 export const LoginFormContainer = styled.div`
   width: 100%;
-  padding: 40px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { large } from '~/styles/variables';
+import { large, medium } from '~/styles/variables';
 
 export const HeaderVolume = styled.div`
   width: 100%;
@@ -57,7 +57,9 @@ export const Icon = styled.div`
 export const UserArea = styled.div`
   display: flex;
   align-items: center;
-  max-width: calc(100% - 260px);
+  @media (min-width: ${medium}) {
+    max-width: calc(100% - 260px);
+  }
 `;
 
 export const UserName = styled.div`

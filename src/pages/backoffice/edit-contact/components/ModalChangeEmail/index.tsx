@@ -10,6 +10,9 @@ import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
+import { Breakpoint } from '~/styles/variables';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -25,6 +28,7 @@ interface ModalChangeEmailProps {
 
 export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
   const [codeValidated, setCodeValidated] = useState(false);
+  const minWidth = useMinWidth();
 
   function handleSetCodeValidated() {
     setCodeValidated(true);
@@ -47,7 +51,7 @@ export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
           animate="visible"
           exit="exit"
         >
-          <Title description="Editar e-mail" size="big" />
+          <Title description="Editar e-mail" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
           {!codeValidated ? (
             <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
           ) : (
@@ -67,12 +71,13 @@ function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
     onSubmit: () => handleSetCodeValidated(),
     validationSchema: ChangeInputCodeValidator,
   });
+  const minWidth = useMinWidth();
 
   return (
     <>
       <Text
         description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
-        fontSize="1.8"
+        fontSize={minWidth(Breakpoint.medium) ? '1.8' : '1.4'}
         isBold={true}
       />
       <Form onSubmit={formik.handleSubmit}>

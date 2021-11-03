@@ -9,10 +9,13 @@ import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './sty
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
+  const minWidth = useMinWidth();
 
   const formik = useFormik({
     initialValues: {
@@ -41,7 +44,7 @@ export function ContactForm() {
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de acesso:" size="big" />
+      <Title description="Cadastro de acesso:" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
       <ContactFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="name"

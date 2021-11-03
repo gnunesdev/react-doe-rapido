@@ -5,10 +5,13 @@ import { SelectContainer } from '~/components/Select/styles';
 import { medium } from '~/styles/variables';
 
 export const Container = styled.div`
-  padding: 48px 64px;
+  padding: 32px 24px;
   width: 100%;
   margin: 0 auto;
   max-width: 1140px;
+  @media (min-width: ${medium}) {
+    padding: 48px 64px;
+  }
 `;
 
 export const Form = styled.form`

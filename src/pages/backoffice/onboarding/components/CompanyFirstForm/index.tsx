@@ -14,12 +14,15 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
 import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
+import { Breakpoint } from '~/styles/variables';
 import { STATE_LISTS } from '~/utils/address';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanyFirstForm() {
   const { goToNextStep } = useOnboardingSteps();
+  const minWidth = useMinWidth();
 
   const formik = useFormik({
     initialValues: {
@@ -80,7 +83,7 @@ export function CompanyFirstForm() {
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de instituição" size="big" />
+      <Title description="Cadastro de instituição" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
       <CompanyFirstFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="tradingName"

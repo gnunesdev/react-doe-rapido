@@ -8,10 +8,13 @@ import { ModalChangePassword } from '../ModalChangePassword';
 import { Container, InputRow, Form } from './styles';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 
 export function EditContactForm() {
   const [isChangeEmailModalOpen, toggleChangeEmailModalOpen] = useState(false);
   const [isChangePasswordModalOpen, toggleChangePasswordModalOpen] = useState(false);
+  const minWidth = useMinWidth();
 
   function handleToggleEmailModalOpen() {
     toggleChangeEmailModalOpen((oldState) => !oldState);
@@ -33,7 +36,10 @@ export function EditContactForm() {
 
   return (
     <Container>
-      <Title description="Editar contato" size="big" />
+      <Title
+        description="Editar contato"
+        size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+      />
       <Form onSubmit={formik.handleSubmit}>
         <Input
           name="name"

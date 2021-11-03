@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
+import { medium } from '~/styles/variables';
 
 export const ContactFormContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 
-  max-width: 480px;
-  width: 100%;
+  @media (min-width: ${medium}) {
+    max-width: 480px;
+  }
 `;
 
 export const ContactFormStyled = styled.form`
@@ -21,13 +24,24 @@ export const ContactFormStyled = styled.form`
 export const ButtonsContainer = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 3.2rem;
+  flex-direction: column;
+  margin-top: 24px;
 
   button {
-    width: 50%;
+    width: auto;
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
 
-    &:first-child {
-      margin-right: 1rem;
+  @media (min-width: ${medium}) {
+    flex-direction: row;
+    button {
+      flex: 1;
+      &:not(:first-child) {
+        margin-top: 0;
+        margin-left: 8px;
+      }
     }
   }
 `;

@@ -11,11 +11,14 @@ import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
+import { useMinWidth } from '~/hooks/useMinWidth';
 import { getAddressByCep, isAddress } from '~/services/cep';
+import { Breakpoint } from '~/styles/variables';
 import { cleanPhone } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 
 const EditCompanyPage: NextPage = () => {
+  const minWidth = useMinWidth();
   const formik = useFormik({
     initialValues: {
       tradingName: '',
@@ -70,7 +73,10 @@ const EditCompanyPage: NextPage = () => {
   return (
     <BackofficeContainer>
       <Container>
-        <Title description="Editar instituição" size="big" />
+        <Title
+          description="Editar instituição"
+          size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+        />
         <Form onSubmit={formik.handleSubmit}>
           <Input
             name="tradingName"

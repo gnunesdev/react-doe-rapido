@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 
-export const OnboardingContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+import { medium } from '~/styles/variables';
 
-  height: ${(props) => props.theme.containers.page};
+export const OnboardingContainer = styled.div`
+  padding: 32px 24px;
+  min-height: ${(props) => props.theme.containers.page};
+  display: flex;
+  justify-content: center;
+  @media (min-width: ${medium}) {
+    align-items: center;
+  }
 `;
