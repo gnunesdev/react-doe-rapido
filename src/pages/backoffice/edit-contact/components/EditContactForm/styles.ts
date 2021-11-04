@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { SelectContainer } from '~/components/Select/styles';
+import { medium } from '~/styles/variables';
 
 export const Container = styled.div`
   padding: 48px 64px;
@@ -16,7 +17,8 @@ export const Form = styled.form`
 
 export const InputRow = styled.div`
   display: flex;
-  margin-top: 2.4rem;
+  flex-direction: column;
+  margin-top: 24px;
 
   &:first-child {
     ${InputContainer} {
@@ -25,10 +27,19 @@ export const InputRow = styled.div`
   }
 
   ${InputContainer}, ${SelectContainer} {
-    width: 50%;
-
     &:not(:first-child) {
-      margin-left: 14px;
+      margin-top: 24px;
+    }
+  }
+
+  @media (min-width: ${medium}) {
+    flex-direction: row;
+    ${InputContainer}, ${SelectContainer} {
+      flex: 1;
+      &:not(:first-child) {
+        margin-top: 0;
+        margin-left: 14px;
+      }
     }
   }
 `;

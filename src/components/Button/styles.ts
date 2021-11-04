@@ -2,7 +2,7 @@ import styled, { css, DefaultTheme } from 'styled-components';
 
 interface ButtonContainerProps {
   variant: 'primary' | 'secondary';
-  width: number;
+  width: number | 'auto';
 }
 
 const ButtonVariants = {

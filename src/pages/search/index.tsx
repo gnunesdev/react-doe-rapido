@@ -4,15 +4,24 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 
 import { AddressSuggestions } from './components/AddressSuggestions';
 import { CompanyList } from './components/CompanyList';
-import { AppContainer, FiltersContainer, SearchBar } from './styles';
+import {
+  SearchContainer,
+  FiltersContainer,
+  SearchBar,
+  SearchContent,
+  Filters,
+} from './styles';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
+import { PageContainer } from '~/components/PageContainer';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
+import { useMinWidth } from '~/hooks/useMinWidth';
 import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
-import { CompanyListType } from '~/types/Company';
+import { Breakpoint } from '~/styles/variables';
+import { CompanyInList } from '~/types/Company';
 
 const AppPage: NextPage = () => {
   const {
@@ -24,8 +33,9 @@ const AppPage: NextPage = () => {
   } = usePlacesAutocomplete({ debounce: 500 });
 
   const [isAddressLoading, setIsAddressLoading] = useState(false);
-  const [companys, setCompanys] = useState<Array<CompanyListType>>([]);
+  const [companies, setCompanies] = useState<CompanyInList[]>([]);
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
+  const minWidth = useMinWidth();
 
   function handleSelect(description: string) {
     setValue(description, false);
@@ -38,12 +48,11 @@ const AppPage: NextPage = () => {
     setIsAddressLoading(true);
     navigator.geolocation.getCurrentPosition(async (position) => {
       try {
-        const { data: geoAddress } = await getAddressByGeolocation(
+        const { data: geocodeResponse } = await getAddressByGeolocation(
           String(position.coords.latitude),
           String(position.coords.longitude)
         );
-
-        const address = geoAddress.results[0]?.formatted_address;
+        const address = geocodeResponse.results[0]?.formatted_address;
         setValue(address);
 
         setIsAddressLoading(false);
@@ -57,18 +66,14 @@ const AppPage: NextPage = () => {
 
   async function searchCompanys() {
     try {
-      // console.log(value);
       const result = await getGeocode({ address: value });
       const { lat, lng } = await getLatLng(result[0]);
-
-      const { data: companysData } = await getCompanysByNearbyAddress(
+      const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
         String(lat),
         String(lng),
         needsFilters
       );
-
-      // console.log(companysData);
-      setCompanys(companysData);
+      setCompanies(nearbyCompanies);
     } catch (error) {
       console.error(error);
     }
@@ -89,48 +94,59 @@ const AppPage: NextPage = () => {
   }
 
   return (
-    <AppContainer>
-      <Title description="Pesquisa de instituições" size="big" />
-      <SearchBar>
-        <Input
-          label="Digite seu endereço:"
-          inputSize="big"
-          name="address"
-          onChange={handleInput}
-          disabled={!ready}
-          value={value}
-        />
-        {status === 'OK' && (
-          <AddressSuggestions address={data} handleSelect={handleSelect} />
-        )}
-
-        {companys.length > 0 ? (
-          <FiltersContainer>
-            <Text description="Instituições que precisam de:" fontSize="1.8" isBold={true} />
-            <div>
-              {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
-                <Checkbox
-                  name={needValue}
-                  key={needId}
-                  label={needValue}
-                  size="medium"
-                  onChange={() => handleSelectNeedFilter(needId)}
-                />
-              ))}
-            </div>
-          </FiltersContainer>
-        ) : (
-          <Link
-            label={
-              isAddressLoading ? 'Carregando localização...' : 'Insira minha localização'
-            }
-            isButton={true}
-            handleClick={handleGetCurrentAddress}
+    <PageContainer>
+      <SearchContainer showingResults={companies.length > 0}>
+        <SearchContent>
+          <Title
+            description="Pesquisa de instituições"
+            size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
           />
-        )}
-      </SearchBar>
-      {companys.length > 0 ? <CompanyList companys={companys} /> : ''}
-    </AppContainer>
+          <SearchBar>
+            <Input
+              label="Digite seu endereço:"
+              inputSize="big"
+              name="address"
+              onChange={handleInput}
+              disabled={!ready}
+              value={value}
+            />
+            {status === 'OK' && (
+              <AddressSuggestions address={data} handleSelect={handleSelect} />
+            )}
+
+            {companies.length > 0 ? (
+              <FiltersContainer>
+                <Text
+                  description="Instituições que precisam de:"
+                  fontSize="1.8"
+                  isBold={true}
+                />
+                <Filters>
+                  {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
+                    <Checkbox
+                      name={needValue}
+                      key={needId}
+                      label={needValue}
+                      size="medium"
+                      onChange={() => handleSelectNeedFilter(needId)}
+                    />
+                  ))}
+                </Filters>
+              </FiltersContainer>
+            ) : (
+              <Link
+                label={
+                  isAddressLoading ? 'Carregando localização...' : 'Insira minha localização'
+                }
+                isButton={true}
+                handleClick={handleGetCurrentAddress}
+              />
+            )}
+          </SearchBar>
+          {companies.length > 0 ? <CompanyList companys={companies} /> : ''}
+        </SearchContent>
+      </SearchContainer>
+    </PageContainer>
   );
 };
 

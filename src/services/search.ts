@@ -1,16 +1,16 @@
+import { AxiosResponse } from 'axios';
+
 import { api } from './api';
+import { Company, CompanyInList } from '~/types/Company';
+import { GeocodeResponse } from '~/types/geocode';
 
-export interface Address {
-  results: unknown[];
-}
-
-export async function getAddressByGeolocation(lat: string, long: string) {
+export async function getAddressByGeolocation(
+  lat: string,
+  long: string
+): Promise<AxiosResponse<GeocodeResponse>> {
   try {
-    const result = await api.get<Address>(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.NEXT_PUBLIC_MAPS_TOKEN}`
-    );
-
-    return result;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.NEXT_PUBLIC_MAPS_TOKEN}`;
+    return await api.get<GeocodeResponse>(url);
   } catch (error) {
     console.error(error);
     throw error;
@@ -21,22 +21,20 @@ export async function getCompanysByNearbyAddress(
   lat: string,
   long: string,
   needs: string[]
-) {
+): Promise<AxiosResponse<CompanyInList[]>> {
   try {
-    const result = await api.get('/company');
-
-    return result;
+    return await api.get<CompanyInList[]>('/company');
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
-export async function getCompanyById(id: string) {
+export async function getCompanyById(id: string): Promise<AxiosResponse<Company>> {
   try {
-    const result = await api.get(`/company/${id}`);
-
-    return result;
+    return await api.get<Company>(`/company/${id}`);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }

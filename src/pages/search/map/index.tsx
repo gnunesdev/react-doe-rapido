@@ -6,7 +6,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { CompanyButton } from './styles';
 import { getCompanysToRenderInMap } from '~/services/map';
-import { CompanyMapType } from '~/types/Company';
+import { Company } from '~/types/Company';
 
 const containerStyle = {
   width: '100vw',
@@ -14,18 +14,18 @@ const containerStyle = {
 };
 
 interface MapPageProps {
-  companys: Array<CompanyMapType>;
+  companies: Array<Company>;
 }
 
-const MapPage: NextPage<MapPageProps> = ({ companys }) => {
+const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   const routes = useRouter();
   const { drawerId } = routes.query;
 
   const centerScreen = useMemo(() => {
-    return { lat: Number(companys[0].lat), lng: Number(companys[0].long) };
-  }, [companys]);
+    return { lat: Number(companies[0].lat), lng: Number(companies[0].long) };
+  }, [companies]);
 
-  const [selectedCompany, setSelectedCompany] = useState<CompanyMapType | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(Boolean(drawerId));
 
@@ -63,7 +63,7 @@ const MapPage: NextPage<MapPageProps> = ({ companys }) => {
         mapId: 'e258f25e5d7f6c6e',
       }}
     >
-      {companys.map((company) => (
+      {companies.map((company) => (
         <Marker
           position={{ lat: Number(company.lat), lng: Number(company.long) }}
           key={company.id}
@@ -109,10 +109,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
   }
 
-  const response = await getCompanysToRenderInMap(String(id));
-  const companys: [CompanyMapType] | undefined = response?.data;
-
-  if (companys.length === 0) {
+  const companies = await getCompanysToRenderInMap(String(id));
+  if (companies.length === 0) {
     return {
       redirect: {
         destination: '/search',
@@ -122,9 +120,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   if (drawerId) {
-    const companyExists = companys.find((company) => company.id === drawerId);
-    // console.log(companys);
-
+    const companyExists = companies.find((company) => company.id === Number(drawerId));
     if (!companyExists) {
       return {
         redirect: {
@@ -137,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
   return {
     props: {
-      companys,
+      companies,
     },
   };
 };

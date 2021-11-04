@@ -1,9 +1,17 @@
 import { Link } from '../Link';
-import { LinksSection, SidebarContainer } from './styles';
+import { LinksSection, SidebarContainer, Overlay, SidebarVolume } from './styles';
+import Modal from '~/components/Modal';
+import { useSidebarContext } from '~/context/useSidebarState';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 
-export function Sidebar() {
+export interface InnerSidebarProps {
+  isCollapsed: boolean;
+}
+
+const InnerSidebar: React.FC<InnerSidebarProps> = ({ isCollapsed }) => {
   return (
-    <SidebarContainer>
+    <SidebarContainer isCollapsed={isCollapsed}>
       <LinksSection>
         <h3>Cadastros</h3>
         <ul>
@@ -24,5 +32,19 @@ export function Sidebar() {
         </ul>
       </LinksSection>
     </SidebarContainer>
+  );
+};
+
+export function Sidebar() {
+  const minWidth = useMinWidth();
+  const { isCollapsed } = useSidebarContext();
+  return (
+    <>
+      {minWidth(Breakpoint.large) && <SidebarVolume />}
+      <Modal>
+        <InnerSidebar isCollapsed={!minWidth(Breakpoint.large) && isCollapsed} />
+        {!minWidth(Breakpoint.large) && !isCollapsed && <Overlay />}
+      </Modal>
+    </>
   );
 }

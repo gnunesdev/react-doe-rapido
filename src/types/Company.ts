@@ -1,13 +1,13 @@
-export type CompanyListType = {
+export interface CompanyInList {
   id_company: number;
   name: string;
   address: string;
   distance: number;
   lat: string;
   long: string;
-};
+}
 
-export type CompanyMapType = {
+export interface Company {
   id: number;
   name: string;
   street: string;
@@ -19,4 +19,4 @@ export type CompanyMapType = {
   lat: string;
   long: string;
   distance: number;
-};
+}

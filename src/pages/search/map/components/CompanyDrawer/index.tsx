@@ -1,23 +1,30 @@
 import { useEffect, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
 
-import { CompanyDrawerContainer, CompanyInfoContainer, Header, Overlay } from './styles';
+import {
+  CompanyDrawerContainer,
+  CompanyInfoContainer,
+  Header,
+  Overlay,
+  Close,
+} from './styles';
 import Modal from '~/components/Modal';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
 import { getCompanyById } from '~/services/search';
-import { CompanyMapType } from '~/types/Company';
+import { Company } from '~/types/Company';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;
-  companyData: CompanyMapType | null;
+  companyData: Company | null;
   companyId: string | null;
 }
 
 export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDrawerProps) {
-  const { colors } = useTheme();
+  const { foreground } = useTheme();
 
-  const [company, setCompany] = useState<CompanyMapType | null>(companyData);
+  const [company, setCompany] = useState<Company | null>(companyData);
 
   useEffect(() => {
     if (!companyData) {
@@ -41,7 +48,10 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
       <Modal>
         <CompanyDrawerContainer>
           <Header>
-            <Title description={company.name} size="medium" color={colors.fore} />
+            <Title description={company.name} size="medium" color={foreground.primary} />
+            <Close onClick={closeModal}>
+              <FaTimes color={foreground.primary} size={24} />
+            </Close>
           </Header>
           <CompanyInfoContainer>
             <strong>{company.name}</strong>

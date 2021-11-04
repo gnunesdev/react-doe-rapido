@@ -1,14 +1,36 @@
 import styled from 'styled-components';
 
-export const SidebarContainer = styled.nav`
-  min-width: 280px;
+export interface SidebarContainerProps {
+  isCollapsed: boolean;
+}
+
+export const SidebarVolume = styled.div`
+  width: 280px;
   max-width: 280px;
-  min-height: calc(100vh - 62px);
+  min-width: 280px;
+`;
 
+export const SidebarContainer = styled.nav<SidebarContainerProps>`
+  max-width: 280px;
+  min-width: 280px;
+  width: 280px;
+  position: fixed;
+  top: 62px;
+  bottom: 0;
+  left: 0;
   background: ${(props) => props.theme.colors.primary};
-
-  display: block;
-  padding: 2.4rem;
+  padding: 24px;
+  z-index: 2;
+  transition: transform 250ms;
+  transform: translateX(
+    ${(props) => {
+      if (props.isCollapsed) {
+        return '-100%';
+      } else {
+        return '0';
+      }
+    }}
+  );
 `;
 
 export const LinksSection = styled.div`
@@ -33,4 +55,14 @@ export const LinksSection = styled.div`
       margin-top: 0.8rem;
     }
   }
+`;
+
+export const Overlay = styled.div`
+  background: rgba(0, 0, 0, 60%);
+  position: fixed;
+  z-index: 1;
+  top: 62px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;

@@ -1,10 +1,10 @@
 import { FaAt, FaPhone, FaShare, FaWhatsapp } from 'react-icons/fa';
 
-import { CompanyMapType } from '~/types/Company';
+import { Company } from '~/types/Company';
 
 interface ButtonActionProps {
   type: 'whats' | 'email' | 'phone' | 'share';
-  company: CompanyMapType;
+  company: Company;
 }
 
 export function ButtonAction({ type }: ButtonActionProps) {

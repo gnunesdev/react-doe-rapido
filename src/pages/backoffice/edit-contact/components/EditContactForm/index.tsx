@@ -34,15 +34,13 @@ export function EditContactForm() {
     <Container>
       <Title description="Editar contato" size="big" />
       <Form onSubmit={formik.handleSubmit}>
-        <InputRow>
-          <Input
-            name="name"
-            inputSize="big"
-            onChange={formik.handleChange}
-            label="Nome"
-            error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
-          ></Input>
-        </InputRow>
+        <Input
+          name="name"
+          inputSize="big"
+          onChange={formik.handleChange}
+          label="Nome"
+          error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
+        ></Input>
         <InputRow>
           <Input
             name="email"

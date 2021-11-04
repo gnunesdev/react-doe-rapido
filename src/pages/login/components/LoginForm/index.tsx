@@ -11,6 +11,8 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { login } from '~/features/user';
 import { useAppDispatch } from '~/hooks/redux';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 
 export function LoginForm() {
   const routes = useRouter();
@@ -45,9 +47,14 @@ export function LoginForm() {
     },
   });
 
+  const minWidth = useMinWidth();
+
   return (
     <LoginFormContainer>
-      <Title description="Insira suas informações" size="big" />
+      <Title
+        description="Insira suas informações"
+        size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+      />
 
       <LoginFormStyled onSubmit={formik.handleSubmit}>
         <Input
@@ -67,9 +74,9 @@ export function LoginForm() {
           }
         />
         <ButtonsContainer>
-          <Button variant="primary" description="Login" type="submit" />
-          <Button variant="secondary" type="submit">
-            <Link href="/onboarding">Não possui login? cadastre-se</Link>
+          <Button variant="primary" description="Login" type="submit" width="auto" />
+          <Button variant="secondary" type="submit" width="auto">
+            <Link href="/backoffice/onboarding/contact">Cadastre-se</Link>
           </Button>
         </ButtonsContainer>
       </LoginFormStyled>

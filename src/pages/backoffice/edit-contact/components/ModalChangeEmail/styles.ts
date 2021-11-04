@@ -18,7 +18,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  background: ${(props) => props.theme.colors.white};
+  background: ${(props) => props.theme.colors.background};
   width: 620px;
   z-index: 2;
 

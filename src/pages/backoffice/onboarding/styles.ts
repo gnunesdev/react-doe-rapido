@@ -5,5 +5,5 @@ export const OnboardingContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: ${(props) => props.theme.containers.desktop};
+  height: ${(props) => props.theme.containers.page};
 `;
