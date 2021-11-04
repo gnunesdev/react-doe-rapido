@@ -19,12 +19,6 @@ export function CompanyList({ companys }: CompanyListProps) {
     routes.push(`/search/map?id=${id}`);
   }
 
-  const onClickListItem = (id: string) => {
-    if (!minWidth(Breakpoint.medium)) {
-      routes.push(`/search/map?id=${id}`);
-    }
-  };
-
   return (
     <CompanyListContainer>
       <Text fontSize="1.8" description="Resultados:" isBold={true} />
@@ -32,7 +26,9 @@ export function CompanyList({ companys }: CompanyListProps) {
         {companys.map((company) => (
           <li
             key={company.id_company}
-            onClick={() => onClickListItem('' + company.id_company)}
+            {...(!minWidth(Breakpoint.medium) && {
+              onClick: () => handleSeeOnMap('' + company.id_company),
+            })}
           >
             <ItemInfo>
               <strong>
