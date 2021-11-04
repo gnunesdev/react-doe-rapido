@@ -6,11 +6,11 @@ import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 
 export interface InnerSidebarProps {
-  collapsed: boolean;
+  isCollapsed: boolean;
 }
 
 const InnerSidebar: React.FC<React.ComponentProps<'nav'> & InnerSidebarProps> = ({
-  collapsed,
+  isCollapsed: collapsed,
 }) => {
   return (
     <SidebarContainer collapsed={collapsed}>
@@ -44,7 +44,7 @@ export function Sidebar() {
     <>
       {minWidth(Breakpoint.large) && <SidebarVolume />}
       <Modal>
-        <InnerSidebar collapsed={!minWidth(Breakpoint.large) && isCollapsed} />
+        <InnerSidebar isCollapsed={!minWidth(Breakpoint.large) && isCollapsed} />
         {!minWidth(Breakpoint.large) && !isCollapsed && <Overlay />}
       </Modal>
     </>
