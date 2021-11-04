@@ -24,7 +24,7 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const Left = styled.div`
+export const HeaderLeft = styled.div`
   display: flex;
   align-items: center;
 `;

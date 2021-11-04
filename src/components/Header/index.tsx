@@ -10,7 +10,7 @@ import {
   UserIcon,
   UserName,
   HeaderVolume,
-  Left,
+  HeaderLeft,
   Menu,
 } from './styles';
 import { useSidebarContext } from '~/context/useSidebarState';
@@ -33,7 +33,7 @@ export function Header() {
     <>
       <HeaderVolume />
       <HeaderContainer>
-        <Left>
+        <HeaderLeft>
           {!minWidth(Breakpoint.large) && (
             <Menu onClick={handleCollapseSidebar}>
               <FaBars color={foreground.primary} size={24} />
@@ -45,7 +45,7 @@ export function Header() {
               <FaHandHoldingHeart color={foreground.primary} size={24} />
             </Icon>
           </Logo>
-        </Left>
+        </HeaderLeft>
 
         <UserArea>
           {minWidth(Breakpoint.medium) && (
