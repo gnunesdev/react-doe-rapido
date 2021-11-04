@@ -1,5 +1,5 @@
 import { Container } from './styles';
 
-export const PageContainer: React.FC<React.ComponentProps<'div'>> = ({ children }) => {
+export const PageContainer: React.FC = ({ children }) => {
   return <Container>{children}</Container>;
 };
