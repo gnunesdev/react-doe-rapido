@@ -1,5 +1,5 @@
 export const enum Breakpoint {
-  medium = 600,
+  medium = 768,
   large = 1280,
 }
 

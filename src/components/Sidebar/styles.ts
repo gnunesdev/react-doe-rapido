@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export interface SidebarContainerProps {
-  collapsed: boolean;
+  isCollapsed: boolean;
 }
 
 export const SidebarVolume = styled.div`
@@ -24,7 +24,7 @@ export const SidebarContainer = styled.nav<SidebarContainerProps>`
   transition: transform 250ms;
   transform: translateX(
     ${(props) => {
-      if (props.collapsed) {
+      if (props.isCollapsed) {
         return '-100%';
       } else {
         return '0';

@@ -9,11 +9,9 @@ export interface InnerSidebarProps {
   isCollapsed: boolean;
 }
 
-const InnerSidebar: React.FC<React.ComponentProps<'nav'> & InnerSidebarProps> = ({
-  isCollapsed: collapsed,
-}) => {
+const InnerSidebar: React.FC<InnerSidebarProps> = ({ isCollapsed }) => {
   return (
-    <SidebarContainer collapsed={collapsed}>
+    <SidebarContainer isCollapsed={isCollapsed}>
       <LinksSection>
         <h3>Cadastros</h3>
         <ul>
