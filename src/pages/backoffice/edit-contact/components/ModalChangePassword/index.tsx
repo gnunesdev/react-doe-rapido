@@ -1,14 +1,15 @@
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 import { ChangeInputCodeValidator, ChangePasswordValidator } from '../../constants/utils';
-import { Form, ModalContainer } from './styles';
+import { dropIn } from './animation';
+import { Form, ModalContainer, Overlay } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -27,15 +28,23 @@ export function ModalChangePassword({ handleCloseModal }: ModalChangePasswordPro
 
   return (
     <Modal>
-      <ModalContainer>
-        <Title description="Editar senha" size="big" />
-        {!codeValidated ? (
-          <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
-        ) : (
-          <ChangeValueStep />
-        )}
-      </ModalContainer>
-      <Overlay onClick={handleCloseModal} />
+      <Overlay onClick={handleCloseModal}>
+        <ModalContainer
+          as={motion.div}
+          onClick={(e) => e.stopPropagation()}
+          variants={dropIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <Title description="Editar senha" size="big" />
+          {!codeValidated ? (
+            <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
+          ) : (
+            <ChangeValueStep />
+          )}
+        </ModalContainer>
+      </Overlay>
     </Modal>
   );
 }

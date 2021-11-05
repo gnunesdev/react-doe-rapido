@@ -20,7 +20,6 @@ export const SidebarContainer = styled.nav<SidebarContainerProps>`
   left: 0;
   background: ${(props) => props.theme.colors.primary};
   padding: 24px;
-  z-index: 2;
   transition: transform 250ms;
   transform: translateX(
     ${(props) => {

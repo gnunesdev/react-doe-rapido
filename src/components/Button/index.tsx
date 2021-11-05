@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import { ButtonContainer } from './styles';
 
 interface ButtonProps {
@@ -17,7 +19,14 @@ export const Button: React.FC<React.ComponentProps<'button'> & ButtonProps> = ({
   children,
 }) => {
   return (
-    <ButtonContainer variant={variant} width={width} onClick={onClick} type={type}>
+    <ButtonContainer
+      as={motion.button}
+      whileTap={{ scale: 0.95 }}
+      variant={variant}
+      width={width}
+      onClick={onClick}
+      type={type}
+    >
       {description ? description : children}
     </ButtonContainer>
   );

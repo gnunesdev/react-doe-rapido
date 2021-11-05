@@ -4,6 +4,7 @@ const theme: DefaultTheme = {
   title: 'light',
   colors: {
     primary: '#3483B4',
+    primaryHover: '#256891',
     secondary: '#62b6cb',
     background: '#F3F3F3',
     red: '#ff4d4d',

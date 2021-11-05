@@ -1,4 +1,5 @@
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
+import { url } from 'inspector';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -41,7 +42,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
 
   function handleOpenDrawer() {
     const { id } = routes.query;
-    router.push(`/search/map?id=${id}&drawerId=${selectedCompany?.id}`, undefined, {
+    router.push(`/search/map?id=${id}&drawerId=${selectedCompany?.id_company}`, undefined, {
       shallow: true,
     });
     setIsDrawerOpen(true);
@@ -66,7 +67,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
       {companies.map((company) => (
         <Marker
           position={{ lat: Number(company.lat), lng: Number(company.long) }}
-          key={company.id}
+          key={company.id_company}
           onClick={() => {
             panTo(Number(company.lat), Number(company.long));
             setSelectedCompany(company);
@@ -110,6 +111,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   const companies = await getCompanysToRenderInMap(String(id));
+
   if (companies.length === 0) {
     return {
       redirect: {
@@ -120,7 +122,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   if (drawerId) {
-    const companyExists = companies.find((company) => company.id === Number(drawerId));
+    const companyExists = companies.find(
+      (company) => company.id_company === Number(drawerId)
+    );
     if (!companyExists) {
       return {
         redirect: {

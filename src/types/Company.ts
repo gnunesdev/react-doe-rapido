@@ -8,7 +8,7 @@ export interface CompanyInList {
 }
 
 export interface Company {
-  id: number;
+  id_company: number;
   name: string;
   street: string;
   number: string;
@@ -19,4 +19,6 @@ export interface Company {
   lat: string;
   long: string;
   distance: number;
+  phone: string;
+  email: string;
 }

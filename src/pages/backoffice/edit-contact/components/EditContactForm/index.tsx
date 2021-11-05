@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 import { EditContactFormValidator } from '../../constants/utils';
@@ -60,13 +61,15 @@ export function EditContactForm() {
         </InputRow>
       </Form>
 
-      {isChangeEmailModalOpen && (
-        <ModalChangeEmail handleCloseModal={handleToggleEmailModalOpen} />
-      )}
+      <AnimatePresence>
+        {isChangeEmailModalOpen && (
+          <ModalChangeEmail handleCloseModal={handleToggleEmailModalOpen} />
+        )}
 
-      {isChangePasswordModalOpen && (
-        <ModalChangePassword handleCloseModal={handleTogglePasswordModalOpen} />
-      )}
+        {isChangePasswordModalOpen && (
+          <ModalChangePassword handleCloseModal={handleTogglePasswordModalOpen} />
+        )}
+      </AnimatePresence>
     </Container>
   );
 }

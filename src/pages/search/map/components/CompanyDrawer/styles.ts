@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { ActionButtonContainer } from '~/components/ActionButton/styles';
 import { TitleStyled } from '~/components/Title/styles';
 import { medium } from '~/styles/variables';
 
@@ -69,6 +70,18 @@ export const CompanyInfoContainer = styled.div`
 
   .needs {
     margin-top: 2rem;
+  }
+
+  .actions {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+
+    ${ActionButtonContainer} {
+      :not(:first-child) {
+        margin-left: 0.6rem;
+      }
+    }
   }
 
   ul {

@@ -14,7 +14,6 @@ export const HeaderContainer = styled.header`
   background: ${(props) => props.theme.colors.primary};
   position: fixed;
   top: 0;
-  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;

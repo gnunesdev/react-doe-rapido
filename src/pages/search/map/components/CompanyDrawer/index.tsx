@@ -9,6 +9,7 @@ import {
   Overlay,
   Close,
 } from './styles';
+import { ActionButton } from '~/components/ActionButton';
 import Modal from '~/components/Modal';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
@@ -17,14 +18,14 @@ import { Company } from '~/types/Company';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;
-  companyData: Company | null;
+  companyData: Company;
   companyId: string | null;
 }
 
 export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDrawerProps) {
   const { foreground } = useTheme();
 
-  const [company, setCompany] = useState<Company | null>(companyData);
+  const [company, setCompany] = useState<Company>(companyData);
 
   useEffect(() => {
     if (!companyData) {
@@ -42,6 +43,8 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
       }
     }
   }
+
+  console.log(company);
 
   return (
     company && (
@@ -74,7 +77,12 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
                 ))}
               </ul>
             </div>
-            <div className="actions"></div>
+            <div className="actions">
+              <ActionButton type="whats" whatsPhone="5511951503633" />
+              <ActionButton type="phone" phone={company.phone} />
+              <ActionButton type="email" email={company.email} />
+              <ActionButton type="share" />
+            </div>
           </CompanyInfoContainer>
         </CompanyDrawerContainer>
         <Overlay onClick={closeModal} />

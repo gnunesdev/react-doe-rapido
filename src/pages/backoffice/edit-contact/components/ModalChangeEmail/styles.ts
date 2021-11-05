@@ -10,25 +10,24 @@ export const Overlay = styled.div`
   height: 100vh;
   background: rgba(0, 0, 0, 60%);
 
-  z-index: 1;
-
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ModalContainer = styled.div`
   background: ${(props) => props.theme.colors.background};
+
   width: 620px;
-  z-index: 2;
+  height: fit-content;
 
-  position: fixed;
+  position: absolute;
 
-  top: 50%;
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
+  margin: 0 auto;
   padding: 50px;
 
   ${ButtonContainer} {

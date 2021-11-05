@@ -7,8 +7,7 @@ import { large } from '~/styles/variables';
 
 export const Container = styled.div`
   padding: 48px 64px;
-  width: 100%;
-  max-width: 1140px;
+  width: 90%;
   margin: 0 auto;
 `;
 

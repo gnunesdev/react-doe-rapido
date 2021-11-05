@@ -26,19 +26,15 @@ export function CompanyList({ companys }: CompanyListProps) {
         {companys.map((company) => (
           <li
             key={company.id_company}
-            {...(!minWidth(Breakpoint.medium) && {
-              onClick: () => handleSeeOnMap('' + company.id_company),
-            })}
+            onClick={
+              !minWidth(Breakpoint.medium)
+                ? () => handleSeeOnMap(String(company.id_company))
+                : undefined
+            }
           >
             <ItemInfo>
-              <strong>
-                {company.name +
-                  'MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO'}
-              </strong>
-              <p>
-                {company.address +
-                  'MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO, MESTRE RATO'}
-              </p>
+              <strong>{company.name}</strong>
+              <p>{company.address}</p>
               <span>Distância aproximada: {company.distance / 1000}km</span>
             </ItemInfo>
             {minWidth(Breakpoint.medium) && (

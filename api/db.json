@@ -5,7 +5,7 @@
   },
   "companies": [
     {
-      "id_company": 2,
+      "id": 2,
       "name": "Shopping Cidade São Paulo",
       "address": "Rua teste 123, Vila Madalena",
       "distance": 800
@@ -35,9 +35,9 @@
       "distance": 5000
     }
   ],
-  "company": [
+  "map-company": [
     {
-      "id": 1,
+      "id_company": 1,
       "tradingName": "Empresa do Rato",
       "name": "EMPRESA RATO LTDA",
       "cnpj": "51604231000145",
@@ -48,13 +48,13 @@
       "city": "São Paulo",
       "state": "SP",
       "phone": "Empresa do Rato",
-      "email": "Empresa do Rato",
+      "email:": "ratofeio@rato.com.br",
       "needs": "Empresa do Rato",
       "lat": -23.67,
       "long": -46.67
     },
     {
-      "id": 2,
+      "id_company": 2,
       "tradingName": "Shopping Cidade São Paulo",
       "name": "Shopping Cidade São Paulo",
       "street": "Rua teste",
@@ -68,7 +68,7 @@
       "distance": 800
     },
     {
-      "id": 3,
+      "id_company": 3,
       "name": "Lugar ai esquisito",
       "street": "Rua teste",
       "number": "4A",
@@ -81,7 +81,7 @@
       "distance": 1200
     },
     {
-      "id": 4,
+      "id_company": 4,
       "name": "Casa do carlos",
       "street": "Rua teste",
       "number": "4A",
@@ -94,7 +94,7 @@
       "distance": 2000
     },
     {
-      "id": 5,
+      "id_company": 5,
       "name": "Casa do leo",
       "street": "Rua teste",
       "number": "4A",
@@ -107,7 +107,7 @@
       "distance": 2200
     },
     {
-      "id": 6,
+      "id_company": 6,
       "name": "Casa do guizao",
       "street": "Rua teste",
       "number": "4A",
@@ -120,89 +120,108 @@
       "distance": 2800
     }
   ],
-  "map-company": [
-    {
-      "id": 1,
-      "tradingName": "Empresa do Rato",
-      "name": "EMPRESA RATO LTDA",
-      "cnpj": "51604231000145",
-      "cep": "05857590",
-      "street": "Rua teste",
-      "number": "4",
-      "district": "Valo velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "phone": "Empresa do Rato",
-      "email": "Empresa do Rato",
-      "needs": "Empresa do Rato",
-      "lat": -23.67,
-      "long": -46.67
-    },
-    {
-      "id": 2,
-      "tradingName": "Shopping Cidade São Paulo",
-      "name": "Shopping Cidade São Paulo",
-      "street": "Rua teste",
-      "number": "4A",
-      "district": "Valo Velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "needs": [1, 3, 4],
-      "lat": -23.67,
-      "long": -46.67,
-      "distance": 800
-    },
-    {
-      "id": 3,
-      "name": "Lugar ai esquisito",
-      "street": "Rua teste",
-      "number": "4A",
-      "district": "Valo Velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "needs": [1, 3, 4],
-      "lat": -23.562827,
-      "long": -46.654591,
-      "distance": 1200
-    },
-    {
-      "id": 4,
-      "name": "Casa do carlos",
-      "street": "Rua teste",
-      "number": "4A",
-      "district": "Valo Velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "needs": [1, 3, 4],
-      "lat": -23.64082,
-      "long": -46.53197,
-      "distance": 2000
-    },
-    {
-      "id": 5,
-      "name": "Casa do leo",
-      "street": "Rua teste",
-      "number": "4A",
-      "district": "Valo Velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "needs": [1, 3, 4],
-      "lat": -23.67016,
-      "long": -46.80189,
-      "distance": 2200
-    },
-    {
-      "id": 6,
-      "name": "Casa do guizao",
-      "street": "Rua teste",
-      "number": "4A",
-      "district": "Valo Velho",
-      "city": "São Paulo",
-      "state": "SP",
-      "needs": [1, 3, 4],
-      "lat": -23.65175,
-      "long": -46.78581,
-      "distance": 2800
-    }
+  "company": [
+      {
+        "id": 1,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      },
+      {
+        "id": 2,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      },
+      {
+        "id": 3,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      },
+      {
+        "id": 4,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      },
+      {
+        "id": 5,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      },
+      {
+        "id": 6,
+        "tradingName": "Empresa do Rato",
+        "name": "EMPRESA RATO LTDA",
+        "cnpj": "51604231000145",
+        "cep": "05857590",
+        "street": "Rua teste",
+        "number": "4",
+        "district": "Valo velho",
+        "city": "São Paulo",
+        "state": "SP",
+        "phone": "+5511951503633",
+        "email:": "ratofeio@rato.com.br",
+        "needs": "Empresa do Rato",
+        "lat": -23.67,
+        "long": -46.67
+      }
   ]
 }
