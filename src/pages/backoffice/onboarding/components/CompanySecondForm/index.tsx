@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanySecondFormValidationSchema } from '../../utils';
@@ -16,6 +17,7 @@ import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
 import { cleanPhone } from '~/utils';
+import { fadeIn } from '~/utils/animations';
 
 export function CompanySecondForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -33,7 +35,12 @@ export function CompanySecondForm() {
   });
 
   return (
-    <CompanySecondFormContainer>
+    <CompanySecondFormContainer
+      as={motion.div}
+      initial="hidden"
+      animate="animate"
+      variants={fadeIn}
+    >
       <Title description="Cadastro de instituição:" size="big" />
       <CompanySecondFormStyled onSubmit={formik.handleSubmit}>
         <UploadImage />
@@ -68,6 +75,7 @@ export function CompanySecondForm() {
               name="needs"
               value={need}
               onChange={formik.handleChange}
+              error={String(formik.errors.needs)}
             />
           ))}
         </NeedsContainer>

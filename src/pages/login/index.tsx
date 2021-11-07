@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { NextPage } from 'next';
 
 import { LoginForm } from './components/LoginForm';

@@ -20,7 +20,7 @@ export const Checkbox: React.VFC<CheckboxProps> = ({
   error,
 }) => {
   return (
-    <CheckboxContainer size={size}>
+    <CheckboxContainer size={size} hasError={Boolean(error)}>
       <label>
         <input
           type="checkbox"
@@ -31,8 +31,6 @@ export const Checkbox: React.VFC<CheckboxProps> = ({
         />
         {label}
       </label>
-
-      {error && <span>{error}</span>}
     </CheckboxContainer>
   );
 };

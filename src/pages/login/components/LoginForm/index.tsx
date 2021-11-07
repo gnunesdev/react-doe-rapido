@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
@@ -13,6 +14,7 @@ import { login } from '~/features/user';
 import { useAppDispatch } from '~/hooks/redux';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
+import { fadeIn } from '~/utils/animations';
 
 export function LoginForm() {
   const routes = useRouter();
@@ -50,7 +52,7 @@ export function LoginForm() {
   const minWidth = useMinWidth();
 
   return (
-    <LoginFormContainer>
+    <LoginFormContainer as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
       <Title
         description="Insira suas informações"
         size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
@@ -75,7 +77,7 @@ export function LoginForm() {
         />
         <ButtonsContainer>
           <Button variant="primary" description="Login" type="submit" width="auto" />
-          <Button variant="secondary" type="submit" width="auto">
+          <Button variant="secondary" type="button" width="auto">
             <Link href="/backoffice/onboarding/contact">Cadastre-se</Link>
           </Button>
         </ButtonsContainer>

@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanyFirstFormValidator } from '../../utils';
@@ -14,6 +15,7 @@ import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
 import { STATE_LISTS } from '~/utils/address';
+import { fadeIn } from '~/utils/animations';
 
 export function CompanyFirstForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -64,7 +66,12 @@ export function CompanyFirstForm() {
   }
 
   return (
-    <CompanyFirstFormContainer>
+    <CompanyFirstFormContainer
+      as={motion.div}
+      initial="hidden"
+      animate="animate"
+      variants={fadeIn}
+    >
       <Title description="Cadastro de instituição" size="big" />
       <CompanyFirstFormStyled onSubmit={formik.handleSubmit}>
         <Input

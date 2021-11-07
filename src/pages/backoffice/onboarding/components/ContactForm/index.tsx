@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -7,6 +8,7 @@ import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './sty
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { fadeIn } from '~/utils/animations';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -25,7 +27,12 @@ export function ContactForm() {
   });
 
   return (
-    <ContactFormContainer>
+    <ContactFormContainer
+      as={motion.div}
+      initial="hidden"
+      animate="animate"
+      variants={fadeIn}
+    >
       <Title description="Cadastro de acesso:" size="big" />
       <ContactFormStyled onSubmit={formik.handleSubmit}>
         <Input

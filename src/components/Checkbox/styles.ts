@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface CheckboxContainerProps {
   size: 'big' | 'medium';
+  hasError: boolean;
 }
 
 export const CheckboxContainer = styled.div<CheckboxContainerProps>`
@@ -15,9 +16,13 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
 
     transition: all 0.175s ease-in;
     margin-right: 0.6rem;
+
+    border-color: ${(props) =>
+      props.hasError ? props.theme.colors.red : props.theme.colors.primary};
   }
 
   label {
+    cursor: pointer;
     color: ${(props) => props.theme.colors.primary};
     font-size: ${(props) => {
       switch (props.size) {
