@@ -75,7 +75,7 @@ const EditCompanyPage: NextPage = () => {
       <Container>
         <Title
           description="Editar instituição"
-          size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+          size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
         />
         <Form onSubmit={formik.handleSubmit}>
           <Input

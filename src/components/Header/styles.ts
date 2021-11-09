@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { large, medium } from '~/styles/variables';
+import { large, small } from '~/styles/variables';
 
 export const HeaderVolume = styled.div`
   width: 100%;
@@ -57,7 +57,7 @@ export const Icon = styled.div`
 export const UserArea = styled.div`
   display: flex;
   align-items: center;
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: calc(100% - 260px);
   }
 `;

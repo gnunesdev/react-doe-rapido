@@ -28,7 +28,7 @@ export function CompanyList({ companys }: CompanyListProps) {
             key={company.id_company}
 <<<<<<< HEAD
             onClick={
-              !minWidth(Breakpoint.medium)
+              !minWidth(Breakpoint.small)
                 ? () => handleSeeOnMap(String(company.id_company))
                 : undefined
             }

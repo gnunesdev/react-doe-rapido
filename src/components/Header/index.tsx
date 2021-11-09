@@ -51,7 +51,12 @@ export function Header() {
         </HeaderLeft>
 
         <UserArea>
-          {minWidth(Breakpoint.medium) && <UserName>Mestre Rato</UserName>}
+          {minWidth(Breakpoint.small) && (
+            <UserName>
+              {(user && user.email) ||
+                'Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato, Mestre Rato'}
+            </UserName>
+          )}
           <UserIcon src="https://i.pinimg.com/originals/b5/66/ea/b566eae21682bc79e1918c24149b2578.gif" />
         </UserArea>
       </HeaderContainer>
