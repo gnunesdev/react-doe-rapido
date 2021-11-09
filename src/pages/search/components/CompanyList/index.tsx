@@ -26,18 +26,24 @@ export function CompanyList({ companys }: CompanyListProps) {
         {companys.map((company) => (
           <li
             key={company.id_company}
+<<<<<<< HEAD
             onClick={
               !minWidth(Breakpoint.medium)
                 ? () => handleSeeOnMap(String(company.id_company))
                 : undefined
             }
+=======
+            {...(!minWidth(Breakpoint.small) && {
+              onClick: () => handleSeeOnMap('' + company.id_company),
+            })}
+>>>>>>> db5e743 (feat(landingPage): fazer landingPage)
           >
             <ItemInfo>
               <strong>{company.name}</strong>
               <p>{company.address}</p>
               <span>Distância aproximada: {company.distance / 1000}km</span>
             </ItemInfo>
-            {minWidth(Breakpoint.medium) && (
+            {minWidth(Breakpoint.small) && (
               <Button
                 variant="primary"
                 description="Ver no mapa"

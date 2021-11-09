@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { SelectContainer } from '~/components/Select/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const CompanyFirstFormContainer = styled.div`
   max-width: 1140px;
@@ -24,7 +24,7 @@ export const InputRow = styled.div`
     }
   }
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     flex-direction: row;
     ${InputContainer}, ${SelectContainer} {
       flex: 1;

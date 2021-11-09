@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { InputContainer } from '~/components/Input/styles';
 import { SelectContainer } from '~/components/Select/styles';
 import { TitleStyled } from '~/components/Title/styles';
-import { large, medium } from '~/styles/variables';
+import { large, small } from '~/styles/variables';
 
 export const Container = styled.div`
   padding: 32px 24px;
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     padding: 48px 64px;
   }
 `;

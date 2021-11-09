@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { ButtonContainer } from '~/components/Button/styles';
 import { InputContainer } from '~/components/Input/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const LoginFormContainer = styled.div`
   width: 100%;
@@ -10,7 +10,7 @@ export const LoginFormContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: 480px;
     padding: 0;
   }
@@ -39,7 +39,7 @@ export const ButtonsContainer = styled.div`
     }
   }
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     flex-direction: row;
 
     ${ButtonContainer} {

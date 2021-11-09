@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { TitleStyled } from '~/components/Title/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const ConfirmContactFormContainer = styled.div`
   max-width: 480px;
@@ -32,7 +32,7 @@ export const ButtonsContainer = styled.div`
     }
   }
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     flex-direction: row;
     button {
       flex: 1;

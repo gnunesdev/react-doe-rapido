@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const ContactFormContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: 480px;
   }
 `;
@@ -34,7 +34,7 @@ export const ButtonsContainer = styled.div`
     }
   }
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     flex-direction: row;
     button {
       flex: 1;

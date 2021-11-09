@@ -46,7 +46,7 @@ export function LoginForm() {
     <LoginFormContainer as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
       <Title
         description="Insira suas informações"
-        size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+        size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
 
       <LoginFormStyled onSubmit={formik.handleSubmit}>

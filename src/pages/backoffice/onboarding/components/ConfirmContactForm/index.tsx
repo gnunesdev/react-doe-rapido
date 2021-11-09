@@ -61,7 +61,7 @@ export function ConfirmContactForm() {
     <ConfirmContactFormContainer>
       <Title
         description="Confirme seu e-mail"
-        size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+        size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
       <ConfirmContactFormStyled onSubmit={formik.handleSubmit}>
         <Text
