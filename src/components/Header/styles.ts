@@ -34,11 +34,15 @@ export const Menu = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;
 `;
 
 export const Logo = styled.div`
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 export const Title = styled.h1`

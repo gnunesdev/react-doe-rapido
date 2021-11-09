@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanyFirstFormValidator } from '../../utils';
@@ -33,7 +34,14 @@ export function CompanyFirstForm() {
       state: '',
     },
     onSubmit: () => {
-      goToNextStep();
+      try {
+        goToNextStep();
+      } catch (error) {
+        console.error('error');
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      }
     },
     validationSchema: CompanyFirstFormValidator,
   });

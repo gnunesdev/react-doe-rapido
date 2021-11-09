@@ -14,12 +14,17 @@ export const SidebarContainer = styled.nav<SidebarContainerProps>`
   max-width: 280px;
   min-width: 280px;
   width: 280px;
+
   position: fixed;
   top: 62px;
   bottom: 0;
   left: 0;
-  background: ${(props) => props.theme.colors.primary};
+  z-index: 2;
+
   padding: 24px;
+
+  background: ${(props) => props.theme.colors.primary};
+
   transition: transform 250ms;
   transform: translateX(
     ${(props) => {

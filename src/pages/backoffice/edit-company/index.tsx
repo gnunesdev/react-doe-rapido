@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { NextPage } from 'next';
+import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from '../components/BackofficeContainer';
 import { EditCompanyFormValidator } from './constants/utils';
@@ -31,7 +32,14 @@ const EditCompanyPage: NextPage = () => {
       needs: [],
     },
     onSubmit: () => {
-      // console.log('OPA!');
+      try {
+        toast.success('Informações atualizadas com sucesso!');
+      } catch (error) {
+        console.error('error');
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      }
     },
     validationSchema: EditCompanyFormValidator,
   });
@@ -52,9 +60,13 @@ const EditCompanyPage: NextPage = () => {
       formik.setFieldValue('city', cepData.data.localidade);
       formik.setFieldValue('state', cepData.data.uf);
     } catch (e) {
-      // console.log('erro:', e);
+      console.error('error');
+      toast.error(
+        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+      );
     }
   }
+
   return (
     <BackofficeContainer>
       <Container>

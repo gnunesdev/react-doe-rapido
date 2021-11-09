@@ -37,13 +37,15 @@ const InnerSidebar: React.FC<InnerSidebarProps> = ({ isCollapsed }) => {
 
 export function Sidebar() {
   const minWidth = useMinWidth();
-  const { isCollapsed } = useSidebarContext();
+  const { isCollapsed, toggleCollapsed } = useSidebarContext();
   return (
     <>
       {minWidth(Breakpoint.large) && <SidebarVolume />}
       <Modal>
         <InnerSidebar isCollapsed={!minWidth(Breakpoint.large) && isCollapsed} />
-        {!minWidth(Breakpoint.large) && !isCollapsed && <Overlay />}
+        {!minWidth(Breakpoint.large) && !isCollapsed && (
+          <Overlay onClick={toggleCollapsed} />
+        )}
       </Modal>
     </>
   );

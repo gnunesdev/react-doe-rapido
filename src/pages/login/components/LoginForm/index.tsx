@@ -10,16 +10,12 @@ import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles'
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
-import { login } from '~/features/user';
-import { useAppDispatch } from '~/hooks/redux';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
 
 export function LoginForm() {
   const routes = useRouter();
-
-  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -34,17 +30,12 @@ export function LoginForm() {
           password: values.password,
         });
 
-        dispatch(
-          login({
-            name: 'nome teste',
-            email: values.email,
-          })
-        );
-
         routes.push('backoffice');
       } catch (error) {
-        console.error(error);
-        toast.error('Algum erro ocorreu, verifiique as informações e tente novamente');
+        console.error('error');
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
       }
     },
   });

@@ -1,9 +1,11 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
+import { CodeFormValidationSchema } from '../../utils';
 import {
   ButtonsContainer,
   CodeLinkContainer,
@@ -19,28 +21,32 @@ import { Title } from '~/components/Title';
 export function ConfirmContactForm() {
   const { colors } = useTheme();
 
-  const [timeToResend, setTimeToResend] = useState(5);
-  const [codeSent, setCodeSent] = useState(true);
+  const [timeToResend, setTimeToResend] = useState(60);
 
   const { goToNextStep } = useOnboardingSteps();
 
   useEffect(() => {
-    if (codeSent) {
-      timeToResend > 0 &&
-        setTimeout(() => {
-          setTimeToResend((prevState) => prevState - 1);
-        }, 1000);
-    }
-  }, [codeSent, timeToResend]);
+    timeToResend > 0 &&
+      setTimeout(() => {
+        setTimeToResend((prevState) => prevState - 1);
+      }, 1000);
+  }, [timeToResend]);
 
   const formik = useFormik({
     initialValues: {
       confirmationCode: '',
     },
     onSubmit: () => {
-      setCodeSent(true);
-      goToNextStep();
+      try {
+        goToNextStep();
+      } catch (error) {
+        console.error('error');
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      }
     },
+    validationSchema: CodeFormValidationSchema,
   });
 
   function handleResendCode() {
@@ -57,24 +63,31 @@ export function ConfirmContactForm() {
           description="Enviamos um código para seu e-mail cadastrado, por favor insira-o abaixo
         para finalizar seu cadastro:"
         />
-        <Input name="confirmationCode" inputSize="big" onChange={formik.handleChange} />
-        {codeSent && (
-          <CodeLinkContainer>
-            {timeToResend > 0 ? (
-              <Text
-                fontSize="1.8"
-                color={colors.primary}
-                description={`Enviar novamente (${String(timeToResend)})`}
-              />
-            ) : (
-              <ButtonLink
-                label="Enviar novamente"
-                handleClick={handleResendCode}
-                isButton={true}
-              />
-            )}
-          </CodeLinkContainer>
-        )}
+        <Input
+          name="confirmationCode"
+          inputSize="big"
+          onChange={formik.handleChange}
+          error={
+            formik.touched.confirmationCode && formik.errors.confirmationCode
+              ? formik.errors.confirmationCode
+              : ''
+          }
+        />
+        <CodeLinkContainer>
+          {timeToResend > 0 ? (
+            <Text
+              fontSize="1.8"
+              color={colors.primary}
+              description={`Enviar novamente (${String(timeToResend)})`}
+            />
+          ) : (
+            <ButtonLink
+              label="Enviar novamente"
+              handleClick={handleResendCode}
+              isButton={true}
+            />
+          )}
+        </CodeLinkContainer>
         <ButtonsContainer>
           <Button description="Confirme o código" type="submit" variant="primary" />
           <Button type="submit" variant="secondary">

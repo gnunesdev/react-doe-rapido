@@ -19,7 +19,7 @@ export default createGlobalStyle`
   select,
   button {
     border: none;
-    font: 400 1rem "Roboto", sans-serif;
+    font: 400 1.4rem "Roboto", sans-serif;
   }
   button {
     cursor: pointer;

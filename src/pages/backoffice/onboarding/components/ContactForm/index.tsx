@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
-import { LoginFormValidationSchema } from '../../utils';
+import { ContactFormValidationSchema } from '../../utils';
 import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
@@ -21,9 +22,16 @@ export function ContactForm() {
       confirmPassword: '',
     },
     onSubmit: () => {
-      goToNextStep();
+      try {
+        goToNextStep();
+      } catch (error) {
+        console.error('error');
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      }
     },
-    validationSchema: LoginFormValidationSchema,
+    validationSchema: ContactFormValidationSchema,
   });
 
   return (
