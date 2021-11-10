@@ -1,4 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
+import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
 
 import { CompanyFirstForm } from './components/CompanyFirstForm';
@@ -9,6 +10,7 @@ import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
 import { getCookies } from '~/utils';
+import { withSSRAuth } from '~/utils/withSSRAuth';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;
@@ -32,10 +34,12 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-  const currentStep = String(params?.step);
+export const getServerSideProps = withSSRAuth(async (context) => {
+  const { params } = context;
+  const cookies = parseCookies(context);
 
-  if (!Object.values(STEPS).includes(currentStep)) {
+  const currentStep = String(params?.step);
+  if (currentStep && !Object.values(STEPS).includes(currentStep)) {
     return {
       redirect: {
         destination: '/',
@@ -44,9 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     };
   }
 
-  const cookies = getCookies(req);
-  const realStep = cookies?.onboardingStep ? JSON.parse(cookies.onboardingStep) : '';
-
+  const realStep = cookies.onboardingStep;
   if (realStep && currentStep != realStep && Object.values(STEPS).includes(realStep)) {
     return {
       redirect: {
@@ -70,6 +72,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
       step: currentStep,
     },
   };
-};
+});
 
 export default OnboardingPage;

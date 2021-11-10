@@ -14,6 +14,7 @@ import { CompanyNeedsMap } from '~/constants';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { cleanPhone } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
+import { withSSRAuth } from '~/utils/withSSRAuth';
 
 const EditCompanyPage: NextPage = () => {
   const formik = useFormik({
@@ -214,5 +215,11 @@ const EditCompanyPage: NextPage = () => {
     </BackofficeContainer>
   );
 };
+
+export const getServerSideProps = withSSRAuth(async (context) => {
+  return {
+    props: {},
+  };
+});
 
 export default EditCompanyPage;

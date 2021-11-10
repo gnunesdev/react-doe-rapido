@@ -17,6 +17,7 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 
   @media (min-width: ${large}) {
     padding-left: 24px;

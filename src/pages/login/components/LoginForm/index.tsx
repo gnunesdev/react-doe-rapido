@@ -1,21 +1,20 @@
-import axios from 'axios';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
 import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { useAuthContext } from '~/context/useAuth';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
 
 export function LoginForm() {
-  const routes = useRouter();
+  const { signIn } = useAuthContext();
 
   const formik = useFormik({
     initialValues: {
@@ -24,19 +23,8 @@ export function LoginForm() {
     },
     validationSchema: LoginFormValidationSchema,
     onSubmit: async (values) => {
-      try {
-        await axios.post('/login', {
-          email: values.email,
-          password: values.password,
-        });
-
-        routes.push('backoffice');
-      } catch (error) {
-        console.error('error');
-        toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
-        );
-      }
+      const user = { email: values.email, password: values.password };
+      await signIn(user);
     },
   });
 
@@ -60,6 +48,7 @@ export function LoginForm() {
         <Input
           label="Senha:"
           name="password"
+          type="password"
           inputSize="big"
           onChange={formik.handleChange}
           error={

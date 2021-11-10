@@ -1,8 +1,8 @@
 import { Link } from '../Link';
 import { LinksSection, SidebarContainer, Overlay, SidebarVolume } from './styles';
 import Modal from '~/components/Modal';
-import { useSidebarContext } from '~/context/useSidebarState';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { useSidebarContext } from '~/hooks/useSidebarState';
 import { Breakpoint } from '~/styles/variables';
 
 export interface InnerSidebarProps {

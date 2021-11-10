@@ -14,8 +14,8 @@ import {
   HeaderLeft,
   Menu,
 } from './styles';
-import { useSidebarContext } from '~/context/useSidebarState';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { useSidebarContext } from '~/hooks/useSidebarState';
 import { Breakpoint } from '~/styles/variables';
 
 export function Header() {
