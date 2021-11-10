@@ -9,17 +9,17 @@ interface ActionButtonProps {
   email?: string;
 }
 
-export function ActionButton({ type, whatsPhone, phone, email }: ActionButtonProps) {
-  function handleClick() {
-    switch (type) {
-      case 'whats' && whatsPhone:
-        window.open(`https://api.whatsapp.com/send?phone=${whatsPhone}`, '_blank')?.focus();
-        break;
-      case 'phone':
-        console.log('todo');
-        break;
-    }
-  }
+export function ActionButton({ type }: ActionButtonProps) {
+  // function handleClick() {
+  //   switch (type) {
+  //     case 'whats' && whatsPhone:
+  //       window.open(`https://api.whatsapp.com/send?phone=${whatsPhone}`, '_blank')?.focus();
+  //       break;
+  //     case 'phone':
+  //       console.log('todo');
+  //       break;
+  //   }
+  // }
 
   return (
     <>

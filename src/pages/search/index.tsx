@@ -99,7 +99,7 @@ const AppPage: NextPage = () => {
         <SearchContent>
           <Title
             description="Pesquisa de instituições"
-            size={minWidth(Breakpoint.medium) ? 'big' : 'medium'}
+            size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
           />
           <SearchBar>
             <Input

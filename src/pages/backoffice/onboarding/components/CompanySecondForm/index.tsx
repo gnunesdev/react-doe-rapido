@@ -17,11 +17,14 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 import { cleanPhone } from '~/utils';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanySecondForm() {
   const { goToNextStep } = useOnboardingSteps();
+  const minWidth = useMinWidth();
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +52,10 @@ export function CompanySecondForm() {
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de instituição:" size="big" />
+      <Title
+        description="Cadastro de instituição:"
+        size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
+      />
       <CompanySecondFormStyled onSubmit={formik.handleSubmit}>
         <UploadImage />
         <InputRow>

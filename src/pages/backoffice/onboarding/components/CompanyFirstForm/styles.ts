@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
 import { SelectContainer } from '~/components/Select/styles';
+import { small } from '~/styles/variables';
 
 export const CompanyFirstFormContainer = styled.div`
   max-width: 1140px;
@@ -14,13 +15,23 @@ export const CompanyFirstFormStyled = styled.form`
 
 export const InputRow = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 2.4rem;
 
   ${InputContainer}, ${SelectContainer} {
-    width: 50%;
+    &:not(:first-child) {
+      margin-top: 24px;
+    }
+  }
 
-    &:last-child {
-      margin-left: 1.4rem;
+  @media (min-width: ${small}) {
+    flex-direction: row;
+    ${InputContainer}, ${SelectContainer} {
+      flex: 1;
+      &:not(:first-child) {
+        margin-top: 0;
+        margin-left: 16px;
+      }
     }
   }
 `;

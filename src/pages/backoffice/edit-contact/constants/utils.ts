@@ -22,5 +22,5 @@ export const ChangePasswordValidator = Yup.object({
     .min(6, 'A senha precisa ter no mínimo 6 dígitos'),
   confirmNewPassword: Yup.string()
     .required('Esse campo é obrigatório')
-    .oneOf([Yup.ref('password')], 'As senhas não conferem'),
+    .oneOf([Yup.ref('newPassword')], 'As senhas não conferem'),
 });
