@@ -1,7 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import { FaPen } from 'react-icons/fa';
 import InputMask from 'react-input-mask';
-import { useTheme } from 'styled-components';
 
 import { EditInputButton, InputContainer } from './styles';
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const CompanyListContainer = styled.div`
   margin-top: 3rem;
@@ -45,7 +45,7 @@ export const CompanyListContainer = styled.div`
 
 export const ItemInfo = styled.div`
   max-width: 100%;
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: calc(100% - 216px);
   }
 `;

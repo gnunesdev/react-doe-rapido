@@ -10,6 +10,8 @@ import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
+import { useMinWidth } from '~/hooks/useMinWidth';
+import { Breakpoint } from '~/styles/variables';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -19,8 +21,13 @@ interface ModalChangePasswordProps {
   handleCloseModal: VoidFunction;
 }
 
+interface ChangeValueStepProps {
+  handleCloseModal: VoidFunction;
+}
+
 export function ModalChangePassword({ handleCloseModal }: ModalChangePasswordProps) {
   const [codeValidated, setCodeValidated] = useState(false);
+  const minWidth = useMinWidth();
 
   function handleSetCodeValidated() {
     setCodeValidated(true);
@@ -28,20 +35,29 @@ export function ModalChangePassword({ handleCloseModal }: ModalChangePasswordPro
 
   return (
     <Modal>
-      <Overlay onClick={handleCloseModal}>
+      <Overlay
+        onClick={handleCloseModal}
+        as={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
         <ModalContainer
           as={motion.div}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
           variants={dropIn}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          <Title description="Editar senha" size="big" />
+          <Title
+            description="Editar senha"
+            size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
+          />
           {!codeValidated ? (
             <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
           ) : (
-            <ChangeValueStep />
+            <ChangeValueStep handleCloseModal={handleCloseModal} />
           )}
         </ModalContainer>
       </Overlay>
@@ -50,6 +66,7 @@ export function ModalChangePassword({ handleCloseModal }: ModalChangePasswordPro
 }
 
 function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
+  const minWidth = useMinWidth();
   const formik = useFormik({
     initialValues: {
       code: '',
@@ -62,7 +79,7 @@ function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
     <>
       <Text
         description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
-        fontSize="1.8"
+        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
         isBold={true}
       />
       <Form onSubmit={formik.handleSubmit}>
@@ -79,15 +96,15 @@ function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
   );
 }
 
-function ChangeValueStep() {
+function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
   const formik = useFormik({
     initialValues: {
-      currentPassword: '',
+      oldPassword: '',
       newPassword: '',
       confirmNewPassword: '',
     },
     onSubmit: () => {
-      // console.log('123');
+      handleCloseModal();
     },
     validationSchema: ChangePasswordValidator,
   });
@@ -95,25 +112,40 @@ function ChangeValueStep() {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Input
-        name="code"
+        name="oldPassword"
         label="Senha atual:"
         inputSize="big"
         onChange={formik.handleChange}
         type="password"
+        error={
+          formik.touched.oldPassword && formik.errors.oldPassword
+            ? formik.errors.oldPassword
+            : ''
+        }
       />
       <Input
-        name="code"
+        name="newPassword"
         label="Nova senha:"
         inputSize="big"
         onChange={formik.handleChange}
         type="password"
+        error={
+          formik.touched.newPassword && formik.errors.newPassword
+            ? formik.errors.newPassword
+            : ''
+        }
       />
       <Input
-        name="code"
+        name="confirmNewPassword"
         label="Confirma a nova senha:"
         inputSize="big"
         onChange={formik.handleChange}
         type="password"
+        error={
+          formik.touched.confirmNewPassword && formik.errors.confirmNewPassword
+            ? formik.errors.confirmNewPassword
+            : ''
+        }
       />
       <Button variant="primary" description="Confirmar edição" />
     </Form>

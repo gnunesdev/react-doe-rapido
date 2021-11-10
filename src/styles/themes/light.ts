@@ -16,6 +16,32 @@ const theme: DefaultTheme = {
     page: 'calc(100vh - 62px)',
   },
   typography: {
+    landingPage: {
+      title1: `
+        font-size: 2.6rem;
+        font-weight: bold;
+      `,
+      title2: `
+        font-size: 3.6rem;
+        font-weight: bold;
+      `,
+      title3: `
+        font-size: 5.6rem;
+        font-weight: bold;
+      `,
+      text1: `
+        font-size: 1.6rem;
+        font-weight: normal;
+      `,
+      text2: `
+        font-size: 2rem;
+        font-weight: normal;
+      `,
+      text3: `
+        font-size: 2.6rem;
+        font-weight: normal;
+      `,
+    },
     headline: `
       font-size: 2.4rem;
       font-weight: 900;

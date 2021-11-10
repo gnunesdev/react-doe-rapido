@@ -27,7 +27,7 @@ export function CompanyList({ companys }: CompanyListProps) {
           <li
             key={company.id_company}
             onClick={
-              !minWidth(Breakpoint.medium)
+              !minWidth(Breakpoint.small)
                 ? () => handleSeeOnMap(String(company.id_company))
                 : undefined
             }
@@ -37,7 +37,7 @@ export function CompanyList({ companys }: CompanyListProps) {
               <p>{company.address}</p>
               <span>Distância aproximada: {company.distance / 1000}km</span>
             </ItemInfo>
-            {minWidth(Breakpoint.medium) && (
+            {minWidth(Breakpoint.small) && (
               <Button
                 variant="primary"
                 description="Ver no mapa"

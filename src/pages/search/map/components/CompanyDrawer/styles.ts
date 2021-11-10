@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { ActionButtonContainer } from '~/components/ActionButton/styles';
 import { TitleStyled } from '~/components/Title/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export const CompanyDrawerContainer = styled.div`
   height: 100vh;
@@ -13,7 +13,7 @@ export const CompanyDrawerContainer = styled.div`
   top: 0;
   left: 0;
 
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: 480px;
   }
 `;

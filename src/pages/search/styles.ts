@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { CheckboxContainer } from '~/components/Checkbox/styles';
 import { LinkButton } from '~/components/Link/styles';
-import { medium } from '~/styles/variables';
+import { small } from '~/styles/variables';
 
 export interface SearchContainerProps {
   showingResults: boolean;
@@ -15,14 +15,14 @@ export const SearchContainer = styled.div<SearchContainerProps>`
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     padding-top: ${(props) => (props.showingResults ? '32px' : '30vh')};
   }
 `;
 
 export const SearchContent = styled.div`
   width: 100%;
-  @media (min-width: ${medium}) {
+  @media (min-width: ${small}) {
     max-width: 1280px;
   }
 `;

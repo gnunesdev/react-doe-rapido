@@ -17,6 +17,14 @@ declare module 'styled-components' {
       page: string;
     };
     typography: {
+      landingPage: {
+        title1: string;
+        title2: string;
+        title3: string;
+        text1: string;
+        text2: string;
+        text3: string;
+      };
       headline: string;
       title: string;
       body: string;
