@@ -7,7 +7,7 @@ interface TextProps {
   isBold?: boolean;
 }
 
-export const Text: React.FC<TextProps> = ({ description, fontSize, color, isBold }) => {
+export const Text: React.VFC<TextProps> = ({ description, fontSize, color, isBold }) => {
   return (
     <TextStyled fontSize={fontSize} color={color} isBold={isBold}>
       {description}

@@ -6,7 +6,7 @@ import { ButtonLink } from '~/components/ButtonLink';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 
-const Section3: React.FC = () => {
+const Section3: React.VFC = () => {
   const minWidth = useMinWidth();
   return (
     <Wrapper>

@@ -1,7 +1,7 @@
 import { Wrapper } from './styles';
 import { ButtonLink } from '~/components/ButtonLink';
 
-const Section2: React.FC = () => {
+const Section2: React.VFC = () => {
   return (
     <Wrapper>
       <div className="container">

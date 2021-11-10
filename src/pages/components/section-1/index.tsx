@@ -1,6 +1,6 @@
 import { Wrapper } from './styles';
 
-const Section1: React.FC = () => {
+const Section1: React.VFC = () => {
   return (
     <Wrapper>
       <div className="container">

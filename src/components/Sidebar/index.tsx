@@ -9,7 +9,7 @@ export interface InnerSidebarProps {
   isCollapsed: boolean;
 }
 
-const InnerSidebar: React.FC<InnerSidebarProps> = ({ isCollapsed }) => {
+const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed }) => {
   return (
     <SidebarContainer isCollapsed={isCollapsed}>
       <LinksSection>
