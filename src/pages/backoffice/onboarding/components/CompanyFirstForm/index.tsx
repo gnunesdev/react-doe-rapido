@@ -77,21 +77,16 @@ export function CompanyFirstForm() {
   }
 
   return (
-<<<<<<< HEAD
     <CompanyFirstFormContainer
       as={motion.div}
       initial="hidden"
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de instituição" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
-=======
-    <CompanyFirstFormContainer>
       <Title
         description="Cadastro de instituição"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
->>>>>>> db5e743 (feat(landingPage): fazer landingPage)
       <CompanyFirstFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="tradingName"

@@ -11,7 +11,6 @@ import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { useMinWidth } from '~/hooks/useMinWidth';
-import { Overlay } from '~/pages/search/map/components/CompanyDrawer/styles';
 import { Breakpoint } from '~/styles/variables';
 
 interface CodeStepProps {
@@ -45,13 +44,16 @@ export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
       >
         <ModalContainer
           as={motion.div}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
           variants={dropIn}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          <Title description="Editar e-mail" size={minWidth(Breakpoint.small) ? 'big' : 'medium'} />
+          <Title
+            description="Editar e-mail"
+            size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
+          />
           {!codeValidated ? (
             <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
           ) : (

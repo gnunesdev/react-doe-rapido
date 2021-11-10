@@ -1,5 +1,4 @@
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
-import { url } from 'inspector';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -36,7 +35,9 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   }, []);
 
   const panTo = useCallback((lat, lng) => {
-    mapRef.current.panTo({ lat, lng });
+    if (mapRef.current) {
+      (mapRef.current as any).panTo({ lat, lng });
+    }
     // mapRef.current.setZoom(14);
   }, []);
 
@@ -87,7 +88,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
           <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
         </InfoWindow>
       )}
-      {isDrawerOpen && (
+      {isDrawerOpen && selectedCompany && (
         <CompanyDrawer
           closeModal={handleCloseDrawer}
           companyData={selectedCompany}

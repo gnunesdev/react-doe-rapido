@@ -46,21 +46,16 @@ export function CompanySecondForm() {
   });
 
   return (
-<<<<<<< HEAD
     <CompanySecondFormContainer
       as={motion.div}
       initial="hidden"
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de instituição:" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
-=======
-    <CompanySecondFormContainer>
       <Title
         description="Cadastro de instituição:"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
->>>>>>> db5e743 (feat(landingPage): fazer landingPage)
       <CompanySecondFormStyled onSubmit={formik.handleSubmit}>
         <UploadImage />
         <InputRow>

@@ -38,21 +38,16 @@ export function ContactForm() {
   });
 
   return (
-<<<<<<< HEAD
     <ContactFormContainer
       as={motion.div}
       initial="hidden"
       animate="animate"
       variants={fadeIn}
     >
-      <Title description="Cadastro de acesso:" size={minWidth(Breakpoint.medium) ? 'big' : 'medium'} />
-=======
-    <ContactFormContainer>
       <Title
         description="Cadastro de acesso:"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
->>>>>>> db5e743 (feat(landingPage): fazer landingPage)
       <ContactFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="name"

@@ -44,8 +44,6 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
     }
   }
 
-  console.log(company);
-
   return (
     company && (
       <Modal>

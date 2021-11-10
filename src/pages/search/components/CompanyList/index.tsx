@@ -26,17 +26,11 @@ export function CompanyList({ companys }: CompanyListProps) {
         {companys.map((company) => (
           <li
             key={company.id_company}
-<<<<<<< HEAD
             onClick={
               !minWidth(Breakpoint.small)
                 ? () => handleSeeOnMap(String(company.id_company))
                 : undefined
             }
-=======
-            {...(!minWidth(Breakpoint.small) && {
-              onClick: () => handleSeeOnMap('' + company.id_company),
-            })}
->>>>>>> db5e743 (feat(landingPage): fazer landingPage)
           >
             <ItemInfo>
               <strong>{company.name}</strong>

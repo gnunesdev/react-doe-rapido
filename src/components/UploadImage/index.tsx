@@ -4,6 +4,7 @@ import { Button } from '../Button';
 import { UploadImageContainer } from './styles';
 
 export const UploadImage: React.VFC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedFile, setSelectedFile] = useState(null);
   const inputRef = useRef(null);
 
@@ -12,7 +13,9 @@ export const UploadImage: React.VFC = () => {
   }
 
   function handleClickInputUpload() {
-    inputRef.current?.click!();
+    if (inputRef.current) {
+      (inputRef.current as any).click();
+    }
   }
 
   return (

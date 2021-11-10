@@ -13,6 +13,7 @@ export const HeaderContainer = styled.header`
   padding-right: 24px;
   background: ${(props) => props.theme.colors.primary};
   position: fixed;
+  z-index: 1;
   top: 0;
   display: flex;
   justify-content: space-between;
