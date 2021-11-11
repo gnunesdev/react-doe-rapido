@@ -14,7 +14,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
     if (!cookies['doerapido.token']) {
       return {
         redirect: {
-          destination: '/backoffice',
+          destination: '/login',
           permanent: false,
         },
       };

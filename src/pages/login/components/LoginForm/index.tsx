@@ -1,11 +1,10 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/dist/client/router';
-import Link from 'next/link';
 
 import { LoginFormValidationSchema } from '../../utils';
 import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
 import { Button } from '~/components/Button';
+import { ButtonLink } from '~/components/ButtonLink';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { useAuthContext } from '~/context/useAuth';
@@ -57,9 +56,13 @@ export function LoginForm() {
         />
         <ButtonsContainer>
           <Button variant="primary" description="Login" type="submit" width="auto" />
-          <Button variant="secondary" type="button" width="auto">
-            <Link href="/backoffice/onboarding/contact">Cadastre-se</Link>
-          </Button>
+          <ButtonLink
+            variant="secondary"
+            type="button"
+            width="auto"
+            description="Cadastre-se"
+            href="/backoffice/onboarding/contact"
+          />
         </ButtonsContainer>
       </LoginFormStyled>
     </LoginFormContainer>

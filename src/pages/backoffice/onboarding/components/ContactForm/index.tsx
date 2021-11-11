@@ -9,12 +9,15 @@ import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './sty
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { useAuthContext } from '~/context/useAuth';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
+  const { updateUser } = useAuthContext();
   const minWidth = useMinWidth();
 
   const formik = useFormik({
@@ -24,8 +27,20 @@ export function ContactForm() {
       password: '',
       confirmPassword: '',
     },
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
+        const user = {
+          name: formik.values.name,
+          email: formik.values.email,
+          password: formik.values.password,
+        };
+
+        const { data: userData } = await publicApi.post('/user', {
+          ...user,
+        });
+
+        updateUser({ id: userData.id, name: userData.name, email: userData.email });
+
         goToNextStep();
       } catch (error) {
         console.error('error');
@@ -87,7 +102,7 @@ export function ContactForm() {
         />
         <ButtonsContainer>
           <Button variant="primary" type="submit" description="Enviar" />
-          <Link href="/teste">
+          <Link href="/login">
             <Button variant="secondary" description="Voltar para o login" />
           </Link>
         </ButtonsContainer>

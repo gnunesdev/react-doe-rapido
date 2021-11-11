@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useContext } from 'react';
+import { setCookie } from 'nookies';
+import { createContext, ReactNode, useCallback, useContext, useMemo } from 'react';
 
 import { STEPS } from './../constants';
 import usePersistedState from '~/hooks/usePersistedState';
@@ -17,19 +18,18 @@ const OnboardingStepsContext = createContext({} as OnboardingStepsContextData);
 
 export const OnboardingStepsProvider = ({ children }: OnboardingStepsProviderProps) => {
   const router = useRouter();
-
-  /**
-   * Set initial step to the first one in the contant Object
-   */
   const [currentStep, setCurrentStep] = usePersistedState('onboardingStep', STEPS.contact);
 
-  const OnboardingSteps = Object.values(STEPS);
-  const currentIndexStep = OnboardingSteps.findIndex((step) => step === currentStep);
+  const OnboardingSteps = useMemo(() => Object.values(STEPS), []);
+  const currentIndexStep = useMemo(
+    () => OnboardingSteps.findIndex((step) => step === currentStep),
+    [currentStep]
+  );
 
-  function goToNextStep() {
+  const goToNextStep = () => {
     setCurrentStep(OnboardingSteps[currentIndexStep + 1]);
     router.push(`/backoffice/onboarding/${OnboardingSteps[currentIndexStep + 1]}`);
-  }
+  };
 
   return (
     <OnboardingStepsContext.Provider value={{ currentStep, goToNextStep }}>

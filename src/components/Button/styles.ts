@@ -43,6 +43,8 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
 
   transition: all 0.235s ease-in-out;
 
+  z-index: 1;
+
   ${({ theme, variant }) => css`
     ${ButtonVariants[variant](theme)}
   `}

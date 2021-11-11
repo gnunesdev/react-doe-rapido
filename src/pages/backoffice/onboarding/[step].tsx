@@ -34,7 +34,7 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   );
 };
 
-export const getServerSideProps = withSSRAuth(async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   const cookies = parseCookies(context);
 
@@ -42,7 +42,7 @@ export const getServerSideProps = withSSRAuth(async (context) => {
   if (currentStep && !Object.values(STEPS).includes(currentStep)) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/login',
         permanent: false,
       },
     };
@@ -72,6 +72,6 @@ export const getServerSideProps = withSSRAuth(async (context) => {
       step: currentStep,
     },
   };
-});
+};
 
 export default OnboardingPage;

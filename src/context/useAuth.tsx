@@ -21,6 +21,8 @@ interface AuthProviderContextData {
   user: User;
   isLoggedIn: false;
   signIn: (credentials: SignInCredentials) => void;
+  signInOnOnboarding: (access: AccessCredential) => void;
+  updateUser: (user: User) => void;
 }
 
 interface AuthProviderProps {
@@ -43,6 +45,11 @@ interface JwtTokenResponse {
   id: string;
   nbf: number;
   unique_name: string;
+}
+
+interface AccessCredential {
+  token: string;
+  refreshToken: string;
 }
 
 export function signOut() {
@@ -120,7 +127,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       api.defaults.headers['Authorization'] = `Bearer ${access.token}`;
 
-      router.push('/backoffice');
+      const cookies = parseCookies();
+
+      console.log(JSON.stringify(cookies.onboardingStep));
+
+      if (cookies.onboardingStep !== 'finished') {
+        console.log('abc');
+        router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
+      } else {
+        router.push('/backoffice');
+      }
     } catch (error) {
       console.error('error', error);
       toast.error(
@@ -129,8 +145,44 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
+  async function signInOnOnboarding({ token, refreshToken }: AccessCredential) {
+    try {
+      setCookie(undefined, 'doerapido.token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/',
+      });
+      setCookie(undefined, 'doerapido.refreshToken', refreshToken, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/',
+      });
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+      const jwtData: JwtTokenResponse = jwtDecode(token);
+
+      const { data: userData } = await api.get(`/user/${jwtData.id}`);
+
+      setUser({
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+      });
+    } catch (error) {
+      console.error('error', error);
+      toast.error(
+        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+      );
+    }
+  }
+
+  function updateUser({ id, name, email }) {
+    setUser({ id, name, email });
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, signIn }}>
+    <AuthContext.Provider
+      value={{ user, isLoggedIn, signIn, signInOnOnboarding, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

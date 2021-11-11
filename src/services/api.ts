@@ -82,7 +82,4 @@ api.interceptors.response.use(
 
 export const publicApi = axios.create({
   baseURL: 'https://doerapidoapi.azurewebsites.net/api',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
 });

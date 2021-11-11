@@ -1,19 +1,20 @@
-import Cookie from 'js-cookie';
+import { parseCookies, setCookie } from 'nookies';
 import { useState, useEffect } from 'react';
 
 export default function usePersistedState(key: string, initialState: any) {
   const [state, setState] = useState(() => {
-    const storageValue = Cookie.get(key);
+    const cookies = parseCookies();
+    const storageValue = cookies[key];
 
     if (storageValue) {
-      return JSON.parse(storageValue);
+      return cookies[key];
     } else {
       return initialState;
     }
   });
 
   useEffect(() => {
-    Cookie.set(key, JSON.stringify(state));
+    setCookie(undefined, key, state);
   }, [key, state]);
 
   return [state, setState];

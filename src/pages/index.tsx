@@ -12,16 +12,6 @@ import { Breakpoint } from '~/styles/variables';
 const Home: NextPage = () => {
   const minWidth = useMinWidth();
 
-  async function get() {
-    await getCompanysToRenderInMap('138616983');
-    // const teste = await getCompanysToRenderInMap('138616983');
-    // console.log('teste', teste);
-  }
-  useEffect(() =>
-    (() => {
-      get();
-    })()
-  );
   return (
     <StyledPageContainer>
       <Section1></Section1>

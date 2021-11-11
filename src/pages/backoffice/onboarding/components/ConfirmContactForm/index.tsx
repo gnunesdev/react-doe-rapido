@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { apiResolver } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -17,17 +18,18 @@ import { Input } from '~/components/Input';
 import { Link as ButtonLink } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
+import { useAuthContext } from '~/context/useAuth';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { api, publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();
+  const { goToNextStep } = useOnboardingSteps();
+  const { signInOnOnboarding, user } = useAuthContext();
+  const minWidth = useMinWidth();
 
   const [timeToResend, setTimeToResend] = useState(60);
-
-  const { goToNextStep } = useOnboardingSteps();
-
-  const minWidth = useMinWidth();
 
   useEffect(() => {
     timeToResend > 0 &&
@@ -40,8 +42,13 @@ export function ConfirmContactForm() {
     initialValues: {
       confirmationCode: '',
     },
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
+        const { data: confirmEmailResponse } = await publicApi.post('/confirm-email', {
+          code: formik.values.confirmationCode,
+          email: user.email,
+        });
+        await signInOnOnboarding(confirmEmailResponse.access);
         goToNextStep();
       } catch (error) {
         console.error('error');
@@ -53,7 +60,10 @@ export function ConfirmContactForm() {
     validationSchema: CodeFormValidationSchema,
   });
 
-  function handleResendCode() {
+  async function handleResendCode() {
+    // await publicApi.post('/confirm-email', {
+    //   id: user
+    // })
     setTimeToResend(60);
   }
 
