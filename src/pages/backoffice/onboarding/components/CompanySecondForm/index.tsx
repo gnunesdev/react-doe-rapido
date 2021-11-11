@@ -30,6 +30,7 @@ export function CompanySecondForm() {
     initialValues: {
       phone: '',
       email: '',
+      image: '',
       needs: [],
     },
     onSubmit: () => {
@@ -57,7 +58,7 @@ export function CompanySecondForm() {
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
       <CompanySecondFormStyled onSubmit={formik.handleSubmit}>
-        <UploadImage />
+        <UploadImage onChange={(value) => formik.setFieldValue('image', value)} />
         <InputRow>
           <Input
             name="phone"

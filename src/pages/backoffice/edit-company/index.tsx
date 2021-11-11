@@ -4,12 +4,20 @@ import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from '../components/BackofficeContainer';
 import { EditCompanyFormValidator } from './constants/utils';
-import { ButtonsContainer, Container, Form, InputRow, NeedsContainer } from './styles';
+import {
+  ButtonsContainer,
+  Container,
+  Form,
+  InputRow,
+  NeedsContainer,
+  ImageInput,
+} from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
+import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { getAddressByCep, isAddress } from '~/services/cep';
@@ -33,10 +41,12 @@ const EditCompanyPage: NextPage = () => {
       state: '',
       phone: '',
       email: '',
+      image: '',
       needs: [],
     },
     onSubmit: () => {
       try {
+        console.log(formik.values);
         toast.success('Informações atualizadas com sucesso!');
       } catch (error) {
         console.error('error');
@@ -196,6 +206,9 @@ const EditCompanyPage: NextPage = () => {
               error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
             />
           </InputRow>
+          <ImageInput>
+            <UploadImage onChange={(value) => formik.setFieldValue('image', value)} />
+          </ImageInput>
           <NeedsContainer>
             <Title size="small" description="Principais necessidades" />
             {Object.values(CompanyNeedsMap).map((need) => (

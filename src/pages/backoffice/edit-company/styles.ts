@@ -56,3 +56,7 @@ export const NeedsContainer = styled.div`
     margin-bottom: 1rem;
   }
 `;
+
+export const ImageInput = styled.div`
+  margin-top: 16px;
+`;
