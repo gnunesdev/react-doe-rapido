@@ -5,8 +5,10 @@ export const ActionButtonContainer = styled.button`
   height: 48px;
   background: ${(props) => props.theme.colors.primary};
   border-radius: 16px;
-
   transition: all 0.175s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     border-radius: 50%;
