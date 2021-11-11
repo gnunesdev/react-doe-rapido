@@ -10,17 +10,17 @@ interface ActionButtonProps {
   email?: string;
 }
 
-export function ActionButton({ type, whatsPhone }: ActionButtonProps) {
+export function ActionButton({ type, whatsPhone, email, phone }: ActionButtonProps) {
   function handleClick() {
     switch (type) {
       case 'whats':
         window.open(`https://api.whatsapp.com/send?phone=${whatsPhone}`, '_blank');
         break;
       case 'phone':
-        window.open(`tel:11951584888`, '_blank');
+        window.open(`tel:${phone}`, '_blank');
         break;
       case 'email':
-        window.open(`mailto:carlos.henrique0307200@gmial.com?subject=Assunto`, '_blank');
+        window.open(`mailto:${email}?subject=Doação`, '_blank');
         break;
       case 'share':
         navigator.clipboard.writeText(window.location.href);
