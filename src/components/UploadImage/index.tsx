@@ -14,8 +14,11 @@ export const UploadImage: React.VFC<UploadImageProps> = ({ onChange }) => {
   const [imageName, setImageName] = useState<string>();
   const [image, setImage] = useState<string>();
 
-  async function handleFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  async function handleFileSelected(event: React.ChangeEvent<HTMLInputElement>) {
+    if (!event.currentTarget.files?.length) {
+      return;
+    }
+    const file: File = event.currentTarget.files[0];
     const base64Image = await blobToBase64(file);
     setImageName(file.name);
     setImage(base64Image);
