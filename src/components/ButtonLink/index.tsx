@@ -8,7 +8,7 @@ interface ButtonProps {
   onClick?: VoidFunction;
 }
 
-export const ButtonLink: React.FC<React.ComponentProps<'button'> & ButtonProps> = ({
+export const ButtonLink: React.VFC<React.ComponentProps<'button'> & ButtonProps> = ({
   description,
   variant,
   width = 200,
