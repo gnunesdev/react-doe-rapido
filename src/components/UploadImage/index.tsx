@@ -37,6 +37,10 @@ export const UploadImage: React.VFC<UploadImageProps> = ({ onChange }) => {
     if (onChange) {
       onChange();
     }
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.value = '';
   }
 
   return (
