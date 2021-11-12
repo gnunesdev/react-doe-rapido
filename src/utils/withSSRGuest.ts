@@ -12,13 +12,13 @@ export function withSSRGuest<P>(fn: GetServerSideProps<P>) {
     const cookies = parseCookies(context);
 
     if (
-      cookies['onboarding'] &&
-      cookies['onboarding'] !== 'finished' &&
+      cookies['onboardingStep'] &&
+      cookies['onboardingStep'] !== 'finished' &&
       cookies['doerapido.token']
     ) {
       return {
         redirect: {
-          destination: '/backoffice/onboarding',
+          destination: `/backoffice/onboarding/${cookies['onboardingStep']}`,
           permanent: false,
         },
       };

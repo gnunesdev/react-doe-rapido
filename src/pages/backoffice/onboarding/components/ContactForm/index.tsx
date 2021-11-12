@@ -7,6 +7,7 @@ import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { ContactFormValidationSchema } from '../../utils';
 import { ContactFormStyled, ContactFormContainer, ButtonsContainer } from './styles';
 import { Button } from '~/components/Button';
+import { ButtonLink } from '~/components/ButtonLink';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { useAuthContext } from '~/context/useAuth';
@@ -102,9 +103,7 @@ export function ContactForm() {
         />
         <ButtonsContainer>
           <Button variant="primary" type="submit" description="Enviar" />
-          <Link href="/login">
-            <Button variant="secondary" description="Voltar para o login" />
-          </Link>
+          <ButtonLink description="Voltar para o login" href="/login" variant="secondary" />
         </ButtonsContainer>
       </ContactFormStyled>
     </ContactFormContainer>

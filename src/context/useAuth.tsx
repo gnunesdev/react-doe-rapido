@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const { 'doerapido.token': token } = parseCookies();
 
-    if (token) {
+    if (token && !router.pathname.split('/').includes('onboarding')) {
       const data: JwtTokenResponse = jwtDecode(token);
       updateInfoOnLogin(data.id);
     }
@@ -129,10 +129,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const cookies = parseCookies();
 
-      console.log(JSON.stringify(cookies.onboardingStep));
-
       if (cookies.onboardingStep !== 'finished') {
-        console.log('abc');
         router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
       } else {
         router.push('/backoffice');
