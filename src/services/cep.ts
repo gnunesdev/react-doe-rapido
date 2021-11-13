@@ -1,4 +1,4 @@
-import { api } from './api';
+import { publicApi } from './api';
 
 export interface ViacepAddress {
   cep: string;
@@ -19,7 +19,7 @@ export interface ViacepNotFound {
 export type ViacepResponse = ViacepAddress | ViacepNotFound;
 
 export async function getAddressByCep(cep: string) {
-  return api.get<ViacepResponse>(`https://viacep.com.br/ws/${cep}/json/`);
+  return publicApi.get<ViacepResponse>(`https://viacep.com.br/ws/${cep}/json/`);
 }
 
 export const isAddress = (response: ViacepResponse): response is ViacepAddress =>

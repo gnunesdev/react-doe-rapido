@@ -9,8 +9,7 @@ import { ContactForm } from './components/ContactForm';
 import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
-import { getCookies } from '~/utils';
-import { withSSRAuth } from '~/utils/withSSRAuth';
+import { Header } from '~/components/Header';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;
@@ -25,12 +24,15 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
   }, [currentStep, stepToRender]);
 
   return (
-    <OnboardingContainer>
-      {step === STEPS.contact && <ContactForm />}
-      {step === STEPS.confirmContact && <ConfirmContactForm />}
-      {step === STEPS.company1 && <CompanyFirstForm />}
-      {step === STEPS.company2 && <CompanySecondForm />}
-    </OnboardingContainer>
+    <>
+      <Header />
+      <OnboardingContainer>
+        {step === STEPS.contact && <ContactForm />}
+        {step === STEPS.confirmContact && <ConfirmContactForm />}
+        {step === STEPS.company1 && <CompanyFirstForm />}
+        {step === STEPS.company2 && <CompanySecondForm />}
+      </OnboardingContainer>
+    </>
   );
 };
 

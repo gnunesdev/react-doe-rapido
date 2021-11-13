@@ -17,14 +17,18 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
+import { useCompanyContext } from '~/context/useCompany';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
-import { cleanPhone } from '~/utils';
+import { clearMask } from '~/utils';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanySecondForm() {
   const { goToNextStep } = useOnboardingSteps();
   const minWidth = useMinWidth();
+
+  const { company } = useCompanyContext();
 
   const formik = useFormik({
     initialValues: {
@@ -33,11 +37,22 @@ export function CompanySecondForm() {
       image: '',
       needs: [],
     },
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
+        const companyData = {
+          phone: formik.values.phone,
+          email: formik.values.email,
+          needs: formik.values.needs,
+          ...(formik.values.image && { image: formik.values.image }),
+        };
+
+        await api.put(`/company/${company.id}`, {
+          ...companyData,
+        });
+
         goToNextStep();
       } catch (error) {
-        console.error('error');
+        console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
@@ -66,7 +81,7 @@ export function CompanySecondForm() {
             onChange={formik.handleChange}
             label="Telefone:"
             mask={
-              cleanPhone(formik.values.phone).length >= 10
+              clearMask(formik.values.phone).length >= 10
                 ? '(99)99999-9999'
                 : '(99)9999-9999'
             }

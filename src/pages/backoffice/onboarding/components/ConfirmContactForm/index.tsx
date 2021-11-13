@@ -19,14 +19,17 @@ import { Link as ButtonLink } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { useAuthContext } from '~/context/useAuth';
+import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
-import { api, publicApi } from '~/services/api';
+import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 
 export function ConfirmContactForm() {
   const { colors } = useTheme();
   const { goToNextStep } = useOnboardingSteps();
-  const { signInOnOnboarding, user } = useAuthContext();
+  const { signInOnOnboarding } = useAuthContext();
+  const { user } = useUserContext();
+
   const minWidth = useMinWidth();
 
   const [timeToResend, setTimeToResend] = useState(60);
@@ -51,7 +54,7 @@ export function ConfirmContactForm() {
         await signInOnOnboarding(confirmEmailResponse.access);
         goToNextStep();
       } catch (error) {
-        console.error('error');
+        console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );

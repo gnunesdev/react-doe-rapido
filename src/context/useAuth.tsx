@@ -4,13 +4,9 @@ import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { useCompanyContext } from './useCompany';
+import { User, useUserContext } from './useUser';
 import { api, publicApi } from '~/services/api';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
 
 interface SignInCredentials {
   email: string;
@@ -18,11 +14,9 @@ interface SignInCredentials {
 }
 
 interface AuthProviderContextData {
-  user: User;
   isLoggedIn: false;
   signIn: (credentials: SignInCredentials) => void;
   signInOnOnboarding: (access: AccessCredential) => void;
-  updateUser: (user: User) => void;
 }
 
 interface AuthProviderProps {
@@ -38,7 +32,7 @@ interface LoginResponse {
   user: User;
 }
 
-interface JwtTokenResponse {
+export interface JwtTokenResponse {
   email: string;
   exp: number;
   iat: number;
@@ -53,25 +47,25 @@ interface AccessCredential {
 }
 
 export function signOut() {
-  destroyCookie(undefined, 'doerapido.token');
-  destroyCookie(undefined, 'doerapido.refreshToken');
+  destroyCookie(undefined, 'doerapido.token', { path: '/' });
+  destroyCookie(undefined, 'doerapido.refreshToken', { path: '/' });
 
-  Router.push('/login');
+  Router.push('/');
 }
 
 const AuthContext = createContext({} as AuthProviderContextData);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
-
-  const [user, setUser] = useState<User>();
-  const [company, setCompany] = useState<any>();
   const isLoggedIn = false;
+
+  const { updateUser } = useUserContext();
+  const { updateCompany } = useCompanyContext();
 
   useEffect(() => {
     const { 'doerapido.token': token } = parseCookies();
 
-    if (token && !router.pathname.split('/').includes('onboarding')) {
+    if (token && router.pathname.split('/').includes('onboarding')) {
       const data: JwtTokenResponse = jwtDecode(token);
       updateInfoOnLogin(data.id);
     }
@@ -79,21 +73,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   async function updateInfoOnLogin(id: string) {
     try {
-      const { data: user } = await api(`/user/${id}`);
-      const { data: company } = await api(`/companyByUserId/${id}`);
+      const dataUser = await api(`/user/${id}`);
 
-      setUser({
-        id: user.id,
-        email: user.name,
-        name: user.name,
-      });
+      if (dataUser.data) {
+        updateUser({
+          id: dataUser.data.user?.id,
+          email: dataUser.data.user?.email,
+          name: dataUser.data.user?.name,
+        });
+      }
 
-      setCompany({
-        company,
-      });
+      const dataCompany = await api(`/companyByUserId/${id}`);
+
+      if (dataCompany.data) {
+        updateCompany(dataCompany.data.company);
+      }
     } catch (error) {
       console.error(error);
-      signOut();
     }
   }
 
@@ -104,7 +100,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password,
       });
 
-      const { user, access, company } = response.data;
+      const { user: userData, access, company: companyData } = response.data;
 
       setCookie(undefined, 'doerapido.token', access.token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
@@ -115,14 +111,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         path: '/',
       });
 
-      setUser({
-        id: user.id,
-        email: user.email,
-        name: user.name,
+      updateUser({
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
       });
 
-      if (company) {
-        setCompany(company);
+      if (companyData) {
+        updateCompany(companyData);
       }
 
       api.defaults.headers['Authorization'] = `Bearer ${access.token}`;
@@ -159,7 +155,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const { data: userData } = await api.get(`/user/${jwtData.id}`);
 
-      setUser({
+      updateUser({
         id: userData.id,
         email: userData.email,
         name: userData.name,
@@ -172,13 +168,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
-  function updateUser({ id, name, email }) {
-    setUser({ id, name, email });
-  }
-
   return (
     <AuthContext.Provider
-      value={{ user, isLoggedIn, signIn, signInOnOnboarding, updateUser }}
+      value={{
+        isLoggedIn,
+        signIn,
+        signInOnOnboarding,
+      }}
     >
       {children}
     </AuthContext.Provider>

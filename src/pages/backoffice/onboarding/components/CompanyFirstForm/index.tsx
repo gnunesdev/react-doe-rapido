@@ -14,15 +14,20 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
+import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { api } from '~/services/api';
 import { ViacepAddress, getAddressByCep, isAddress } from '~/services/cep';
 import { Breakpoint } from '~/styles/variables';
+import { clearMask } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanyFirstForm() {
   const { goToNextStep } = useOnboardingSteps();
   const minWidth = useMinWidth();
+
+  const { user } = useUserContext();
 
   const formik = useFormik({
     initialValues: {
@@ -36,11 +41,29 @@ export function CompanyFirstForm() {
       city: '',
       state: '',
     },
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
+        const company = {
+          idUser: user.id,
+          tradingName: formik.values.tradingName,
+          name: formik.values.name,
+          cnpj: clearMask(formik.values.cnpj),
+          cep: clearMask(formik.values.cep),
+          street: formik.values.street,
+          number: formik.values.number,
+          district: formik.values.district,
+          city: formik.values.city,
+          state: formik.values.state,
+        };
+        console.log({ company });
+        await api.post('/company', {
+          ...company,
+        });
+        // updateCompany({
+        // })
         goToNextStep();
       } catch (error) {
-        console.error('error');
+        console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
@@ -59,9 +82,9 @@ export function CompanyFirstForm() {
 
       if (cepData) {
         if (!isAddress(cepData.data)) {
-          // console.log('not found');
           return;
         }
+
         const address: ViacepAddress = cepData.data;
 
         if (address) {

@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
+import jwtDecode from 'jwt-decode';
 import { NextPage } from 'next';
+import { parseCookies } from 'nookies';
 import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from '../components/BackofficeContainer';
@@ -19,29 +21,39 @@ import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
+import { JwtTokenResponse } from '~/context/useAuth';
+import { Company } from '~/context/useCompany';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { setupAuthorizedApi } from '~/services/api';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { Breakpoint } from '~/styles/variables';
-import { cleanPhone } from '~/utils';
+import { clearMask } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 import { withSSRAuth } from '~/utils/withSSRAuth';
 
-const EditCompanyPage: NextPage = () => {
+interface EditCompanyPageProps {
+  company: Company;
+}
+
+const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company }) => {
   const minWidth = useMinWidth();
+
+  console.log({ company });
+
   const formik = useFormik({
     initialValues: {
-      tradingName: '',
-      name: '',
-      cnpj: '',
-      cep: '',
-      street: '',
-      number: '',
-      district: '',
-      city: '',
-      state: '',
+      tradingName: company.tradingName,
+      name: company.name,
+      cnpj: company.cnpj,
+      cep: company.cep,
+      street: company.street,
+      number: company.number,
+      district: company.district,
+      city: company.city,
+      state: company.state,
       phone: '',
-      email: '',
-      image: '',
+      email: company.email,
+      image: company.image,
       needs: [],
     },
     onSubmit: () => {
@@ -49,7 +61,7 @@ const EditCompanyPage: NextPage = () => {
         console.log(formik.values);
         toast.success('Informações atualizadas com sucesso!');
       } catch (error) {
-        console.error('error');
+        console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
@@ -192,7 +204,7 @@ const EditCompanyPage: NextPage = () => {
               onChange={formik.handleChange}
               label="Telefone:"
               mask={
-                cleanPhone(formik.values.phone).length >= 10
+                clearMask(formik.values.phone).length >= 10
                   ? '(99)99999-9999'
                   : '(99)9999-9999'
               }
@@ -236,8 +248,17 @@ const EditCompanyPage: NextPage = () => {
 };
 
 export const getServerSideProps = withSSRAuth(async (context) => {
+  const { 'doerapido.token': token } = parseCookies(context);
+  const { id }: JwtTokenResponse = jwtDecode(token);
+
+  const api = setupAuthorizedApi(context);
+
+  const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
+
   return {
-    props: {},
+    props: {
+      company,
+    },
   };
 });
 

@@ -7,6 +7,7 @@ export const OnboardingContainer = styled.div`
   min-height: ${(props) => props.theme.containers.page};
   display: flex;
   justify-content: center;
+
   @media (min-width: ${small}) {
     align-items: center;
   }

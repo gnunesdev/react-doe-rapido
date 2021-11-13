@@ -10,7 +10,6 @@ export const HeaderVolume = styled.div`
 export const HeaderContainer = styled.header`
   width: 100%;
   height: 62px;
-  padding-left: 18px;
   padding-right: 24px;
   background: ${(props) => props.theme.colors.primary};
   position: fixed;
@@ -55,4 +54,28 @@ export const Title = styled.h1`
 
 export const Icon = styled.div`
   margin-left: 8px;
+`;
+
+export const UserArea = styled.div`
+  display: flex;
+  align-items: center;
+  @media (min-width: ${small}) {
+    max-width: calc(100% - 260px);
+  }
+`;
+
+export const UserName = styled.div`
+  ${(props) => props.theme.typography.body2}
+  color: ${(props) => props.theme.foreground.primary};
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: calc(100% - 50px);
+  text-overflow: ellipsis;
+`;
+
+export const UserIcon = styled.img`
+  margin-left: 8px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
 `;

@@ -4,14 +4,10 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from './components/BackofficeContainer';
-import { useAuthContext } from '~/context/useAuth';
-import { api } from '~/services/api';
 import { withSSRAuth } from '~/utils/withSSRAuth';
 
 const BackofficePage: NextPage = () => {
   const router = useRouter();
-
-  const { user } = useAuthContext();
 
   useEffect(() => {
     if (router.query?.cameFromOnboarding) {

@@ -1,14 +1,19 @@
 import { Container } from './styles';
+import { HeaderBackoffice } from '~/components/HeaderBackoffice';
 import { PageContainer } from '~/components/PageContainer';
 import { Sidebar } from '~/components/Sidebar';
+import { SidebarProvider } from '~/hooks/useSidebarState';
 
-export const BackofficeContainer: React.FC<React.ComponentProps<'div'>> = ({ children }) => {
+export const BackofficeContainer: React.FC = ({ children }) => {
   return (
     <PageContainer>
-      <Container>
-        <Sidebar></Sidebar>
-        {children}
-      </Container>
+      <SidebarProvider>
+        <HeaderBackoffice />
+        <Container>
+          <Sidebar></Sidebar>
+          {children}
+        </Container>
+      </SidebarProvider>
     </PageContainer>
   );
 };

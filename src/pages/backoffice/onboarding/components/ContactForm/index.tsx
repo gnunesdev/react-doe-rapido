@@ -10,7 +10,7 @@ import { Button } from '~/components/Button';
 import { ButtonLink } from '~/components/ButtonLink';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
-import { useAuthContext } from '~/context/useAuth';
+import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
@@ -18,7 +18,7 @@ import { fadeIn } from '~/utils/animations';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
-  const { updateUser } = useAuthContext();
+  const { updateUser } = useUserContext();
   const minWidth = useMinWidth();
 
   const formik = useFormik({
@@ -44,7 +44,7 @@ export function ContactForm() {
 
         goToNextStep();
       } catch (error) {
-        console.error('error');
+        console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
