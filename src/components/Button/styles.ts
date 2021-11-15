@@ -1,7 +1,7 @@
 import styled, { css, DefaultTheme } from 'styled-components';
 
 interface ButtonContainerProps {
-  variant: 'primary' | 'secondary';
+  variant: 'primary' | 'secondary' | 'tertiary';
   width: number | 'auto';
 }
 
@@ -29,6 +29,19 @@ const ButtonVariants = {
     }
     color: ${theme.colors.primary};
     border: 1px solid ${theme.colors.primary};
+  `,
+  tertiary: (theme: DefaultTheme) => css`
+    &:before {
+      background: #fff;
+    }
+    &:after {
+      background: ${theme.colors.primaryHover};
+    }
+    &:hover {
+      color: #fff;
+    }
+    color: ${theme.colors.primary};
+    border: 1px solid ${theme.colors.primaryHover};
   `,
 };
 

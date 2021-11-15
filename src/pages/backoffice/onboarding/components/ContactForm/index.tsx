@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -21,6 +22,8 @@ export function ContactForm() {
   const { updateUser } = useUserContext();
   const minWidth = useMinWidth();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -30,6 +33,8 @@ export function ContactForm() {
     },
     onSubmit: async () => {
       try {
+        setIsLoading(true);
+
         const user = {
           name: formik.values.name,
           email: formik.values.email,
@@ -43,6 +48,7 @@ export function ContactForm() {
         updateUser({ id: userData.id, name: userData.name, email: userData.email });
 
         goToNextStep();
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
         toast.error(
@@ -102,7 +108,12 @@ export function ContactForm() {
           }
         />
         <ButtonsContainer>
-          <Button variant="primary" type="submit" description="Enviar" />
+          <Button
+            variant="primary"
+            type="submit"
+            description="Enviar"
+            isLoading={isLoading}
+          />
           <ButtonLink description="Voltar para o login" href="/login" variant="secondary" />
         </ButtonsContainer>
       </ContactFormStyled>

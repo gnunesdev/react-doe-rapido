@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
@@ -12,6 +13,7 @@ import {
   Filters,
 } from './styles';
 import { Checkbox } from '~/components/Checkbox';
+import { Header } from '~/components/Header';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
 import { PageContainer } from '~/components/PageContainer';
@@ -22,6 +24,7 @@ import { useMinWidth } from '~/hooks/useMinWidth';
 import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
 import { Breakpoint } from '~/styles/variables';
 import { CompanyInList } from '~/types/Company';
+import { fadeIn } from '~/utils/animations';
 
 const AppPage: NextPage = () => {
   const {
@@ -95,7 +98,14 @@ const AppPage: NextPage = () => {
 
   return (
     <PageContainer>
-      <SearchContainer showingResults={companies.length > 0}>
+      <Header />
+      <SearchContainer
+        showingResults={companies.length > 0}
+        as={motion.div}
+        initial="hidden"
+        animate="animate"
+        variants={fadeIn}
+      >
         <SearchContent>
           <Title
             description="Pesquisa de instituições"

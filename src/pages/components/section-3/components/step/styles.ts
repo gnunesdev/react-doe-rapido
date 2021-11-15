@@ -4,7 +4,9 @@ export interface IconProps {
   size: number;
 }
 
-export const StepContainer = styled.div``;
+export const StepContainer = styled.div`
+  width: 220px;
+`;
 
 export const Icon = styled.div<IconProps>`
   margin: 0 auto;

@@ -2,15 +2,16 @@ import { CheckboxContainer } from './styles';
 
 interface CheckboxProps {
   name: string;
-  label: string;
+  label?: string;
   onChange: any;
   onBlur?: any;
   error?: string;
+  checked: boolean;
   size: 'big' | 'medium';
   value?: string;
 }
 
-export const Checkbox: React.VFC<CheckboxProps> = ({
+export const Checkbox: React.FC<CheckboxProps> = ({
   name,
   label,
   size,
@@ -18,18 +19,21 @@ export const Checkbox: React.VFC<CheckboxProps> = ({
   onBlur,
   value,
   error,
+  children,
+  checked = false,
 }) => {
   return (
     <CheckboxContainer size={size} hasError={Boolean(error)}>
       <label>
         <input
           type="checkbox"
+          checked={checked}
           name={name}
           onChange={onChange}
           onBlur={onBlur}
           value={value}
         />
-        {label}
+        {children ? children : label}
       </label>
     </CheckboxContainer>
   );

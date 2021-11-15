@@ -14,16 +14,18 @@ import {
   HeaderLeft,
   Menu,
 } from './styles';
-import { useUserContext } from '~/context/useUser';
+import { User, useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { useSidebarContext } from '~/hooks/useSidebarState';
 import { Breakpoint } from '~/styles/variables';
 
-export function HeaderBackoffice() {
+interface HeaderBackofficeProps {
+  user: User;
+}
+
+export function HeaderBackoffice({ user }: HeaderBackofficeProps) {
   const { foreground } = useTheme();
   const { toggleCollapsed } = useSidebarContext();
-
-  const { user } = useUserContext();
 
   const minWidth = useMinWidth();
 
@@ -54,7 +56,7 @@ export function HeaderBackoffice() {
         </HeaderLeft>
 
         <UserArea>
-          {minWidth(Breakpoint.small) && <UserName>{user?.name}</UserName>}
+          {minWidth(Breakpoint.small) && <UserName>{user.name}</UserName>}
           <UserIcon src="https://i.pinimg.com/originals/b5/66/ea/b566eae21682bc79e1918c24149b2578.gif" />
         </UserArea>
       </HeaderContainer>

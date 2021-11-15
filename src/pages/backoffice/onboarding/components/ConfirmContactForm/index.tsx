@@ -64,9 +64,18 @@ export function ConfirmContactForm() {
   });
 
   async function handleResendCode() {
-    // await publicApi.post('/confirm-email', {
-    //   id: user
-    // })
+    try {
+      await publicApi.post('/send-new-code', {
+        email: user.email,
+      });
+      toast.success('Um novo código foi enviado para seu e-mail');
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+      );
+    }
+    toast;
     setTimeToResend(60);
   }
 

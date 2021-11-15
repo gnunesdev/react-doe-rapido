@@ -14,12 +14,11 @@ export const HeaderContainer = styled.header`
   padding-right: 24px;
   background: ${(props) => props.theme.colors.primary};
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1;
 
   @media (min-width: ${large}) {
     padding-left: 24px;

@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 import { LoginFormValidationSchema } from '../../utils';
 import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
@@ -15,6 +16,8 @@ import { fadeIn } from '~/utils/animations';
 export function LoginForm() {
   const { signIn } = useAuthContext();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -22,8 +25,10 @@ export function LoginForm() {
     },
     validationSchema: LoginFormValidationSchema,
     onSubmit: async (values) => {
+      setIsLoading(true);
       const user = { email: values.email, password: values.password };
       await signIn(user);
+      setIsLoading(false);
     },
   });
 
@@ -35,7 +40,6 @@ export function LoginForm() {
         description="Insira suas informações"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
-
       <LoginFormStyled onSubmit={formik.handleSubmit}>
         <Input
           label="Email:"
@@ -55,7 +59,13 @@ export function LoginForm() {
           }
         />
         <ButtonsContainer>
-          <Button variant="primary" description="Login" type="submit" width="auto" />
+          <Button
+            variant="primary"
+            description="Login"
+            type="submit"
+            width="auto"
+            isLoading={isLoading}
+          />
           <ButtonLink
             variant="secondary"
             type="button"

@@ -3,7 +3,7 @@ import { Link, ButtonContainer } from './styles';
 interface ButtonProps {
   description: string;
   href: string;
-  variant: 'primary' | 'secondary';
+  variant: 'primary' | 'secondary' | 'tertiary';
   width?: number | 'auto';
   onClick?: VoidFunction;
 }

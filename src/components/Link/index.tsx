@@ -9,7 +9,9 @@ interface LinkProps {
 
 export const Link: React.VFC<LinkProps> = ({ isButton, href, label, handleClick }) => {
   return isButton ? (
-    <LinkButton onClick={handleClick}>{label}</LinkButton>
+    <LinkButton onClick={handleClick} type="button">
+      {label}
+    </LinkButton>
   ) : (
     <a href={href}>{label}</a>
   );

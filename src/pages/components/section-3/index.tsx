@@ -16,34 +16,32 @@ const Section3: React.VFC = () => {
           <div className="header__info">
             <div className="header__title">Cadastre sua instituição</div>
             <div className="header__text">
-              se cadastre na nossa plataforma exclusiva e apareça para diversos doadores que
+              Se cadastre na nossa plataforma exclusiva e apareça para diversos doadores que
               podem ajudar nas necessidades da sua insituição
             </div>
           </div>
         </div>
         <div className="steps">
-          <Step index={0} size={minWidth(Breakpoint.medium) ? 230 : 140}>
-            Faça login na <br />
-            plataforma
+          <Step index={0} size={minWidth(Breakpoint.medium) ? 200 : 140}>
+            Faça login na plataforma
           </Step>
           <div className="steps__arrow">
             <FaLongArrowAltDown size={minWidth(Breakpoint.medium) ? 90 : 50} />
           </div>
-          <Step index={1} size={minWidth(Breakpoint.medium) ? 230 : 140}>
-            cadastre sua <br />
-            instituição
+          <Step index={1} size={minWidth(Breakpoint.medium) ? 200 : 140}>
+            Cadastre sua instituição
           </Step>
           <div className="steps__arrow">
             <FaLongArrowAltDown size={minWidth(Breakpoint.medium) ? 90 : 50} />
           </div>
-          <Step index={2} size={minWidth(Breakpoint.medium) ? 230 : 140}>
-            Receba <br /> doações
+          <Step index={2} size={minWidth(Breakpoint.medium) ? 200 : 140}>
+            Receba doações
           </Step>
         </div>
         <ButtonLink
           variant="primary"
           description="Cadastre-se agora"
-          href="/backoffice/onboarding/contact"
+          href="/login"
           width={minWidth(Breakpoint.medium) ? 480 : 220}
         />
       </div>

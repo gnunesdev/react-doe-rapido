@@ -1,12 +1,21 @@
+import jwtDecode from 'jwt-decode';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from './components/BackofficeContainer';
+import { JwtTokenResponse } from '~/context/useAuth';
+import { User } from '~/context/useUser';
+import { setupAuthorizedApi } from '~/services/api';
 import { withSSRAuth } from '~/utils/withSSRAuth';
 
-const BackofficePage: NextPage = () => {
+interface BackofficePageProps {
+  user: User;
+}
+
+const BackofficePage: NextPage<BackofficePageProps> = ({ user }) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -19,14 +28,23 @@ const BackofficePage: NextPage = () => {
 
   return (
     <>
-      <BackofficeContainer></BackofficeContainer>
+      <BackofficeContainer user={user} />
     </>
   );
 };
 
 export const getServerSideProps = withSSRAuth(async (context) => {
+  const { 'doerapido.token': token } = parseCookies(context);
+  const { id }: JwtTokenResponse = jwtDecode(token);
+
+  const api = setupAuthorizedApi(context);
+
+  const { data: user } = await api.get<User>(`/user/${id}`);
+
   return {
-    props: {},
+    props: {
+      user,
+    },
   };
 });
 

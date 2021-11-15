@@ -5,13 +5,19 @@ import { useState } from 'react';
 import { EditContactFormValidator } from '../../constants/utils';
 import { ModalChangeEmail } from '../ModalChangeEmail';
 import { ModalChangePassword } from '../ModalChangePassword';
-import { Container, InputRow, Form } from './styles';
+import { Container, InputRow, Form, ButtonsContainer } from './styles';
+import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
+import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 
-export function EditContactForm() {
+interface EditContactFormProps {
+  user: User;
+}
+
+export function EditContactForm({ user }: EditContactFormProps) {
   const [isChangeEmailModalOpen, toggleChangeEmailModalOpen] = useState(false);
   const [isChangePasswordModalOpen, toggleChangePasswordModalOpen] = useState(false);
   const minWidth = useMinWidth();
@@ -26,7 +32,7 @@ export function EditContactForm() {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: user.name,
     },
     onSubmit: () => {
       // console.log('OPA!');
@@ -45,6 +51,7 @@ export function EditContactForm() {
           name="name"
           inputSize="big"
           onChange={formik.handleChange}
+          value={formik.values.name}
           label="Nome"
           error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
         ></Input>
@@ -76,6 +83,9 @@ export function EditContactForm() {
           <ModalChangePassword handleCloseModal={handleTogglePasswordModalOpen} />
         )}
       </AnimatePresence>
+      <ButtonsContainer>
+        <Button variant="primary" description="Salvar informações" type="submit" />
+      </ButtonsContainer>
     </Container>
   );
 }

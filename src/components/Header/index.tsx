@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaHandHoldingHeart, FaBars } from 'react-icons/fa';
+import { FaHandHoldingHeart } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
 
 import { HeaderContainer, Icon, Logo, Title, HeaderVolume, HeaderLeft } from './styles';

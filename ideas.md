@@ -12,13 +12,17 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Corrigir upload imagem
 - [OK] Autenticação usuário
 - [OK] Animações
+- [OK] Adicionar todos os filtros
 
 
 - [Doing] Adicionar toast para erros
 - [Doing] Finalizar integração
-- Adicionar todos os filtros
-- Botão de loading
-- Pente fino layout desk + mobile
+- [Doing] Pente fino layout desk + mobile
+- [Doing] Botão de loading
+- [Doing] Termos de uso
+- Validar login se usuário finalizou onboarding
+- Validar carregamento de imagem nos forms
+- Validar needs na edição de formulários
 
 
 - [After] Validação do step via banco de dados

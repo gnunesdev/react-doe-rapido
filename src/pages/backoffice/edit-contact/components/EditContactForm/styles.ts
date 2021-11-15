@@ -18,6 +18,10 @@ export const Form = styled.form`
   margin-top: 2rem;
 `;
 
+export const ButtonsContainer = styled.div`
+  margin-top: 3rem;
+`;
+
 export const InputRow = styled.div`
   display: flex;
   flex-direction: column;

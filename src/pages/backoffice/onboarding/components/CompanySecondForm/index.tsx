@@ -10,6 +10,7 @@ import {
   CompanySecondFormContainer,
   CompanySecondFormStyled,
   NeedsContainer,
+  TermsContainer,
 } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
@@ -36,6 +37,8 @@ export function CompanySecondForm() {
       email: '',
       image: '',
       needs: [],
+      acceptedTerms: false,
+      acceptedPrivacy: false,
     },
     onSubmit: async () => {
       try {
@@ -60,6 +63,8 @@ export function CompanySecondForm() {
     },
     validationSchema: CompanySecondFormValidationSchema,
   });
+
+  console.log(formik.values);
 
   return (
     <CompanySecondFormContainer
@@ -97,18 +102,40 @@ export function CompanySecondForm() {
         </InputRow>
         <NeedsContainer>
           <Title size="small" description="Principais necessidades" />
-          {Object.values(CompanyNeedsMap).map((need) => (
+          {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
             <Checkbox
-              key={need}
-              label={need}
+              key={needId}
+              label={needValue}
               size="medium"
               name="needs"
-              value={need}
+              value={needId}
               onChange={formik.handleChange}
+              checked={formik.values.needs.includes(String(needId))}
               error={String(formik.errors.needs)}
             />
           ))}
         </NeedsContainer>
+        <TermsContainer>
+          <Title size="small" description="Termos de aceite" />
+          <Checkbox
+            label="Aceita os termos de uso"
+            size="medium"
+            name="acceptedTerms"
+            onChange={formik.handleChange}
+            error={String(formik.errors.needs)}
+          >
+            Aceito os termos de uso
+          </Checkbox>
+          <Checkbox
+            label="Aceita os termos de uso"
+            size="medium"
+            name="acceptedPrivacy"
+            onChange={formik.handleChange}
+            error={String(formik.errors.needs)}
+          >
+            Aceito as políticas de privacidade
+          </Checkbox>
+        </TermsContainer>
         <ButtonsContainer>
           <Button variant="primary" description="Salvar informações" type="submit" />
         </ButtonsContainer>

@@ -26,9 +26,12 @@ export function setupAuthorizedApi(context = undefined) {
     },
     (error: AxiosError) => {
       if (error.response?.status === 401) {
-        cookies = parseCookies();
+        cookies = parseCookies(context);
 
-        const { 'doerapido.refreshToken': refreshToken, 'doerapido.token': token } = cookies;
+        console.log('interceptado', cookies);
+
+        const { 'doerapido.refreshToken': refreshToken, 'doerapido.token': currentToken } =
+          cookies;
         const originalConfig = error.config;
 
         if (!isRefreshing) {
@@ -36,17 +39,17 @@ export function setupAuthorizedApi(context = undefined) {
 
           api
             .post('/refresh-token', {
-              token,
+              token: currentToken,
               refreshToken,
             })
             .then((response) => {
               const { token } = response.data;
 
-              setCookie(undefined, 'doerapido.token', token, {
+              setCookie(context, 'doerapido.token', token, {
                 maxAge: 60 * 60 * 24 * 30, // 30 days
                 path: '/',
               });
-              setCookie(undefined, 'doerapido.refreshToken', response.data.refreshToken, {
+              setCookie(context, 'doerapido.refreshToken', response.data.refreshToken, {
                 maxAge: 60 * 60 * 24 * 30, // 30 days
                 path: '/',
               });

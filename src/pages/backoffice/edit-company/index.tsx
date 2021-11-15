@@ -13,6 +13,7 @@ import {
   InputRow,
   NeedsContainer,
   ImageInput,
+  TermsContainer,
 } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
@@ -23,6 +24,7 @@ import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
 import { JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
+import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { setupAuthorizedApi } from '~/services/api';
 import { getAddressByCep, isAddress } from '~/services/cep';
@@ -33,9 +35,10 @@ import { withSSRAuth } from '~/utils/withSSRAuth';
 
 interface EditCompanyPageProps {
   company: Company;
+  user: User;
 }
 
-const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company }) => {
+const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
   const minWidth = useMinWidth();
 
   console.log({ company });
@@ -51,14 +54,13 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company }) => {
       district: company.district,
       city: company.city,
       state: company.state,
-      phone: '',
+      phone: company.phone,
       email: company.email,
       image: company.image,
-      needs: [],
+      needs: company.needs,
     },
     onSubmit: () => {
       try {
-        console.log(formik.values);
         toast.success('Informações atualizadas com sucesso!');
       } catch (error) {
         console.error(error);
@@ -94,7 +96,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company }) => {
   }
 
   return (
-    <BackofficeContainer>
+    <BackofficeContainer user={user}>
       <Container>
         <Title
           description="Editar instituição"
@@ -253,10 +255,12 @@ export const getServerSideProps = withSSRAuth(async (context) => {
 
   const api = setupAuthorizedApi(context);
 
+  const { data: user } = await api.get<User>(`/user/${id}`);
   const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
 
   return {
     props: {
+      user,
       company,
     },
   };
