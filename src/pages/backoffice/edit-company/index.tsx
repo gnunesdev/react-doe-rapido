@@ -23,7 +23,7 @@ import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
 import { JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
-import { User } from '~/context/useUser';
+import { User, UserWithImage } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { api, setupAuthorizedApi } from '~/services/api';
 import { getAddressByCep, isAddress } from '~/services/cep';
@@ -34,7 +34,7 @@ import { withSSRAuth } from '~/utils/withSSRAuth';
 
 interface EditCompanyPageProps {
   company: Company;
-  user: User;
+  user: UserWithImage;
 }
 
 const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
@@ -114,8 +114,6 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       );
     }
   }
-
-  console.log('abc', formik.values.needs);
 
   return (
     <BackofficeContainer user={user}>
@@ -283,9 +281,14 @@ export const getServerSideProps = withSSRAuth(async (context) => {
   const { data: user } = await api.get<User>(`/user/${id}`);
   const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
 
+  const userData = {
+    ...user,
+    image: company.image,
+  };
+
   return {
     props: {
-      user,
+      user: userData,
       company,
     },
   };

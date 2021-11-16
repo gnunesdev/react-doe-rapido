@@ -6,6 +6,13 @@ export interface User {
   email: string;
 }
 
+export interface UserWithImage {
+  id: number;
+  name: string;
+  email: string;
+  image: string;
+}
+
 interface UserContextData {
   user: User;
   updateUser: (user: User) => void;
@@ -15,8 +22,6 @@ const UserContext = createContext({} as UserContextData);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState<User>();
-
-  console.log({ user });
 
   function updateUser({ id, name, email }) {
     setUser({ id, name, email });

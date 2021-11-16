@@ -8,7 +8,7 @@ export const CompanyDrawerContainer = styled.div`
   height: 100vh;
   width: 100%;
   background: ${(props) => props.theme.colors.background};
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@ export const Overlay = styled.div`
   height: 100vh;
   background: rgba(0, 0, 0, 60%);
 
-  z-index: 1;
+  z-index: 3;
 
   position: fixed;
   top: 0;

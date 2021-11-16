@@ -15,6 +15,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Adicionar todos os filtros
 - [OK] Validar needs na edição de formulários
 - [OK] Validar carregamento de imagem nos forms
+- [OK] Header
 
 
 - [Doing] Adicionar toast para erros
@@ -22,18 +23,16 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Botão de loading
 
+- [Doing] Termos de uso
 - [Doing] Validar login se usuário finalizou onboarding
+- [Doing] Banner informando locais próximos
 - Modal de filtro e botão de pesquisa no search
 - Mostra na home opção pra excluir dados
-- Banner informando locais próximos
-- Banner informando remoção de conta
 - Edit contact
 - Edit company
-- Header
 - Validar refreshtoken no backend
 - Add whatsapp
 - Mascara feia de telefone
-
-- [Doing] Termos de uso
+- Mais animações
 
 - [After] Validação do step via banco de dados

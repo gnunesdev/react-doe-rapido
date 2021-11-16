@@ -1,9 +1,11 @@
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
+import { AnimatePresence } from 'framer-motion';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { CompanyDrawer } from './components/CompanyDrawer';
+import { InfoBanner } from './components/InfoBanner';
 import { CompanyButton } from './styles';
 import { Header } from '~/components/Header';
 import { getCompanysToRenderInMap } from '~/services/map';
@@ -105,6 +107,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
             companyId={String(routes.query?.id)}
           />
         )}
+        <InfoBanner />
       </GoogleMap>
     </>
   );

@@ -2,11 +2,11 @@ import { Container } from './styles';
 import { HeaderBackoffice } from '~/components/HeaderBackoffice';
 import { PageContainer } from '~/components/PageContainer';
 import { Sidebar } from '~/components/Sidebar';
-import { User } from '~/context/useUser';
+import { UserWithImage } from '~/context/useUser';
 import { SidebarProvider } from '~/hooks/useSidebarState';
 
 interface BackofficeContainerProps {
-  user: User;
+  user: UserWithImage;
 }
 
 export const BackofficeContainer: React.FC<BackofficeContainerProps> = ({

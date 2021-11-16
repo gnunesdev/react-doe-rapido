@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { FaHandHoldingHeart, FaBars } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
 
@@ -14,13 +15,13 @@ import {
   HeaderLeft,
   Menu,
 } from './styles';
-import { User, useUserContext } from '~/context/useUser';
+import { UserWithImage } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { useSidebarContext } from '~/hooks/useSidebarState';
 import { Breakpoint } from '~/styles/variables';
 
 interface HeaderBackofficeProps {
-  user: User;
+  user: UserWithImage;
 }
 
 export function HeaderBackoffice({ user }: HeaderBackofficeProps) {
@@ -57,7 +58,7 @@ export function HeaderBackoffice({ user }: HeaderBackofficeProps) {
 
         <UserArea>
           {minWidth(Breakpoint.small) && <UserName>{user.name}</UserName>}
-          <UserIcon src="https://i.pinimg.com/originals/b5/66/ea/b566eae21682bc79e1918c24149b2578.gif" />
+          {user.image && <UserIcon src={user.image} />}
         </UserArea>
       </HeaderContainer>
     </>
