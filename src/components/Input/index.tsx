@@ -7,7 +7,7 @@ import { EditInputButton, InputContainer } from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
-  onChange: any;
+  onChange?: any;
   onBlur?: any;
   error?: string;
   inputSize: 'big' | 'medium';

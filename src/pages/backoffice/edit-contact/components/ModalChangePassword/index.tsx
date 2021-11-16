@@ -19,6 +19,7 @@ interface CodeStepProps {
 
 interface ModalChangePasswordProps {
   handleCloseModal: VoidFunction;
+  userId: number;
 }
 
 interface ChangeValueStepProps {

@@ -16,6 +16,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Validar needs na edição de formulários
 - [OK] Validar carregamento de imagem nos forms
 - [OK] Header
+- [OK] Banner informando locais próximos
 
 
 - [Doing] Adicionar toast para erros
@@ -25,14 +26,14 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 
 - [Doing] Termos de uso
 - [Doing] Validar login se usuário finalizou onboarding
-- [Doing] Banner informando locais próximos
+- [Doing] Edit contact
 - Modal de filtro e botão de pesquisa no search
 - Mostra na home opção pra excluir dados
-- Edit contact
 - Edit company
 - Validar refreshtoken no backend
 - Add whatsapp
 - Mascara feia de telefone
 - Mais animações
+- Botão de sair
 
 - [After] Validação do step via banco de dados

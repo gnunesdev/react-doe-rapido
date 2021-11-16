@@ -79,7 +79,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
         });
 
         if (companyResponseData) {
-          toast.success('Informações atualizadas');
+          toast.success('Informações atualizadas com sucesso!');
         }
       } catch (error) {
         console.error(error);

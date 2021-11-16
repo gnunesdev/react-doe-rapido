@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import { AnimatePresence } from 'framer-motion';
+import { convertTransitionToAnimationOptions } from 'framer-motion/types/animation/utils/transitions';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { EditContactFormValidator } from '../../constants/utils';
 import { ModalChangeEmail } from '../ModalChangeEmail';
@@ -11,6 +13,7 @@ import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
 import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 
 interface EditContactFormProps {
@@ -18,6 +21,7 @@ interface EditContactFormProps {
 }
 
 export function EditContactForm({ user }: EditContactFormProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isChangeEmailModalOpen, toggleChangeEmailModalOpen] = useState(false);
   const [isChangePasswordModalOpen, toggleChangePasswordModalOpen] = useState(false);
   const minWidth = useMinWidth();
@@ -34,8 +38,21 @@ export function EditContactForm({ user }: EditContactFormProps) {
     initialValues: {
       name: user.name,
     },
-    onSubmit: () => {
-      // console.log('OPA!');
+    onSubmit: async () => {
+      try {
+        setIsLoading(true);
+        await api.put(`/user/${user.id}`, {
+          name: formik.values.name,
+        });
+        toast.success('Informações atualizadas com sucesso!');
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      } finally {
+        setIsLoading(false);
+      }
     },
     validationSchema: EditContactFormValidator,
   });
@@ -59,7 +76,6 @@ export function EditContactForm({ user }: EditContactFormProps) {
           <Input
             name="email"
             inputSize="big"
-            onChange={formik.handleChange}
             label="E-mail"
             handleChangeModalInput={handleToggleEmailModalOpen}
           ></Input>
@@ -67,25 +83,33 @@ export function EditContactForm({ user }: EditContactFormProps) {
             name="password"
             type="password"
             inputSize="big"
-            onChange={formik.handleChange}
             label="Senha"
             handleChangeModalInput={handleTogglePasswordModalOpen}
           ></Input>
         </InputRow>
+
+        <ButtonsContainer>
+          <Button
+            variant="primary"
+            description="Salvar informações"
+            type="submit"
+            isLoading={isLoading}
+          />
+        </ButtonsContainer>
       </Form>
 
       <AnimatePresence>
         {isChangeEmailModalOpen && (
-          <ModalChangeEmail handleCloseModal={handleToggleEmailModalOpen} />
+          <ModalChangeEmail userId={user.id} handleCloseModal={handleToggleEmailModalOpen} />
         )}
 
         {isChangePasswordModalOpen && (
-          <ModalChangePassword handleCloseModal={handleTogglePasswordModalOpen} />
+          <ModalChangePassword
+            userId={user.id}
+            handleCloseModal={handleTogglePasswordModalOpen}
+          />
         )}
       </AnimatePresence>
-      <ButtonsContainer>
-        <Button variant="primary" description="Salvar informações" type="submit" />
-      </ButtonsContainer>
     </Container>
   );
 }

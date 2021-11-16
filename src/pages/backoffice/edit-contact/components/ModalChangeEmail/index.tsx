@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { dropIn } from './animation';
@@ -23,11 +23,14 @@ interface ChangeValueStepProps {
 
 interface ModalChangeEmailProps {
   handleCloseModal: VoidFunction;
+  userId: number;
 }
 
-export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
+export function ModalChangeEmail({ handleCloseModal, userId }: ModalChangeEmailProps) {
   const [codeValidated, setCodeValidated] = useState(false);
   const minWidth = useMinWidth();
+
+  useEffect(() => {});
 
   function handleSetCodeValidated() {
     setCodeValidated(true);
