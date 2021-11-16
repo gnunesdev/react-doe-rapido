@@ -16,6 +16,8 @@ const UserContext = createContext({} as UserContextData);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState<User>();
 
+  console.log({ user });
+
   function updateUser({ id, name, email }) {
     setUser({ id, name, email });
   }

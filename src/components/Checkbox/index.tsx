@@ -6,7 +6,7 @@ interface CheckboxProps {
   onChange: any;
   onBlur?: any;
   error?: string;
-  checked: boolean;
+  checked?: boolean;
   size: 'big' | 'medium';
   value?: string;
 }

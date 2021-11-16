@@ -13,7 +13,6 @@ import {
   InputRow,
   NeedsContainer,
   ImageInput,
-  TermsContainer,
 } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
@@ -26,7 +25,7 @@ import { JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
 import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
-import { setupAuthorizedApi } from '~/services/api';
+import { api, setupAuthorizedApi } from '~/services/api';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { Breakpoint } from '~/styles/variables';
 import { clearMask } from '~/utils';
@@ -40,8 +39,6 @@ interface EditCompanyPageProps {
 
 const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
   const minWidth = useMinWidth();
-
-  console.log({ company });
 
   const formik = useFormik({
     initialValues: {
@@ -57,11 +54,33 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       phone: company.phone,
       email: company.email,
       image: company.image,
-      needs: company.needs,
+      needs: company.needs.map((needValue) => String(needValue)),
     },
-    onSubmit: () => {
+    onSubmit: async () => {
       try {
-        toast.success('Informações atualizadas com sucesso!');
+        const companyData = {
+          tradingName: formik.values.tradingName,
+          name: formik.values.name,
+          cnpj: clearMask(formik.values.cnpj),
+          cep: clearMask(formik.values.cep),
+          street: formik.values.street,
+          number: formik.values.number,
+          district: formik.values.district,
+          city: formik.values.city,
+          state: formik.values.state,
+          phone: clearMask(formik.values.phone),
+          email: formik.values.email,
+          image: formik.values.image,
+          needs: formik.values.needs.map((needValue) => Number(needValue)),
+        };
+
+        const { data: companyResponseData } = await api.put(`/company/${company.id}`, {
+          ...companyData,
+        });
+
+        if (companyResponseData) {
+          toast.success('Informações atualizadas');
+        }
       } catch (error) {
         console.error(error);
         toast.error(
@@ -70,6 +89,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       }
     },
     validationSchema: EditCompanyFormValidator,
+    enableReinitialize: true,
   });
 
   async function onCepBlur() {
@@ -94,6 +114,8 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       );
     }
   }
+
+  console.log('abc', formik.values.needs);
 
   return (
     <BackofficeContainer user={user}>
@@ -210,6 +232,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
                   ? '(99)99999-9999'
                   : '(99)9999-9999'
               }
+              value={formik.values.phone}
               error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
             />
             <Input
@@ -218,6 +241,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
               onChange={formik.handleChange}
               label="E-mail:"
               error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
+              value={formik.values.email}
             />
           </InputRow>
           <ImageInput>
@@ -225,14 +249,15 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
           </ImageInput>
           <NeedsContainer>
             <Title size="small" description="Principais necessidades" />
-            {Object.values(CompanyNeedsMap).map((need) => (
+            {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
               <Checkbox
-                key={need}
-                label={need}
+                key={needId}
+                label={needValue}
                 size="medium"
                 name="needs"
-                value={need}
+                value={needId}
                 onChange={formik.handleChange}
+                checked={formik.values.needs.includes(needId)}
               />
             ))}
           </NeedsContainer>

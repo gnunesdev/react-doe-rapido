@@ -77,16 +77,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (dataUser.data) {
         updateUser({
-          id: dataUser.data.user?.id,
-          email: dataUser.data.user?.email,
-          name: dataUser.data.user?.name,
+          id: dataUser.data.id,
+          email: dataUser.data.email,
+          name: dataUser.data.name,
         });
       }
 
       const dataCompany = await api(`/companyByUserId/${id}`);
 
       if (dataCompany.data) {
-        updateCompany(dataCompany.data.company);
+        updateCompany(dataCompany.data);
       }
     } catch (error) {
       console.error(error);

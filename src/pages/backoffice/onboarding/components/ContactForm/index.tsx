@@ -48,12 +48,13 @@ export function ContactForm() {
         updateUser({ id: userData.id, name: userData.name, email: userData.email });
 
         goToNextStep();
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
+      } finally {
+        setIsLoading(false);
       }
     },
     validationSchema: ContactFormValidationSchema,

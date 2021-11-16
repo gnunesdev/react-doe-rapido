@@ -9,14 +9,19 @@ import { CompanyInList } from '~/types/Company';
 
 interface CompanyListProps {
   companys: Array<CompanyInList>;
+  needsSelected: string[];
 }
 
-export function CompanyList({ companys }: CompanyListProps) {
+export function CompanyList({ companys, needsSelected }: CompanyListProps) {
   const routes = useRouter();
   const minWidth = useMinWidth();
 
   function handleSeeOnMap(id: string) {
-    routes.push(`/search/map?id=${id}`);
+    const route = `/search/map?id=${id}&${
+      needsSelected.length ? `needs=${String(needsSelected)}` : ''
+    }`;
+
+    routes.push(route);
   }
 
   return (

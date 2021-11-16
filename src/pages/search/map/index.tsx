@@ -5,6 +5,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { CompanyButton } from './styles';
+import { Header } from '~/components/Header';
 import { getCompanysToRenderInMap } from '~/services/map';
 import { Company } from '~/types/Company';
 
@@ -25,7 +26,14 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
     return { lat: Number(companies[0].lat), lng: Number(companies[0].long) };
   }, [companies]);
 
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const alreadySelectedCompany = useMemo(
+    () => companies.find((company) => company.id_company === Number(drawerId)),
+    []
+  );
+
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(
+    alreadySelectedCompany
+  );
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(Boolean(drawerId));
 
@@ -56,51 +64,54 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   }
 
   return (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={centerScreen}
-      zoom={14}
-      onLoad={onMapLoad}
-      options={{
-        mapId: 'e258f25e5d7f6c6e',
-      }}
-    >
-      {companies.map((company) => (
-        <Marker
-          position={{ lat: Number(company.lat), lng: Number(company.long) }}
-          key={company.id_company}
-          onClick={() => {
-            panTo(Number(company.lat), Number(company.long));
-            setSelectedCompany(company);
-          }}
-        />
-      ))}
-      {selectedCompany && (
-        <InfoWindow
-          position={{
-            lat: Number(selectedCompany.lat),
-            lng: Number(selectedCompany.long),
-          }}
-          onCloseClick={() => {
-            setSelectedCompany(null);
-          }}
-        >
-          <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
-        </InfoWindow>
-      )}
-      {isDrawerOpen && selectedCompany && (
-        <CompanyDrawer
-          closeModal={handleCloseDrawer}
-          companyData={selectedCompany}
-          companyId={String(routes.query?.id)}
-        />
-      )}
-    </GoogleMap>
+    <>
+      <Header />
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={centerScreen}
+        zoom={14}
+        onLoad={onMapLoad}
+        options={{
+          mapId: 'e258f25e5d7f6c6e',
+        }}
+      >
+        {companies.map((company) => (
+          <Marker
+            position={{ lat: Number(company.lat), lng: Number(company.long) }}
+            key={company.id_company}
+            onClick={() => {
+              panTo(Number(company.lat), Number(company.long));
+              setSelectedCompany(company);
+            }}
+          />
+        ))}
+        {selectedCompany && (
+          <InfoWindow
+            position={{
+              lat: Number(selectedCompany.lat),
+              lng: Number(selectedCompany.long),
+            }}
+            onCloseClick={() => {
+              setSelectedCompany(null);
+            }}
+          >
+            <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
+          </InfoWindow>
+        )}
+        {isDrawerOpen && selectedCompany && (
+          <CompanyDrawer
+            closeModal={handleCloseDrawer}
+            companyData={selectedCompany}
+            companyId={String(routes.query?.id)}
+          />
+        )}
+      </GoogleMap>
+    </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id, drawerId } = query;
+  const { id, drawerId, needs } = query;
 
   if (!id) {
     return {
@@ -111,7 +122,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     };
   }
 
-  const companies = await getCompanysToRenderInMap(String(id));
+  const needsArray = needs ? String(needs).split(',') : [];
+
+  const companies = await getCompanysToRenderInMap(String(id), needsArray);
 
   if (companies.length === 0) {
     return {

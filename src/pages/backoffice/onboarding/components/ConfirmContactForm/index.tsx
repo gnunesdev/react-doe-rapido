@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { apiResolver } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -30,6 +29,8 @@ export function ConfirmContactForm() {
   const { signInOnOnboarding } = useAuthContext();
   const { user } = useUserContext();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const minWidth = useMinWidth();
 
   const [timeToResend, setTimeToResend] = useState(60);
@@ -47,6 +48,7 @@ export function ConfirmContactForm() {
     },
     onSubmit: async () => {
       try {
+        setIsLoading(true);
         const { data: confirmEmailResponse } = await publicApi.post('/confirm-email', {
           code: formik.values.confirmationCode,
           email: user.email,
@@ -58,6 +60,8 @@ export function ConfirmContactForm() {
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
+      } finally {
+        setIsLoading(false);
       }
     },
     validationSchema: CodeFormValidationSchema,
@@ -118,7 +122,12 @@ export function ConfirmContactForm() {
           )}
         </CodeLinkContainer>
         <ButtonsContainer>
-          <Button description="Confirme o código" type="submit" variant="primary" />
+          <Button
+            description="Confirme o código"
+            type="submit"
+            variant="primary"
+            isLoading={isLoading}
+          />
           <Button type="submit" variant="secondary">
             <Link href="/login">Voltar para o login</Link>
           </Button>

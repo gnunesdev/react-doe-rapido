@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie } from 'nookies';
 
+import { AuthTokenError } from './errors/AuthTokenError';
 import { signOut } from '~/context/useAuth';
 
 let isRefreshing = false;
@@ -27,8 +28,6 @@ export function setupAuthorizedApi(context = undefined) {
     (error: AxiosError) => {
       if (error.response?.status === 401) {
         cookies = parseCookies(context);
-
-        console.log('interceptado', cookies);
 
         const { 'doerapido.refreshToken': refreshToken, 'doerapido.token': currentToken } =
           cookies;

@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -31,6 +32,8 @@ export function CompanySecondForm() {
 
   const { company } = useCompanyContext();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       phone: '',
@@ -42,9 +45,11 @@ export function CompanySecondForm() {
     },
     onSubmit: async () => {
       try {
+        setIsLoading(true);
+
         const companyData = {
-          phone: formik.values.phone,
           email: formik.values.email,
+          phone: clearMask(formik.values.phone),
           needs: formik.values.needs,
           ...(formik.values.image && { image: formik.values.image }),
         };
@@ -59,12 +64,12 @@ export function CompanySecondForm() {
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
+      } finally {
+        setIsLoading(false);
       }
     },
     validationSchema: CompanySecondFormValidationSchema,
   });
-
-  console.log(formik.values);
 
   return (
     <CompanySecondFormContainer
@@ -137,7 +142,12 @@ export function CompanySecondForm() {
           </Checkbox>
         </TermsContainer>
         <ButtonsContainer>
-          <Button variant="primary" description="Salvar informações" type="submit" />
+          <Button
+            variant="primary"
+            description="Salvar informações"
+            type="submit"
+            isLoading={isLoading}
+          />
         </ButtonsContainer>
       </CompanySecondFormStyled>
     </CompanySecondFormContainer>

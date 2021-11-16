@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 import { AddressSuggestions } from './components/AddressSuggestions';
@@ -79,6 +80,9 @@ const AppPage: NextPage = () => {
       setCompanies(nearbyCompanies);
     } catch (error) {
       console.error(error);
+      toast.error(
+        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+      );
     }
   }
 
@@ -139,6 +143,7 @@ const AppPage: NextPage = () => {
                       label={needValue}
                       size="medium"
                       onChange={() => handleSelectNeedFilter(needId)}
+                      checked={needsFilters.includes(needId)}
                     />
                   ))}
                 </Filters>
@@ -153,7 +158,11 @@ const AppPage: NextPage = () => {
               />
             )}
           </SearchBar>
-          {companies.length > 0 ? <CompanyList companys={companies} /> : ''}
+          {companies.length > 0 ? (
+            <CompanyList needsSelected={needsFilters} companys={companies} />
+          ) : (
+            ''
+          )}
         </SearchContent>
       </SearchContainer>
     </PageContainer>

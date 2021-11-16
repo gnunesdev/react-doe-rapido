@@ -1,5 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -14,6 +15,7 @@ import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
+import { useCompanyContext } from '~/context/useCompany';
 import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { api } from '~/services/api';
@@ -24,10 +26,13 @@ import { STATE_LISTS } from '~/utils/address';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanyFirstForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { goToNextStep } = useOnboardingSteps();
   const minWidth = useMinWidth();
 
   const { user } = useUserContext();
+  const { updateCompany } = useCompanyContext();
 
   const formik = useFormik({
     initialValues: {
@@ -43,6 +48,8 @@ export function CompanyFirstForm() {
     },
     onSubmit: async () => {
       try {
+        setIsLoading(true);
+
         const company = {
           idUser: user.id,
           tradingName: formik.values.tradingName,
@@ -55,18 +62,22 @@ export function CompanyFirstForm() {
           city: formik.values.city,
           state: formik.values.state,
         };
-        console.log({ company });
-        await api.post('/company', {
+
+        const { data: companyData } = await api.post('/company', {
           ...company,
         });
-        // updateCompany({
-        // })
+
+        updateCompany({
+          ...companyData,
+        });
         goToNextStep();
       } catch (error) {
         console.error(error);
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
+      } finally {
+        setIsLoading(false);
       }
     },
     validationSchema: CompanyFirstFormValidator,
@@ -202,7 +213,12 @@ export function CompanyFirstForm() {
           />
         </InputRow>
         <ButtonsContainer>
-          <Button variant="primary" description="Salvar informações" type="submit"></Button>
+          <Button
+            variant="primary"
+            description="Salvar informações"
+            type="submit"
+            isLoading={isLoading}
+          ></Button>
         </ButtonsContainer>
       </CompanyFirstFormStyled>
     </CompanyFirstFormContainer>

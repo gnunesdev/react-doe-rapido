@@ -13,16 +13,27 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Autenticação usuário
 - [OK] Animações
 - [OK] Adicionar todos os filtros
+- [OK] Validar needs na edição de formulários
+- [OK] Validar carregamento de imagem nos forms
 
 
 - [Doing] Adicionar toast para erros
 - [Doing] Finalizar integração
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Botão de loading
-- [Doing] Termos de uso
-- Validar login se usuário finalizou onboarding
-- Validar carregamento de imagem nos forms
-- Validar needs na edição de formulários
 
+- [Doing] Validar login se usuário finalizou onboarding
+- Modal de filtro e botão de pesquisa no search
+- Mostra na home opção pra excluir dados
+- Banner informando locais próximos
+- Banner informando remoção de conta
+- Edit contact
+- Edit company
+- Header
+- Validar refreshtoken no backend
+- Add whatsapp
+- Mascara feia de telefone
+
+- [Doing] Termos de uso
 
 - [After] Validação do step via banco de dados

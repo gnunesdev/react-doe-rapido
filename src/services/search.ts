@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { api } from './api';
+import { api, publicApi } from './api';
 import { Company, CompanyInList } from '~/types/Company';
 import { GeocodeResponse } from '~/types/geocode';
 
@@ -20,10 +20,15 @@ export async function getAddressByGeolocation(
 export async function getCompanysByNearbyAddress(
   lat: string,
   long: string,
-  needs: string[]
+  needs = []
 ): Promise<AxiosResponse<CompanyInList[]>> {
   try {
-    return await api.get<CompanyInList[]>('/company');
+    return await publicApi.post<CompanyInList[]>(
+      `queryCompanies?latitude=${lat}&longitude=${long}`,
+      {
+        needs,
+      }
+    );
   } catch (error) {
     console.error(error);
     throw error;

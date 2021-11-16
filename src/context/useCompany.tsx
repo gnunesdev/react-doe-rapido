@@ -28,7 +28,6 @@ export const CompanyProvider = ({ children }) => {
   const [company, setCompany] = useState<Company>();
 
   function updateCompany(company: Company) {
-    console.log({ company });
     setCompany(company);
   }
 

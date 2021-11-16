@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
 import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
@@ -25,10 +26,18 @@ export function LoginForm() {
     },
     validationSchema: LoginFormValidationSchema,
     onSubmit: async (values) => {
-      setIsLoading(true);
-      const user = { email: values.email, password: values.password };
-      await signIn(user);
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const user = { email: values.email, password: values.password };
+        await signIn(user);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 

@@ -44,11 +44,11 @@ export const FiltersContainer = styled.div`
 export const Filters = styled.div`
   overflow: auto;
   margin-top: 0.8rem;
-  display: flex;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
   ${CheckboxContainer} {
-    &:not(:first-child) {
-      margin-left: 1.2rem;
-    }
     label {
       white-space: nowrap;
     }
