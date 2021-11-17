@@ -3,11 +3,9 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 
 import { OnboardingStepsProvider } from './backoffice/onboarding/hooks/useOnboardingSteps';
-import { Header } from '~/components/Header';
 import { AuthProvider } from '~/context/useAuth';
 import { CompanyProvider } from '~/context/useCompany';
 import { UserProvider } from '~/context/useUser';
-import { SidebarProvider } from '~/hooks/useSidebarState';
 import GlobalStyle from '~/styles/global';
 import light from '~/styles/themes/light';
 

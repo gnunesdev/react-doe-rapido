@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { large, small } from '~/styles/variables';
+import { large } from '~/styles/variables';
 
 export const HeaderVolume = styled.div`
   width: 100%;

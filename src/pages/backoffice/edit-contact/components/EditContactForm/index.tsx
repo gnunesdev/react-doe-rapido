@@ -1,6 +1,5 @@
 import { useFormik } from 'formik';
 import { AnimatePresence } from 'framer-motion';
-import { convertTransitionToAnimationOptions } from 'framer-motion/types/animation/utils/transitions';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 

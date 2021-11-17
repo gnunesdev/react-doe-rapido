@@ -19,7 +19,7 @@ const LoginPage: NextPage = () => {
 
 export default LoginPage;
 
-export const getServerSideProps = withSSRGuest(async (context) => {
+export const getServerSideProps = withSSRGuest(async () => {
   return {
     props: {},
   };

@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import { setCookie } from 'nookies';
-import { createContext, ReactNode, useCallback, useContext, useMemo } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 import { STEPS } from './../constants';
 import usePersistedState from '~/hooks/usePersistedState';

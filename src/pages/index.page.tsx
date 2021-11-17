@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
 
 import Section1 from './components/section-1';
 import Section2 from './components/section-2';

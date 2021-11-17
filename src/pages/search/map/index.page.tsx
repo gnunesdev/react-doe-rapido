@@ -1,5 +1,4 @@
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
-import { AnimatePresence } from 'framer-motion';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';

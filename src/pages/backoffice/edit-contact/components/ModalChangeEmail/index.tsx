@@ -26,11 +26,9 @@ interface ModalChangeEmailProps {
   userId: number;
 }
 
-export function ModalChangeEmail({ handleCloseModal, userId }: ModalChangeEmailProps) {
+export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
   const [codeValidated, setCodeValidated] = useState(false);
   const minWidth = useMinWidth();
-
-  useEffect(() => {});
 
   function handleSetCodeValidated() {
     setCodeValidated(true);

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { FaHandHoldingHeart, FaBars } from 'react-icons/fa';
 import { useTheme } from 'styled-components';
 
