@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { LinkButton } from '../Link/styles';
+
 export interface SidebarContainerProps {
   isCollapsed: boolean;
 }
@@ -51,7 +53,8 @@ export const LinksSection = styled.div`
     margin-top: 1.4rem;
   }
 
-  li {
+  li,
+  ${LinkButton} {
     font-size: 1.6rem;
     color: #fff;
 

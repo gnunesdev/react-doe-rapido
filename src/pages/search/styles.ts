@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { ButtonContainer } from '~/components/Button/styles';
 import { CheckboxContainer } from '~/components/Checkbox/styles';
 import { LinkButton } from '~/components/Link/styles';
 import { small } from '~/styles/variables';
@@ -34,6 +35,11 @@ export const SearchBar = styled.div`
 
   ${LinkButton} {
     margin-top: 1rem;
+  }
+
+  ${ButtonContainer} {
+    margin-top: 1rem;
+    width: 100%;
   }
 `;
 

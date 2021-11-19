@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { NextPage } from 'next';
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -6,6 +6,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocom
 
 import { AddressSuggestions } from './components/AddressSuggestions';
 import { CompanyList } from './components/CompanyList';
+import { FiltersModal } from './components/FiltersModal';
 import {
   SearchContainer,
   FiltersContainer,
@@ -13,6 +14,7 @@ import {
   SearchContent,
   Filters,
 } from './styles';
+import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import { Header } from '~/components/Header';
 import { Input } from '~/components/Input';
@@ -39,7 +41,14 @@ const AppPage: NextPage = () => {
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [companies, setCompanies] = useState<CompanyInList[]>([]);
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
+  const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const minWidth = useMinWidth();
+
+  function handleToggleFiltersModal() {
+    toggleFiltersModal((prevState) => !prevState);
+  }
 
   function handleSelect(description: string) {
     setValue(description, false);
@@ -90,14 +99,16 @@ const AppPage: NextPage = () => {
     setValue(e.target.value);
   }
 
-  function handleSelectNeedFilter(needId: string) {
+  function handleSelectNeedFilter(needId: string, shouldSearch = true) {
     const needAlreadayFiltered = needsFilters.find((need) => need === needId);
 
     needAlreadayFiltered
       ? setNeedsFilters((needs) => needs.filter((need) => need !== needId))
       : setNeedsFilters((needs) => [...needs, needId]);
 
-    searchCompanys();
+    if (shouldSearch) {
+      searchCompanys();
+    }
   }
 
   return (
@@ -129,25 +140,34 @@ const AppPage: NextPage = () => {
             )}
 
             {companies.length > 0 ? (
-              <FiltersContainer>
-                <Text
-                  description="Instituições que precisam de:"
-                  fontSize="1.8"
-                  isBold={true}
+              minWidth(Breakpoint.small) ? (
+                <FiltersContainer>
+                  <Text
+                    description="Instituições que precisam de:"
+                    fontSize="1.8"
+                    isBold={true}
+                  />
+                  <Filters>
+                    {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
+                      <Checkbox
+                        name={needValue}
+                        key={needId}
+                        label={needValue}
+                        size="medium"
+                        onChange={() => handleSelectNeedFilter(needId)}
+                        checked={needsFilters.includes(needId)}
+                      />
+                    ))}
+                  </Filters>
+                </FiltersContainer>
+              ) : (
+                <Button
+                  variant="secondary"
+                  onClick={handleToggleFiltersModal}
+                  description="Filtros"
+                  width={'auto'}
                 />
-                <Filters>
-                  {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
-                    <Checkbox
-                      name={needValue}
-                      key={needId}
-                      label={needValue}
-                      size="medium"
-                      onChange={() => handleSelectNeedFilter(needId)}
-                      checked={needsFilters.includes(needId)}
-                    />
-                  ))}
-                </Filters>
-              </FiltersContainer>
+              )
             ) : (
               <Link
                 label={
@@ -165,6 +185,16 @@ const AppPage: NextPage = () => {
           )}
         </SearchContent>
       </SearchContainer>
+      <AnimatePresence>
+        {isFiltersModalOpen && (
+          <FiltersModal
+            needsFilters={needsFilters}
+            handleSelectNeedFilter={handleSelectNeedFilter}
+            handleToggleFiltersModal={handleToggleFiltersModal}
+            handleSearchCompanys={searchCompanys}
+          />
+        )}
+      </AnimatePresence>
     </PageContainer>
   );
 };

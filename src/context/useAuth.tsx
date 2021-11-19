@@ -50,7 +50,7 @@ export function signOut() {
   destroyCookie(undefined, 'doerapido.token', { path: '/' });
   destroyCookie(undefined, 'doerapido.refreshToken', { path: '/' });
 
-  Router.push('/');
+  Router.push('/login');
 }
 
 const AuthContext = createContext({} as AuthProviderContextData);
@@ -125,8 +125,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const cookies = parseCookies();
 
-      if (cookies.onboardingStep !== 'finished') {
-        router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
+      if (!userData.finishedOnboarding) {
+        if (cookies.onboardingStep !== 'finished') {
+          router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
+        } else {
+          router.push(`/login`);
+          // todo validate step via database
+        }
       } else {
         router.push('/backoffice');
       }

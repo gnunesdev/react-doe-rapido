@@ -5,6 +5,4 @@ export const LinkButton = styled.button`
   font-size: 1.8rem;
 
   color: ${(props) => props.theme.colors.primary};
-
-  font-weight: bold;
 `;

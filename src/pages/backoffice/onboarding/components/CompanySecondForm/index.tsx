@@ -20,6 +20,7 @@ import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
 import { useCompanyContext } from '~/context/useCompany';
+import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
@@ -31,6 +32,7 @@ export function CompanySecondForm() {
   const minWidth = useMinWidth();
 
   const { company } = useCompanyContext();
+  const { user } = useUserContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,6 +58,10 @@ export function CompanySecondForm() {
 
         await api.put(`/company/${company.id}`, {
           ...companyData,
+        });
+
+        await api.put(`/user/${user.id}`, {
+          finishedOnboarding: true,
         });
 
         goToNextStep();

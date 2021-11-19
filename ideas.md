@@ -17,23 +17,25 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Validar carregamento de imagem nos forms
 - [OK] Header
 - [OK] Banner informando locais próximos
+- [OK] Validar login se usuário finalizou onboarding
+- [OK] Botão de sair
+- [OK] Modal de filtro e botão de pesquisa no search
 
 
+- [Doing] Add whatsapp
 - [Doing] Adicionar toast para erros
 - [Doing] Finalizar integração
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Botão de loading
-
 - [Doing] Termos de uso
-- [Doing] Validar login se usuário finalizou onboarding
 - [Doing] Edit contact
-- Modal de filtro e botão de pesquisa no search
+
+- Skeleton resultados
 - Mostra na home opção pra excluir dados
 - Edit company
 - Validar refreshtoken no backend
-- Add whatsapp
 - Mascara feia de telefone
 - Mais animações
-- Botão de sair
+- Recuperação de senha
 
 - [After] Validação do step via banco de dados

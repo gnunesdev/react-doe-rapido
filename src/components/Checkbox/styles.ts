@@ -27,7 +27,7 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
     font-size: ${(props) => {
       switch (props.size) {
         case 'big':
-          return '2.4rem';
+          return '2rem';
         case 'medium':
           return '1.8rem';
       }
