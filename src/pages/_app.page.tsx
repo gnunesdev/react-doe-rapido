@@ -10,6 +10,7 @@ import GlobalStyle from '~/styles/global';
 import light from '~/styles/themes/light';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

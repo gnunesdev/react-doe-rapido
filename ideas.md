@@ -20,7 +20,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Validar login se usuário finalizou onboarding
 - [OK] Botão de sair
 - [OK] Modal de filtro e botão de pesquisa no search
-
+- [OK] Loading resultados
 
 - [Doing] Add whatsapp
 - [Doing] Adicionar toast para erros
@@ -30,12 +30,11 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [Doing] Termos de uso
 - [Doing] Edit contact
 
-- Skeleton resultados
 - Mostra na home opção pra excluir dados
 - Edit company
-- Validar refreshtoken no backend
 - Mascara feia de telefone
-- Mais animações
 - Recuperação de senha
+- Mais animações
+- Validar refreshtoken no backend
 
 - [After] Validação do step via banco de dados

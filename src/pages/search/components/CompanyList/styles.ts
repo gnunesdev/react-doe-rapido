@@ -49,3 +49,22 @@ export const ItemInfo = styled.div`
     max-width: calc(100% - 216px);
   }
 `;
+
+export const SkeletonContainer = styled.div`
+  margin-top: 3rem;
+
+  .header {
+    margin-bottom: 1.6rem;
+  }
+  .results {
+    .react-loading-skeleton {
+      margin-bottom: 1rem;
+    }
+  }
+`;
+
+export const ButtonMap = styled.button`
+  background: ${(props) => props.theme.colors.primary};
+  height: 100%;
+  padding: 1rem;
+`;

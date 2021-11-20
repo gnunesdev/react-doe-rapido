@@ -5,24 +5,16 @@ import { toast } from 'react-toastify';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 import { AddressSuggestions } from './components/AddressSuggestions';
-import { CompanyList } from './components/CompanyList';
+import { CompanyList, CompanyListSkeleton } from './components/CompanyList';
+import { Filters } from './components/Filters';
 import { FiltersModal } from './components/FiltersModal';
-import {
-  SearchContainer,
-  FiltersContainer,
-  SearchBar,
-  SearchContent,
-  Filters,
-} from './styles';
+import { SearchContainer, SearchBar, SearchContent } from './styles';
 import { Button } from '~/components/Button';
-import { Checkbox } from '~/components/Checkbox';
 import { Header } from '~/components/Header';
 import { Input } from '~/components/Input';
 import { Link } from '~/components/Link';
 import { PageContainer } from '~/components/PageContainer';
-import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { CompanyNeedsMap } from '~/constants';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/search';
 import { Breakpoint } from '~/styles/variables';
@@ -42,7 +34,7 @@ const AppPage: NextPage = () => {
   const [companies, setCompanies] = useState<CompanyInList[]>([]);
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
   const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const minWidth = useMinWidth();
 
@@ -79,6 +71,7 @@ const AppPage: NextPage = () => {
 
   async function searchCompanys() {
     try {
+      setIsLoading(true);
       const result = await getGeocode({ address: value });
       const { lat, lng } = await getLatLng(result[0]);
       const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
@@ -92,6 +85,8 @@ const AppPage: NextPage = () => {
       toast.error(
         'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
       );
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -115,7 +110,7 @@ const AppPage: NextPage = () => {
     <PageContainer>
       <Header />
       <SearchContainer
-        showingResults={companies.length > 0}
+        showingResults={companies.length > 0 || isLoading}
         as={motion.div}
         initial="hidden"
         animate="animate"
@@ -139,27 +134,12 @@ const AppPage: NextPage = () => {
               <AddressSuggestions address={data} handleSelect={handleSelect} />
             )}
 
-            {companies.length > 0 ? (
+            {companies.length > 0 || isLoading ? (
               minWidth(Breakpoint.small) ? (
-                <FiltersContainer>
-                  <Text
-                    description="Instituições que precisam de:"
-                    fontSize="1.8"
-                    isBold={true}
-                  />
-                  <Filters>
-                    {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
-                      <Checkbox
-                        name={needValue}
-                        key={needId}
-                        label={needValue}
-                        size="medium"
-                        onChange={() => handleSelectNeedFilter(needId)}
-                        checked={needsFilters.includes(needId)}
-                      />
-                    ))}
-                  </Filters>
-                </FiltersContainer>
+                <Filters
+                  needsSelected={needsFilters}
+                  handleSelectFilter={handleSelectNeedFilter}
+                />
               ) : (
                 <Button
                   variant="secondary"
@@ -178,10 +158,10 @@ const AppPage: NextPage = () => {
               />
             )}
           </SearchBar>
-          {companies.length > 0 ? (
+          {companies.length > 0 && !isLoading ? (
             <CompanyList needsSelected={needsFilters} companys={companies} />
           ) : (
-            ''
+            isLoading && <CompanyListSkeleton />
           )}
         </SearchContent>
       </SearchContainer>

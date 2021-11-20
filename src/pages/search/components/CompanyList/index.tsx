@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
 
-import { CompanyListContainer, ItemInfo } from './styles';
+import { ButtonMap, CompanyListContainer, ItemInfo, SkeletonContainer } from './styles';
 import { Button } from '~/components/Button';
 import { Text } from '~/components/Text';
 import { useMinWidth } from '~/hooks/useMinWidth';
@@ -42,16 +44,33 @@ export function CompanyList({ companys, needsSelected }: CompanyListProps) {
               <p>{company.address}</p>
               <span>Distância aproximada: {company.distance / 1000}km</span>
             </ItemInfo>
-            {minWidth(Breakpoint.small) && (
+            {minWidth(Breakpoint.small) ? (
               <Button
                 variant="primary"
                 description="Ver no mapa"
                 onClick={() => handleSeeOnMap(String(company.id_company))}
               />
+            ) : (
+              <ButtonMap>
+                <FaMapMarkerAlt color="#fff" size={24} />
+              </ButtonMap>
             )}
           </li>
         ))}
       </ul>
     </CompanyListContainer>
+  );
+}
+
+export function CompanyListSkeleton() {
+  return (
+    <SkeletonContainer>
+      <div className="header">
+        <Skeleton height={30} />
+      </div>
+      <div className="results">
+        <Skeleton count={4} height={100}></Skeleton>
+      </div>
+    </SkeletonContainer>
   );
 }
