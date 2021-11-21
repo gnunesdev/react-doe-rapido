@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useTheme } from 'styled-components';
@@ -13,8 +13,9 @@ import {
   ConfirmContactFormStyled,
 } from './styles';
 import { Button } from '~/components/Button';
+import { ButtonLink } from '~/components/ButtonLink';
 import { Input } from '~/components/Input';
-import { Link as ButtonLink } from '~/components/Link';
+import { Link } from '~/components/Link';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { useAuthContext } from '~/context/useAuth';
@@ -114,23 +115,23 @@ export function ConfirmContactForm() {
               description={`Enviar novamente (${String(timeToResend)})`}
             />
           ) : (
-            <ButtonLink
-              label="Enviar novamente"
-              handleClick={handleResendCode}
-              isButton={true}
-            />
+            <Link label="Enviar novamente" handleClick={handleResendCode} isButton={true} />
           )}
         </CodeLinkContainer>
         <ButtonsContainer>
           <Button
+            className="button"
             description="Confirme o código"
             type="submit"
             variant="primary"
             isLoading={isLoading}
           />
-          <Button type="submit" variant="secondary">
-            <Link href="/login">Voltar para o login</Link>
-          </Button>
+          <ButtonLink
+            className="button"
+            description="Voltar para o login"
+            href="/login"
+            variant="secondary"
+          />
         </ButtonsContainer>
       </ConfirmContactFormStyled>
     </ConfirmContactFormContainer>

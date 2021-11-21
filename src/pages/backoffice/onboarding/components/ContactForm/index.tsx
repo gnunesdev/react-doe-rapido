@@ -15,6 +15,7 @@ import { useMinWidth } from '~/hooks/useMinWidth';
 import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
+import { isAxiosError } from '~/utils/http';
 
 export function ContactForm() {
   const { goToNextStep } = useOnboardingSteps();
@@ -38,20 +39,20 @@ export function ContactForm() {
           name: formik.values.name,
           email: formik.values.email,
           password: formik.values.password,
+          stepOnboarding: 'confirmContact',
         };
 
-        const { data: userData } = await publicApi.post('/user', {
-          ...user,
-        });
-
+        const { data: userData } = await publicApi.post('/user', { ...user });
         updateUser({ id: userData.id, name: userData.name, email: userData.email });
-
         goToNextStep();
       } catch (error) {
-        console.error(error);
-        toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
-        );
+        if (isAxiosError(error) && error.response.status === 400) {
+          toast.error(
+            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          );
+        } else {
+          toast.error('Email já cadastrado');
+        }
       } finally {
         setIsLoading(false);
       }
