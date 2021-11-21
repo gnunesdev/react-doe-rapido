@@ -70,6 +70,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
       <Header />
       <GoogleMap
         mapContainerStyle={containerStyle}
+        clickableIcons={false}
         center={centerScreen}
         zoom={14}
         onLoad={onMapLoad}

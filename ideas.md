@@ -27,6 +27,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Validar refreshtoken no backend
 - [OK] Cards e exclusão de conta
 - [OK] investigar minha localização
+- [OK] info window externa
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
@@ -35,7 +36,6 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 
 - quando volta do drawer colocar url certa
 - Botão de voltar
-- desabilitar info window externa
 - Termos de uso
 - Recuperação de senha
 
