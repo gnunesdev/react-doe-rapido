@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { ButtonContainer } from '~/components/Button/styles';
+import { ButtonContainer as ButtonLinkContainer } from '~/components/ButtonLink/styles';
 import { InputContainer } from '~/components/Input/styles';
 import { TitleStyled } from '~/components/Title/styles';
 import { small } from '~/styles/variables';
@@ -34,7 +36,7 @@ export const ButtonsContainer = styled.div`
 
   @media (min-width: ${small}) {
     flex-direction: row;
-    button {
+    ${ButtonContainer}, ${ButtonLinkContainer} {
       flex: 1;
       &:not(:first-child) {
         margin-top: 0;

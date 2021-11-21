@@ -24,6 +24,7 @@ import { Breakpoint } from '~/styles/variables';
 import { clearMask } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 import { fadeIn } from '~/utils/animations';
+import { isAxiosError } from '~/utils/http';
 
 export function CompanyFirstForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +62,7 @@ export function CompanyFirstForm() {
           district: formik.values.district,
           city: formik.values.city,
           state: formik.values.state,
+          step: 'company2',
         };
 
         const { data: companyData } = await api.post('/company', {
@@ -72,10 +74,15 @@ export function CompanyFirstForm() {
         });
         goToNextStep();
       } catch (error) {
-        console.error(error);
-        toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
-        );
+        if (isAxiosError(error) && error.response.status === 400) {
+          toast.error(
+            'Dados inválidos. Verifique se preencheu corretamente todos os campos e tente novamente.'
+          );
+        } else {
+          toast.error(
+            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          );
+        }
       } finally {
         setIsLoading(false);
       }

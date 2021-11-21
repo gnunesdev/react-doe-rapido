@@ -13,6 +13,7 @@ import { useAuthContext } from '~/context/useAuth';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
+import { isAxiosError } from '~/utils/http';
 
 export function LoginForm() {
   const { signIn } = useAuthContext();
@@ -31,10 +32,13 @@ export function LoginForm() {
         const user = { email: values.email, password: values.password };
         await signIn(user);
       } catch (error) {
-        console.error(error);
-        toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
-        );
+        if (isAxiosError(error) && error.response.status === 404) {
+          toast.error('Usuário ou senha incorretos');
+        } else {
+          toast.error(
+            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          );
+        }
       } finally {
         setIsLoading(false);
       }

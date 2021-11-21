@@ -94,52 +94,45 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   async function signIn({ email, password }: SignInCredentials) {
-    try {
-      const response = await publicApi.post<LoginResponse>('login', {
-        email,
-        password,
-      });
+    const response = await publicApi.post<LoginResponse>('login', {
+      email,
+      password,
+    });
 
-      const { user: userData, access, company: companyData } = response.data;
+    const { user: userData, access, company: companyData } = response.data;
 
-      setCookie(undefined, 'doerapido.token', access.token, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        path: '/',
-      });
-      setCookie(undefined, 'doerapido.refreshToken', access.refreshToken, {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        path: '/',
-      });
+    setCookie(undefined, 'doerapido.token', access.token, {
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: '/',
+    });
+    setCookie(undefined, 'doerapido.refreshToken', access.refreshToken, {
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: '/',
+    });
 
-      updateUser({
-        id: userData.id,
-        email: userData.email,
-        name: userData.name,
-      });
+    updateUser({
+      id: userData.id,
+      email: userData.email,
+      name: userData.name,
+    });
 
-      if (companyData) {
-        updateCompany(companyData);
-      }
+    if (companyData) {
+      updateCompany(companyData);
+    }
 
-      api.defaults.headers['Authorization'] = `Bearer ${access.token}`;
+    api.defaults.headers['Authorization'] = `Bearer ${access.token}`;
 
-      const cookies = parseCookies();
+    const cookies = parseCookies();
 
-      if (!userData.finishedOnboarding) {
-        if (cookies.onboardingStep !== 'finished') {
-          router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
-        } else {
-          router.push(`/login`);
-          // todo validate step via database
-        }
+    if (!userData.finishedOnboarding) {
+      if (cookies.onboardingStep !== 'finished') {
+        router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
       } else {
-        router.push('/backoffice');
+        router.push(`/login`);
+        // todo validate step via database
       }
-    } catch (error) {
-      console.error('error', error);
-      toast.error(
-        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
-      );
+    } else {
+      router.push('/backoffice');
     }
   }
 
