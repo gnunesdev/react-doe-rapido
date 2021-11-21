@@ -10,7 +10,7 @@ export async function getAddressByGeolocation(
 ): Promise<AxiosResponse<GeocodeResponse>> {
   try {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.NEXT_PUBLIC_MAPS_TOKEN}`;
-    return await api.get<GeocodeResponse>(url);
+    return await publicApi.get<GeocodeResponse>(url);
   } catch (error) {
     console.error(error);
     throw error;

@@ -25,13 +25,14 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Add whatsapp
 - [OK] Edit company
 - [OK] Validar refreshtoken no backend
+- [OK] Cards e exclusão de conta
+- [OK] investigar minha localização
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
 
-- investigar minha localização
 - quando volta do drawer colocar url certa
 - Botão de voltar
 - desabilitar info window externa
