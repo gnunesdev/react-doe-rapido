@@ -1,4 +1,5 @@
 import { GoogleMap, InfoWindow, Marker } from '@react-google-maps/api';
+import { AnimatePresence } from 'framer-motion';
 import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -99,13 +100,15 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
             <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
           </InfoWindow>
         )}
-        {isDrawerOpen && selectedCompany && (
-          <CompanyDrawer
-            closeModal={handleCloseDrawer}
-            companyData={selectedCompany}
-            companyId={String(routes.query?.id)}
-          />
-        )}
+        <AnimatePresence>
+          {isDrawerOpen && selectedCompany && (
+            <CompanyDrawer
+              closeModal={handleCloseDrawer}
+              companyData={selectedCompany}
+              companyId={String(routes.query?.id)}
+            />
+          )}
+        </AnimatePresence>
         <InfoBanner />
       </GoogleMap>
     </>

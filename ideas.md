@@ -21,20 +21,23 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Botão de sair
 - [OK] Modal de filtro e botão de pesquisa no search
 - [OK] Loading resultados
+- [OK] Mais animações
 
 - [Doing] Add whatsapp
+- [Doing] Edit contact
 - [Doing] Adicionar toast para erros
 - [Doing] Finalizar integração
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Botão de loading
 - [Doing] Termos de uso
-- [Doing] Edit contact
 
-- Mostra na home opção pra excluir dados
+- investigar minha localização
+- quando volta do drawer colocar url certa
+- desabilitar info window externa
 - Edit company
 - Mascara feia de telefone
 - Recuperação de senha
-- Mais animações
+- Botão de voltar
 - Validar refreshtoken no backend
 
 - [After] Validação do step via banco de dados

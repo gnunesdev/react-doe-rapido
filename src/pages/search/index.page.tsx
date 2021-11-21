@@ -109,61 +109,59 @@ const AppPage: NextPage = () => {
   return (
     <PageContainer>
       <Header />
-      <SearchContainer
-        showingResults={companies.length > 0 || isLoading}
-        as={motion.div}
-        initial="hidden"
-        animate="animate"
-        variants={fadeIn}
-      >
-        <SearchContent>
-          <Title
-            description="Pesquisa de instituições"
-            size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
-          />
-          <SearchBar>
-            <Input
-              label="Digite seu endereço:"
-              inputSize="big"
-              name="address"
-              onChange={handleInput}
-              disabled={!ready}
-              value={value}
+      <SearchContainer showingResults={companies.length > 0 || isLoading}>
+        <motion.div initial="hidden" animate="animate" variants={fadeIn}>
+          <SearchContent>
+            <Title
+              description="Pesquisa de instituições"
+              size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
             />
-            {status === 'OK' && (
-              <AddressSuggestions address={data} handleSelect={handleSelect} />
-            )}
-
-            {companies.length > 0 || isLoading ? (
-              minWidth(Breakpoint.small) ? (
-                <Filters
-                  needsSelected={needsFilters}
-                  handleSelectFilter={handleSelectNeedFilter}
-                />
-              ) : (
-                <Button
-                  variant="secondary"
-                  onClick={handleToggleFiltersModal}
-                  description="Filtros"
-                  width={'auto'}
-                />
-              )
-            ) : (
-              <Link
-                label={
-                  isAddressLoading ? 'Carregando localização...' : 'Insira minha localização'
-                }
-                isButton={true}
-                handleClick={handleGetCurrentAddress}
+            <SearchBar>
+              <Input
+                label="Digite seu endereço:"
+                inputSize="big"
+                name="address"
+                onChange={handleInput}
+                disabled={!ready}
+                value={value}
               />
+              {status === 'OK' && (
+                <AddressSuggestions address={data} handleSelect={handleSelect} />
+              )}
+
+              {companies.length > 0 || isLoading ? (
+                minWidth(Breakpoint.small) ? (
+                  <Filters
+                    needsSelected={needsFilters}
+                    handleSelectFilter={handleSelectNeedFilter}
+                  />
+                ) : (
+                  <Button
+                    variant="secondary"
+                    onClick={handleToggleFiltersModal}
+                    description="Filtros"
+                    width={'auto'}
+                  />
+                )
+              ) : (
+                <Link
+                  label={
+                    isAddressLoading
+                      ? 'Carregando localização...'
+                      : 'Insira minha localização'
+                  }
+                  isButton={true}
+                  handleClick={handleGetCurrentAddress}
+                />
+              )}
+            </SearchBar>
+            {companies.length > 0 && !isLoading ? (
+              <CompanyList needsSelected={needsFilters} companys={companies} />
+            ) : (
+              isLoading && <CompanyListSkeleton />
             )}
-          </SearchBar>
-          {companies.length > 0 && !isLoading ? (
-            <CompanyList needsSelected={needsFilters} companys={companies} />
-          ) : (
-            isLoading && <CompanyListSkeleton />
-          )}
-        </SearchContent>
+          </SearchContent>
+        </motion.div>
       </SearchContainer>
       <AnimatePresence>
         {isFiltersModalOpen && (

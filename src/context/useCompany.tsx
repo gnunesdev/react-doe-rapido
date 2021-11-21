@@ -12,6 +12,7 @@ export interface Company {
   city: string;
   state: string;
   phone?: string;
+  phoneWhatsapp?: string;
   email?: string;
   image?: string;
   needs: number[];

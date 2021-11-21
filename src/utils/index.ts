@@ -1,4 +1,4 @@
 export const clearMask = (value: string) => {
-  const newValue = value.replace(/\D+/g, '');
+  const newValue = value ? value.replace(/\D+/g, '') : '';
   return newValue;
 };

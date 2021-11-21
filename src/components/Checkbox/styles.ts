@@ -32,7 +32,6 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
           return '1.8rem';
       }
     }};
-    font-weight: bold;
   }
 
   span {

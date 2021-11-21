@@ -32,7 +32,7 @@ export const NeedsContainer = styled.div`
   margin-top: 2.4rem;
 
   ${TitleStyled} {
-    margin-bottom: 2rem;
+    margin-bottom: 0.4rem;
   }
 `;
 

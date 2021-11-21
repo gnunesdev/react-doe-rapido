@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import jwtDecode from 'jwt-decode';
 import { NextPage } from 'next';
 import { parseCookies } from 'nookies';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from '../components/BackofficeContainer';
@@ -40,6 +41,8 @@ interface EditCompanyPageProps {
 const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
   const minWidth = useMinWidth();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       tradingName: company.tradingName,
@@ -54,10 +57,12 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       phone: company.phone,
       email: company.email,
       image: company.image,
+      phoneWhatsapp: company.phoneWhatsapp,
       needs: company.needs.map((needValue) => String(needValue)),
     },
     onSubmit: async () => {
       try {
+        setIsLoading(true);
         const companyData = {
           tradingName: formik.values.tradingName,
           name: formik.values.name,
@@ -69,6 +74,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
           city: formik.values.city,
           state: formik.values.state,
           phone: clearMask(formik.values.phone),
+          phoneWhatsapp: clearMask(formik.values.phoneWhatsapp),
           email: formik.values.email,
           image: formik.values.image,
           needs: formik.values.needs.map((needValue) => Number(needValue)),
@@ -86,10 +92,11 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
         toast.error(
           'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
         );
+      } finally {
+        setIsLoading(false);
       }
     },
     validationSchema: EditCompanyFormValidator,
-    enableReinitialize: true,
   });
 
   async function onCepBlur() {
@@ -234,6 +241,25 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
               error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
             />
             <Input
+              name="phoneWhatsapp"
+              inputSize="big"
+              onChange={formik.handleChange}
+              label="Telefone:"
+              mask={
+                clearMask(formik.values.phoneWhatsapp).length >= 10
+                  ? '(99)99999-9999'
+                  : '(99)9999-9999'
+              }
+              value={formik.values.phoneWhatsapp}
+              error={
+                formik.touched.phoneWhatsapp && formik.errors.phoneWhatsapp
+                  ? formik.errors.phoneWhatsapp
+                  : ''
+              }
+            />
+          </InputRow>
+          <InputRow>
+            <Input
               name="email"
               inputSize="big"
               onChange={formik.handleChange}
@@ -264,6 +290,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
               variant="primary"
               description="Salvar informações"
               type="submit"
+              isLoading={isLoading}
             ></Button>
           </ButtonsContainer>
         </Form>
