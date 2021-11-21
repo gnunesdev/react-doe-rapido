@@ -22,22 +22,21 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Modal de filtro e botão de pesquisa no search
 - [OK] Loading resultados
 - [OK] Mais animações
+- [OK] Add whatsapp
+- [OK] Edit company
+- [OK] Validar refreshtoken no backend
 
-- [Doing] Add whatsapp
 - [Doing] Edit contact
-- [Doing] Adicionar toast para erros
-- [Doing] Finalizar integração
 - [Doing] Pente fino layout desk + mobile
+- [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
-- [Doing] Termos de uso
 
 - investigar minha localização
 - quando volta do drawer colocar url certa
-- desabilitar info window externa
-- Edit company
-- Mascara feia de telefone
-- Recuperação de senha
 - Botão de voltar
-- Validar refreshtoken no backend
+- desabilitar info window externa
+- Termos de uso
+- Recuperação de senha
 
+- [After] Mascara feia de telefone
 - [After] Validação do step via banco de dados

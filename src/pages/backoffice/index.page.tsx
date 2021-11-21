@@ -2,10 +2,14 @@ import jwtDecode from 'jwt-decode';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { FaUser, FaBuilding, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import { BackofficeContainer } from './components/BackofficeContainer';
+import { Card } from './components/Card';
+import { ModalDeleteAccount } from './components/ModalDeleteAccount';
+import { CardsContainer } from './styles';
 import { JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
 import { User, UserWithImage } from '~/context/useUser';
@@ -19,6 +23,8 @@ interface BackofficePageProps {
 const BackofficePage: NextPage<BackofficePageProps> = ({ user }) => {
   const router = useRouter();
 
+  const [isDeleteAccountModalOpen, toggleDeleteAccountModalOpen] = useState(false);
+
   useEffect(() => {
     if (router.query?.cameFromOnboarding) {
       toast.success(
@@ -27,9 +33,38 @@ const BackofficePage: NextPage<BackofficePageProps> = ({ user }) => {
     }
   });
 
+  function handleToggleModal() {
+    toggleDeleteAccountModalOpen((prevState) => !prevState);
+  }
+
   return (
     <>
-      <BackofficeContainer user={user} />
+      <BackofficeContainer user={user}>
+        <CardsContainer>
+          <Card
+            variant="company"
+            Icon={FaBuilding}
+            title="Editar instituição"
+            description="Edite as informações da sua instituição para mantê-las 100% atualizadas, assim doadores podem te encontrar mais facilmente."
+          />
+          <Card
+            variant="contact"
+            Icon={FaUser}
+            title="Editar contato"
+            description="Edite as informações do seu usuário de acesso, altere senha e e-mail se necessário."
+          />
+          <Card
+            variant="delete"
+            Icon={FaTrash}
+            title="Excluir conta"
+            description="Se você deseja encerrar sua conta na plataforma, nós iremos excluir seus dados e você irá perder seu acesso."
+            onClick={handleToggleModal}
+          />
+        </CardsContainer>
+        {isDeleteAccountModalOpen && (
+          <ModalDeleteAccount closeModal={handleToggleModal} userId={user.id} />
+        )}
+      </BackofficeContainer>
     </>
   );
 };

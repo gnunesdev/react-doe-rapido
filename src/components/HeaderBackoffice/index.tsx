@@ -45,7 +45,7 @@ export function HeaderBackoffice({ user }: HeaderBackofficeProps) {
               <FaBars color={foreground.primary} size={24} />
             </Menu>
           )}
-          <Link href="/">
+          <Link href="/backoffice">
             <Logo>
               <Title>doe.rápido</Title>
               <Icon>

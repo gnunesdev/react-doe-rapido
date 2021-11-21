@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { dropIn } from './animation';
