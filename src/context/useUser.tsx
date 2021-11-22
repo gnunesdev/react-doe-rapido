@@ -4,7 +4,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  finishedOnboarding?: boolean;
+  stepOnboarding?: string;
 }
 
 export interface UserWithImage {

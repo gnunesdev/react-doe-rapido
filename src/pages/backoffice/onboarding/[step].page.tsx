@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 import { GetServerSideProps, NextPage } from 'next';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
@@ -10,6 +11,8 @@ import { STEPS } from './constants';
 import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 import { OnboardingContainer } from './styles';
 import { Header } from '~/components/Header';
+import { destroyCookies, JwtTokenResponse } from '~/context/useAuth';
+import { setupAuthorizedApi } from '~/services/api';
 
 interface OnboardingPageProps {
   step: keyof typeof STEPS;
@@ -38,7 +41,9 @@ const OnboardingPage: NextPage<OnboardingPageProps> = ({ step }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
-  const cookies = parseCookies(context);
+  const { 'doerapido.token': token } = parseCookies(context);
+
+  const api = setupAuthorizedApi(context);
 
   const currentStep = String(params?.step);
   if (currentStep && !Object.values(STEPS).includes(currentStep)) {
@@ -50,17 +55,43 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const realStep = cookies.onboardingStep;
-  if (realStep && currentStep != realStep && Object.values(STEPS).includes(realStep)) {
+  if (!token && currentStep !== STEPS.contact && currentStep !== STEPS.confirmContact) {
     return {
       redirect: {
-        destination: `/backoffice/onboarding/${realStep}`,
+        destination: '/login',
         permanent: false,
       },
     };
   }
 
-  if (realStep === STEPS.finished) {
+  if (token) {
+    const data: JwtTokenResponse = jwtDecode(token);
+    try {
+      const dataUser = await api.get(`/user/${data.id}`);
+
+      if (
+        dataUser.data.stepOnboarding !== STEPS.finished &&
+        dataUser.data.stepOnboarding !== currentStep
+      ) {
+        return {
+          redirect: {
+            destination: `/backoffice/onboarding/${dataUser.data.stepOnboarding}`,
+            permanent: false,
+          },
+        };
+      }
+    } catch (error) {
+      destroyCookies(context);
+      return {
+        redirect: {
+          destination: '/login',
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  if (currentStep === 'finished') {
     return {
       redirect: {
         destination: `/backoffice?cameFromOnboarding=true`,

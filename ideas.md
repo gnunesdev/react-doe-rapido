@@ -32,6 +32,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Correção filtros bugados
 - [OK] Botão de voltar
 
+- [Doing] Validação do step via banco de dados
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
@@ -41,4 +42,3 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - Termos de uso
 
 - [After] Mascara feia de telefone
-- [After] Validação do step via banco de dados

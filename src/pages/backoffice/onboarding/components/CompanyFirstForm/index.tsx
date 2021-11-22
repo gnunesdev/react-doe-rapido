@@ -62,11 +62,14 @@ export function CompanyFirstForm() {
           district: formik.values.district,
           city: formik.values.city,
           state: formik.values.state,
-          step: 'company2',
         };
 
         const { data: companyData } = await api.post('/company', {
           ...company,
+        });
+
+        await api.put(`/user/${user.id}`, {
+          stepOnboarding: 'company2',
         });
 
         updateCompany({

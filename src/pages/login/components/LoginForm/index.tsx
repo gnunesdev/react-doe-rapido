@@ -1,24 +1,26 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
 import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
 import { Button } from '~/components/Button';
-import { ButtonLink } from '~/components/ButtonLink';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
-import { useAuthContext } from '~/context/useAuth';
+import { destroyCookies, useAuthContext } from '~/context/useAuth';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { Breakpoint } from '~/styles/variables';
 import { fadeIn } from '~/utils/animations';
 import { isAxiosError } from '~/utils/http';
 
 export function LoginForm() {
+  const router = useRouter();
   const { signIn } = useAuthContext();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isOnboardingLoading, setIsOnboardingLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -44,6 +46,12 @@ export function LoginForm() {
       }
     },
   });
+
+  function handleRedirectToOnboarding() {
+    destroyCookies();
+    setIsOnboardingLoading(true);
+    router.push('/backoffice/onboarding/contact');
+  }
 
   const minWidth = useMinWidth();
 
@@ -79,12 +87,13 @@ export function LoginForm() {
             width="auto"
             isLoading={isLoading}
           />
-          <ButtonLink
+          <Button
             variant="secondary"
             type="button"
             width="auto"
             description="Cadastre-se"
-            href="/backoffice/onboarding/contact"
+            isLoading={isOnboardingLoading}
+            onClick={handleRedirectToOnboarding}
           />
         </ButtonsContainer>
       </LoginFormStyled>
