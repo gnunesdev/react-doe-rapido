@@ -94,7 +94,9 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
                 </ul>
               </div>
               <div className="actions">
-                <ActionButton type="whats" whatsPhone={company.phone} />
+                {company.phoneWhatsapp && (
+                  <ActionButton type="whats" whatsPhone={company.phoneWhatsapp} />
+                )}
                 <ActionButton type="phone" phone={company.phone} />
                 <ActionButton type="email" email={company.email} />
                 <ActionButton type="share" />

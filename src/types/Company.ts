@@ -20,5 +20,6 @@ export interface Company {
   long: string;
   distance: number;
   phone: string;
+  phoneWhatsapp: string;
   email: string;
 }
