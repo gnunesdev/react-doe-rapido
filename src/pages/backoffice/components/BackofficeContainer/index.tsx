@@ -18,7 +18,7 @@ export const BackofficeContainer: React.FC<BackofficeContainerProps> = ({
       <SidebarProvider>
         <HeaderBackoffice user={user} />
         <Container>
-          <Sidebar></Sidebar>
+          <Sidebar user={user}></Sidebar>
           {children}
         </Container>
       </SidebarProvider>

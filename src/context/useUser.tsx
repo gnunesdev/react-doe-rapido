@@ -12,6 +12,7 @@ export interface UserWithImage {
   name: string;
   email: string;
   image: string;
+  companyId: number;
 }
 
 interface UserContextData {

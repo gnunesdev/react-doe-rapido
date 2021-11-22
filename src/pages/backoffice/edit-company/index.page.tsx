@@ -311,6 +311,7 @@ export const getServerSideProps = withSSRAuth(async (context) => {
 
     const userData = {
       ...user,
+      companyId: company.id,
       image: company.image,
     };
 

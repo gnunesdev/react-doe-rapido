@@ -1,16 +1,48 @@
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 import { Link } from '../Link';
 import { LinksSection, SidebarContainer, Overlay, SidebarVolume } from './styles';
 import Modal from '~/components/Modal';
 import { signOut } from '~/context/useAuth';
+import { UserWithImage } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { useSidebarContext } from '~/hooks/useSidebarState';
 import { Breakpoint } from '~/styles/variables';
 
 export interface InnerSidebarProps {
   isCollapsed: boolean;
+  user: UserWithImage;
 }
 
-const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed }) => {
+interface SideBarProps {
+  user: UserWithImage;
+}
+
+export function Sidebar({ user }: SideBarProps) {
+  const minWidth = useMinWidth();
+  const { isCollapsed, toggleCollapsed } = useSidebarContext();
+  return (
+    <>
+      {minWidth(Breakpoint.large) && <SidebarVolume />}
+      <Modal>
+        <InnerSidebar isCollapsed={!minWidth(Breakpoint.large) && isCollapsed} user={user} />
+        {!minWidth(Breakpoint.large) && !isCollapsed && (
+          <Overlay onClick={toggleCollapsed} />
+        )}
+      </Modal>
+    </>
+  );
+}
+
+const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed, user }) => {
+  function handleCopyLink() {
+    navigator.clipboard.writeText(
+      `${location.origin}/search/map?id=${user.companyId}&drawerId=${user.companyId}`
+    );
+    toast.info('Link copiado para área de transferência');
+  }
+
   return (
     <SidebarContainer isCollapsed={isCollapsed}>
       <LinksSection>
@@ -27,9 +59,28 @@ const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed }) => {
       <LinksSection>
         <h3>Úteis</h3>
         <ul>
-          <li>Acessar instituição no app</li>
-          <li>Compartilhar instituição</li>
-          <li>Entre em contato conosco</li>
+          <li>
+            <Link
+              href={`/search/map?id=${user.companyId}&drawerId=${user.companyId}`}
+              target="_blank"
+              label="Acessar instituição no app"
+            />
+          </li>
+          <li>
+            <Link
+              handleClick={handleCopyLink}
+              target="_blank"
+              label="Compartilhar instituição"
+              isButton={true}
+            />
+          </li>
+          <li>
+            <Link
+              href="mailto:doe.rapido@gmail.com?subject=Doação"
+              target="_blank"
+              label="Entre em contato conosco"
+            />
+          </li>
         </ul>
       </LinksSection>
       <LinksSection>
@@ -41,19 +92,3 @@ const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed }) => {
     </SidebarContainer>
   );
 };
-
-export function Sidebar() {
-  const minWidth = useMinWidth();
-  const { isCollapsed, toggleCollapsed } = useSidebarContext();
-  return (
-    <>
-      {minWidth(Breakpoint.large) && <SidebarVolume />}
-      <Modal>
-        <InnerSidebar isCollapsed={!minWidth(Breakpoint.large) && isCollapsed} />
-        {!minWidth(Breakpoint.large) && !isCollapsed && (
-          <Overlay onClick={toggleCollapsed} />
-        )}
-      </Modal>
-    </>
-  );
-}
