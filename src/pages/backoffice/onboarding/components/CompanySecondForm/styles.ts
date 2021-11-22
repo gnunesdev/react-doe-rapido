@@ -38,6 +38,10 @@ export const NeedsContainer = styled.div`
 
 export const TermsContainer = styled.div`
   margin-top: 2.4rem;
+
+  ${TitleStyled} {
+    margin-bottom: 0.4rem;
+  }
 `;
 
 export const ButtonsContainer = styled.div`

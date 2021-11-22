@@ -153,6 +153,7 @@ export function CompanySecondForm() {
             name="acceptedTerms"
             onChange={formik.handleChange}
             error={String(formik.errors.needs)}
+            checked={formik.values.acceptedTerms}
           >
             Aceito os termos de uso
           </Checkbox>
@@ -162,6 +163,7 @@ export function CompanySecondForm() {
             name="acceptedPrivacy"
             onChange={formik.handleChange}
             error={String(formik.errors.needs)}
+            checked={formik.values.acceptedPrivacy}
           >
             Aceito as políticas de privacidade
           </Checkbox>

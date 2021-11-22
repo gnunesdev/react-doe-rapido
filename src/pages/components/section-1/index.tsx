@@ -8,8 +8,8 @@ const Section1: React.VFC = () => {
         <div className="info">
           <div className="title">doe.rápido, o sistema que ajuda você a ajudar alguém!</div>
           <div className="text">
-            Com o doe.rápido, você encontra lugares próximos que precisam de doações, rápido
-            e fácil, sem enrolação e direto ao ponto.
+            Com o doe.rápido, você encontra lugares próximos que precisam de doações, de
+            forma rápida e fácil, sem enrolação e direto ao ponto.
           </div>
         </div>
       </div>

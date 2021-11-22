@@ -45,7 +45,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const api = setupAuthorizedApi(context);
 
-  const currentStep = String(params?.step);
+  const currentStep = params?.step ? String(params?.step) : false;
+
   if (currentStep && !Object.values(STEPS).includes(currentStep)) {
     return {
       redirect: {
@@ -69,20 +70,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
       const dataUser = await api.get(`/user/${data.id}`);
 
-      if (
-        dataUser.data.stepOnboarding !== STEPS.finished &&
-        dataUser.data.stepOnboarding !== currentStep
-      ) {
-        return {
-          redirect: {
-            destination: `/backoffice/onboarding/${dataUser.data.stepOnboarding}`,
-            permanent: false,
-          },
-        };
-      } else {
+      if (dataUser.data.stepOnboarding === STEPS.finished) {
         return {
           redirect: {
             destination: `/backoffice`,
+            permanent: false,
+          },
+        };
+      }
+
+      if (currentStep && currentStep !== dataUser.data.stepOnboarding) {
+        return {
+          redirect: {
+            destination: `/backoffice/onboarding/${dataUser.data.stepOnboarding}`,
             permanent: false,
           },
         };
