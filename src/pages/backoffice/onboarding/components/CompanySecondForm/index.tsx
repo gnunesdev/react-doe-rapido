@@ -55,6 +55,7 @@ export function CompanySecondForm() {
           phone: clearMask(formik.values.phone),
           phoneWhatsapp: clearMask(formik.values.whats),
           needs: formik.values.needs,
+          stepOnboarding: 'finished',
           ...(formik.values.image && { image: formik.values.image }),
         };
 
@@ -63,7 +64,7 @@ export function CompanySecondForm() {
         });
 
         await api.put(`/user/${user.id}`, {
-          finishedOnboarding: true,
+          stepOnboarding: 'finished',
         });
 
         goToNextStep();

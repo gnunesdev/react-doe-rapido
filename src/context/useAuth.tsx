@@ -46,9 +46,13 @@ interface AccessCredential {
   refreshToken: string;
 }
 
+export function destroyCookies(context?: any) {
+  destroyCookie(context, 'doerapido.token', { path: '/' });
+  destroyCookie(context, 'doerapido.refreshToken', { path: '/' });
+}
+
 export function signOut() {
-  destroyCookie(undefined, 'doerapido.token', { path: '/' });
-  destroyCookie(undefined, 'doerapido.refreshToken', { path: '/' });
+  destroyCookies();
 
   Router.push('/login');
 }
@@ -119,18 +123,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (companyData) {
       updateCompany(companyData);
     }
-
     api.defaults.headers['Authorization'] = `Bearer ${access.token}`;
 
-    const cookies = parseCookies();
-
-    if (!userData.finishedOnboarding) {
-      if (cookies.onboardingStep !== 'finished') {
-        router.push(`/backoffice/onboarding/${cookies.onboardingStep}`);
-      } else {
-        router.push(`/login`);
-        // todo validate step via database
-      }
+    if (userData.stepOnboarding !== 'finished') {
+      router.push(`/backoffice/onboarding/${userData.stepOnboarding}`);
     } else {
       router.push('/backoffice');
     }
@@ -151,7 +147,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const jwtData: JwtTokenResponse = jwtDecode(token);
 
-      const { data: userData } = await api.get(`/user/${jwtData.id}`);
+      const { data: userData } = await api.put(`/user/${jwtData.id}`, {
+        stepOnboarding: 'company1',
+      });
 
       updateUser({
         id: userData.id,

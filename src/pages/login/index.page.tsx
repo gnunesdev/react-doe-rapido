@@ -1,10 +1,9 @@
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 
 import { LoginForm } from './components/LoginForm';
 import { LoginContainer } from './styles';
 import { Header } from '~/components/Header';
 import { PageContainer } from '~/components/PageContainer';
-import { withSSRGuest } from '~/utils/withSSRGuest';
 
 const LoginPage: NextPage = () => {
   return (
@@ -19,8 +18,8 @@ const LoginPage: NextPage = () => {
 
 export default LoginPage;
 
-export const getServerSideProps = withSSRGuest(async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {},
   };
-});
+};
