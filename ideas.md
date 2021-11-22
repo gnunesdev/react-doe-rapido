@@ -35,18 +35,18 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Deslogar em qualquer erro de user e company no backoffice
 - [OK] Ações básicas da sidebar no backoffice
 - [OK] Inverter validate contact form
+- [OK] Remover infowindow
+- [OK] Adicionar contatos no drawer
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
 
-- Remover infowindow
-- Adicionar contatos no drawer
+- Mascara feia de telefone
 - Atualizar header após atualizar infos de contato
 - Performance
 - Animações forms no backoffice
 - Recuperação de senha
 - Termos de uso
 
-- [After] Mascara feia de telefone

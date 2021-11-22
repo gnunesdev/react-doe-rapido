@@ -6,7 +6,7 @@ import { small } from '~/styles/variables';
 
 export const CompanyDrawerContainer = styled.div`
   height: 100vh;
-  width: 100%;
+  width: 90%;
   background: ${(props) => props.theme.colors.background};
   z-index: 4;
   position: fixed;
@@ -70,6 +70,21 @@ export const CompanyInfoContainer = styled.div`
 
   .needs {
     margin-top: 2rem;
+  }
+
+  .contacts {
+    margin-top: 2rem;
+
+    strong {
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      &:not(:first-child) {
+        margin-top: 0.2rem;
+      }
+    }
   }
 
   .actions {

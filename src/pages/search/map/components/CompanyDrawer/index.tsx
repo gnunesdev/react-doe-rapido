@@ -17,6 +17,7 @@ import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
 import { getCompanyById } from '~/services/search';
 import { Company } from '~/types/Company';
+import { maskPhone } from '~/utils';
 
 interface CompanyDrawerProps {
   closeModal: VoidFunction;
@@ -92,6 +93,14 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
                     <li key={need}>{CompanyNeedsMap[need]}</li>
                   ))}
                 </ul>
+              </div>
+              <div className="contacts">
+                <strong>Contatos:</strong>
+                <p>Email: {company.email}</p>
+                <p>Telefone: {maskPhone(company.phone)}</p>
+                {company.phoneWhatsapp && (
+                  <p>Whatsapp: {maskPhone(company.phoneWhatsapp)}</p>
+                )}
               </div>
               <div className="actions">
                 {company.phoneWhatsapp && (

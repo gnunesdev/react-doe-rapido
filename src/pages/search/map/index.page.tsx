@@ -9,7 +9,9 @@ import { CompanyDrawer } from './components/CompanyDrawer';
 import { InfoBanner } from './components/InfoBanner';
 import { CompanyButton } from './styles';
 import { Header } from '~/components/Header';
+import { useMinWidth } from '~/hooks/useMinWidth';
 import { getCompanysToRenderInMap } from '~/services/map';
+import { Breakpoint } from '~/styles/variables';
 import { Company } from '~/types/Company';
 
 const containerStyle = {
@@ -24,6 +26,8 @@ interface MapPageProps {
 const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   const routes = useRouter();
   const { drawerId } = routes.query;
+
+  const minWidth = useMinWidth();
 
   const centerScreen = useMemo(() => {
     return { lat: Number(companies[0].lat), lng: Number(companies[0].long) };
@@ -49,15 +53,14 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
     if (mapRef.current) {
       (mapRef.current as any).panTo({ lat, lng });
     }
-    // mapRef.current.setZoom(14);
   }, []);
 
-  function handleOpenDrawer() {
+  function handleOpenDrawer(company?: Company) {
     const { id, needs } = routes.query;
     router.push(
       `/search/map?id=${id}${
         needs && needs.length ? `&needs=${String(needs)}` : ''
-      }&drawerId=${selectedCompany?.id_company}`,
+      }&drawerId=${company ? company.id_company : selectedCompany?.id_company}`,
       undefined,
       {
         shallow: true,
@@ -97,10 +100,13 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
             onClick={() => {
               panTo(Number(company.lat), Number(company.long));
               setSelectedCompany(company);
+              if (!minWidth(Breakpoint.small)) {
+                handleOpenDrawer(company);
+              }
             }}
           />
         ))}
-        {selectedCompany && (
+        {selectedCompany && minWidth(Breakpoint.small) && (
           <InfoWindow
             position={{
               lat: Number(selectedCompany.lat),
@@ -110,7 +116,9 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
               setSelectedCompany(null);
             }}
           >
-            <CompanyButton onClick={handleOpenDrawer}>{selectedCompany.name}</CompanyButton>
+            <CompanyButton onClick={() => handleOpenDrawer()}>
+              {selectedCompany.name}
+            </CompanyButton>
           </InfoWindow>
         )}
         <AnimatePresence>
