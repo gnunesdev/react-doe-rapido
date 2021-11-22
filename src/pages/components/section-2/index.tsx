@@ -9,7 +9,7 @@ const Section2: React.VFC = () => {
         <div className="text">
           Procure rapidamente pelas instituições que precisam de algum tipo de doação,
           visualize o local e entre em contato para agendar sua doação, tudo do jeito mais
-          simples possível
+          simples possível.
         </div>
         <ButtonLink
           variant="tertiary"

@@ -37,6 +37,7 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Inverter validate contact form
 - [OK] Remover infowindow
 - [OK] Adicionar contatos no drawer
+- [OK] Performance
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
@@ -45,7 +46,6 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 
 - Mascara feia de telefone
 - Atualizar header após atualizar infos de contato
-- Performance
 - Animações forms no backoffice
 - Recuperação de senha
 - Termos de uso

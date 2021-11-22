@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 
 import Section1 from './components/section-1';
 import Section2 from './components/section-2';
@@ -24,6 +24,12 @@ const Home: NextPage = () => {
       </Footer>
     </StyledPageContainer>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {},
+  };
 };
 
 export default Home;

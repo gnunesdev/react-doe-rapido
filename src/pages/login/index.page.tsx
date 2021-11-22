@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 
 import { LoginForm } from './components/LoginForm';
 import { LoginContainer } from './styles';
@@ -18,7 +18,7 @@ const LoginPage: NextPage = () => {
 
 export default LoginPage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {},
   };

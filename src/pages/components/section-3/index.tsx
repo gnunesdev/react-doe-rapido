@@ -17,7 +17,7 @@ const Section3: React.VFC = () => {
             <div className="header__title">Cadastre sua instituição</div>
             <div className="header__text">
               Se cadastre na nossa plataforma exclusiva e apareça para diversos doadores que
-              podem ajudar nas necessidades da sua insituição
+              podem ajudar nas necessidades da sua insituição.
             </div>
           </div>
         </div>
