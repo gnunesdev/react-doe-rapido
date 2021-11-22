@@ -50,7 +50,7 @@ export function ContactForm() {
           toast.error('Email já cadastrado');
         } else {
           toast.error(
-            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+            'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
           );
         }
       } finally {

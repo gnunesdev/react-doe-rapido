@@ -159,7 +159,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       console.error('error', error);
       toast.error(
-        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
       );
     }
   }

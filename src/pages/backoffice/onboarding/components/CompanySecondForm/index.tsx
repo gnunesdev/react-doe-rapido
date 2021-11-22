@@ -71,7 +71,7 @@ export function CompanySecondForm() {
       } catch (error) {
         console.error(error);
         toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
         );
       } finally {
         setIsLoading(false);

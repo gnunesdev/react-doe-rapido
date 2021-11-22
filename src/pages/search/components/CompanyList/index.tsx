@@ -42,7 +42,9 @@ export function CompanyList({ companys, needsSelected }: CompanyListProps) {
             <ItemInfo>
               <strong>{company.name}</strong>
               <p>{company.address}</p>
-              <span>Distância aproximada: {company.distance / 1000}km</span>
+              <span>
+                Distância aproximada: {Number(company.distance / 1000).toFixed(1)}km
+              </span>
             </ItemInfo>
             {minWidth(Breakpoint.small) ? (
               <Button

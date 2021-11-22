@@ -81,11 +81,13 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
                   {company.district} - {company.city}, {company.state}
                 </p>
               </div>
-              <div className="distance">
-                <strong>
-                  Distância aproximada {Number(company.distance / 1000).toFixed(1)}km
-                </strong>
-              </div>
+              {company.distance > 0 && (
+                <div className="distance">
+                  <strong>
+                    Distância aproximada {Number(company.distance / 1000).toFixed(1)}km
+                  </strong>
+                </div>
+              )}
               <div className="needs">
                 <strong>Principais necessidades:</strong>
                 <ul>
