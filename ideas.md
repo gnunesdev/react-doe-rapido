@@ -49,4 +49,3 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - Atualizar header após atualizar infos de contato
 - Animações forms no backoffice
 - Recuperação de senha
-

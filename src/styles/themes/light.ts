@@ -58,6 +58,10 @@ const theme: DefaultTheme = {
       font-size: 2.0rem;
       font-weight: 900;
     `,
+    caption: `
+    font-size: 1.4rem;
+    font-weight: normal;
+    `,
   },
 };
 

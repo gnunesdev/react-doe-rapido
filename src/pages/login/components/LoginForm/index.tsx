@@ -1,11 +1,16 @@
 import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
-import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
+import {
+  ButtonsContainer,
+  LoginFormContainer,
+  LoginFormStyled,
+  ForgotPassword,
+} from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
@@ -55,6 +60,10 @@ export function LoginForm() {
 
   const minWidth = useMinWidth();
 
+  function handleClickForgotPassword() {
+    console.log('Handle!');
+  }
+
   return (
     <LoginFormContainer as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
       <Title
@@ -96,7 +105,12 @@ export function LoginForm() {
             onClick={handleRedirectToOnboarding}
           />
         </ButtonsContainer>
+        <ForgotPassword type="button" onClick={handleClickForgotPassword}>
+          Esqueci minha senha
+        </ForgotPassword>
       </LoginFormStyled>
+
+      <AnimatePresence></AnimatePresence>
     </LoginFormContainer>
   );
 }
