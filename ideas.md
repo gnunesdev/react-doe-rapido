@@ -31,13 +31,19 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] volta do drawer colocar url certa
 - [OK] Correção filtros bugados
 - [OK] Botão de voltar
+- [OK] Validação do step via banco de dados
+- [OK] Deslogar em qualquer erro de user e company no backoffice
 
-- [Doing] Validação do step via banco de dados
+- [Doing] Ações básicas da sidebar no backoffice
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
 
+- Inverter validate contact form
+- Atualizar header após atualizar infos de contato
+- Performance
+- Animações forms no backoffice
 - Recuperação de senha
 - Termos de uso
 

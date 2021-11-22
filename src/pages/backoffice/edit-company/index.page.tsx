@@ -22,7 +22,7 @@ import { Select } from '~/components/Select';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
-import { JwtTokenResponse } from '~/context/useAuth';
+import { destroyCookies, JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
 import { User, UserWithImage } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
@@ -305,20 +305,32 @@ export const getServerSideProps = withSSRAuth(async (context) => {
 
   const api = setupAuthorizedApi(context);
 
-  const { data: user } = await api.get<User>(`/user/${id}`);
-  const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
+  try {
+    const { data: user } = await api.get<User>(`/user/${id}`);
+    const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
 
-  const userData = {
-    ...user,
-    image: company.image,
-  };
+    const userData = {
+      ...user,
+      image: company.image,
+    };
 
-  return {
-    props: {
-      user: userData,
-      company,
-    },
-  };
+    return {
+      props: {
+        user: userData,
+        company,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    destroyCookies(context);
+
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
 });
 
 export default EditCompanyPage;

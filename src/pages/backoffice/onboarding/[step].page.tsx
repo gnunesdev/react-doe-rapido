@@ -79,6 +79,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             permanent: false,
           },
         };
+      } else {
+        return {
+          redirect: {
+            destination: `/backoffice`,
+            permanent: false,
+          },
+        };
       }
     } catch (error) {
       destroyCookies(context);

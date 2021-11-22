@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies';
 
 import { BackofficeContainer } from '../components/BackofficeContainer';
 import { EditContactForm } from './components/EditContactForm';
-import { JwtTokenResponse } from '~/context/useAuth';
+import { destroyCookies, JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
 import { User, UserWithImage } from '~/context/useUser';
 import { setupAuthorizedApi } from '~/services/api';
@@ -28,19 +28,31 @@ export const getServerSideProps = withSSRAuth(async (context) => {
 
   const api = setupAuthorizedApi(context);
 
-  const { data: user } = await api.get<User>(`/user/${id}`);
-  const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
+  try {
+    const { data: user } = await api.get<User>(`/user/${id}`);
+    const { data: company } = await api.get<Company>(`/companyByUserId/${id}`);
 
-  const userData = {
-    ...user,
-    image: company.image,
-  };
+    const userData = {
+      ...user,
+      image: company.image,
+    };
 
-  return {
-    props: {
-      user: userData,
-    },
-  };
+    return {
+      props: {
+        user: userData,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    destroyCookies(context);
+
+    return {
+      redirect: {
+        destination: `/login`,
+        permanent: false,
+      },
+    };
+  }
 });
 
 export default EditContactPage;
