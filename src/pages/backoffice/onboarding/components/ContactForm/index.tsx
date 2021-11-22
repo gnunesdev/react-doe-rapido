@@ -47,11 +47,11 @@ export function ContactForm() {
         goToNextStep();
       } catch (error) {
         if (isAxiosError(error) && error.response.status === 400) {
+          toast.error('Email já cadastrado');
+        } else {
           toast.error(
             'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
           );
-        } else {
-          toast.error('Email já cadastrado');
         }
       } finally {
         setIsLoading(false);

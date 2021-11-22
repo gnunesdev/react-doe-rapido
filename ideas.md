@@ -34,13 +34,15 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Validação do step via banco de dados
 - [OK] Deslogar em qualquer erro de user e company no backoffice
 - [OK] Ações básicas da sidebar no backoffice
+- [OK] Inverter validate contact form
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
 
-- Inverter validate contact form
+- Remover infowindow
+- Adicionar contatos no drawer
 - Atualizar header após atualizar infos de contato
 - Performance
 - Animações forms no backoffice
