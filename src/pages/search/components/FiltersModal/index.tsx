@@ -13,7 +13,7 @@ interface FiltersModalProps {
   needsFilters: string[];
   handleSelectNeedFilter: (needId: string, shouldSearch: boolean) => void;
   handleToggleFiltersModal: VoidFunction;
-  handleSearchCompanys: VoidFunction;
+  handleSearchCompanys: (needs: string[]) => void;
 }
 
 export function FiltersModal({
@@ -26,7 +26,7 @@ export function FiltersModal({
 
   function handleSearch() {
     handleToggleFiltersModal();
-    handleSearchCompanys();
+    handleSearchCompanys(needsFilters);
   }
 
   return (

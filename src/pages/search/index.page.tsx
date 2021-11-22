@@ -69,7 +69,7 @@ const AppPage: NextPage = () => {
     });
   }
 
-  async function searchCompanys() {
+  async function searchCompanys(needs?: string[]) {
     try {
       setIsLoading(true);
       const result = await getGeocode({ address: value });
@@ -77,7 +77,7 @@ const AppPage: NextPage = () => {
       const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
         String(lat),
         String(lng),
-        needsFilters
+        needs
       );
       setCompanies(nearbyCompanies);
     } catch (error) {
@@ -95,14 +95,20 @@ const AppPage: NextPage = () => {
   }
 
   function handleSelectNeedFilter(needId: string, shouldSearch = true) {
-    const needAlreadayFiltered = needsFilters.find((need) => need === needId);
+    const needAlreadyFiltered = needsFilters.find((need) => need === needId);
 
-    needAlreadayFiltered
-      ? setNeedsFilters((needs) => needs.filter((need) => need !== needId))
-      : setNeedsFilters((needs) => [...needs, needId]);
+    let needsToFilter = [];
+
+    if (needAlreadyFiltered) {
+      needsToFilter = needsFilters.filter((need) => need !== needId);
+    } else {
+      needsToFilter = [...needsFilters, needId];
+    }
+
+    setNeedsFilters(needsToFilter);
 
     if (shouldSearch) {
-      searchCompanys();
+      searchCompanys(needsToFilter);
     }
   }
 

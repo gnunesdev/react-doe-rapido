@@ -19,8 +19,8 @@ export function CompanyList({ companys, needsSelected }: CompanyListProps) {
   const minWidth = useMinWidth();
 
   function handleSeeOnMap(id: string) {
-    const route = `/search/map?id=${id}&${
-      needsSelected.length ? `needs=${String(needsSelected)}` : ''
+    const route = `/search/map?id=${id}${
+      needsSelected.length ? `&needs=${String(needsSelected)}` : ''
     }`;
 
     routes.push(route);

@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import Router, { useRouter } from 'next/router';
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useCompanyContext } from './useCompany';

@@ -28,16 +28,17 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Cards e exclusão de conta
 - [OK] investigar minha localização
 - [OK] info window externa
+- [OK] volta do drawer colocar url certa
+- [OK] Correção filtros bugados
+- [OK] Botão de voltar
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
 - [Doing] Adicionar toast para erros
 - [Doing] Botão de loading
 
-- quando volta do drawer colocar url certa
-- Botão de voltar
-- Termos de uso
 - Recuperação de senha
+- Termos de uso
 
 - [After] Mascara feia de telefone
 - [After] Validação do step via banco de dados

@@ -5,8 +5,8 @@ import { TextStyled } from '~/components/Text/styles';
 export const InfoBannerContainer = styled.div`
   position: fixed;
 
-  bottom: 40px;
-  left: 20px;
+  top: 8rem;
+  left: 2rem;
 
   background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
@@ -39,7 +39,7 @@ export const InfoBannerContainerMobile = styled.div`
 
 export const InfoBannerMobileButton = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 90px;
   left: 20px;
   background: ${(props) => props.theme.colors.primary};
   border-radius: 50%;

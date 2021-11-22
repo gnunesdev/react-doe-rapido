@@ -4,6 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import router, { useRouter } from 'next/router';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
+import { BackButton } from './components/BackButton';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { InfoBanner } from './components/InfoBanner';
 import { CompanyButton } from './styles';
@@ -52,16 +53,26 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   }, []);
 
   function handleOpenDrawer() {
-    const { id } = routes.query;
-    router.push(`/search/map?id=${id}&drawerId=${selectedCompany?.id_company}`, undefined, {
-      shallow: true,
-    });
+    const { id, needs } = routes.query;
+    router.push(
+      `/search/map?id=${id}${
+        needs && needs.length ? `&needs=${String(needs)}` : ''
+      }&drawerId=${selectedCompany?.id_company}`,
+      undefined,
+      {
+        shallow: true,
+      }
+    );
     setIsDrawerOpen(true);
   }
 
   function handleCloseDrawer() {
-    const { id } = routes.query;
-    router.push(`/search/map?id=${id}`, undefined, { shallow: true });
+    const { id, needs } = routes.query;
+    router.push(
+      `/search/map?id=${id}${needs && needs.length ? `&needs=${String(needs)}` : ''}`,
+      undefined,
+      { shallow: true }
+    );
     setIsDrawerOpen(false);
   }
 
@@ -76,6 +87,7 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
         onLoad={onMapLoad}
         options={{
           mapId: 'e258f25e5d7f6c6e',
+          disableDefaultUI: true,
         }}
       >
         {companies.map((company) => (
@@ -109,8 +121,9 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
               companyId={String(routes.query?.id)}
             />
           )}
+          <InfoBanner />
         </AnimatePresence>
-        <InfoBanner />
+        <BackButton />
       </GoogleMap>
     </>
   );
