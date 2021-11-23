@@ -90,6 +90,9 @@ export function LoginForm() {
             formik.touched.password && formik.errors.password ? formik.errors.password : ''
           }
         />
+        <ForgotPassword type="button" onClick={handleClickForgotPassword}>
+          Esqueci minha senha
+        </ForgotPassword>
         <ButtonsContainer>
           <Button
             variant="primary"
@@ -107,9 +110,6 @@ export function LoginForm() {
             onClick={handleRedirectToOnboarding}
           />
         </ButtonsContainer>
-        <ForgotPassword type="button" onClick={handleClickForgotPassword}>
-          Esqueci minha senha
-        </ForgotPassword>
       </LoginFormStyled>
 
       <AnimatePresence>
