@@ -12,6 +12,10 @@ export const CompanyListContainer = styled.div`
     align-items: center;
     overflow: hidden;
 
+    > div {
+      max-width: 80%;
+    }
+
     &:not(:last-child) {
       border-bottom: 1px solid ${(props) => props.theme.colors.primary};
     }

@@ -20,6 +20,7 @@ import { getAddressByGeolocation, getCompanysByNearbyAddress } from '~/services/
 import { Breakpoint } from '~/styles/variables';
 import { CompanyInList } from '~/types/Company';
 import { fadeIn } from '~/utils/animations';
+import { isAxiosError } from '~/utils/http';
 
 const AppPage: NextPage = () => {
   const {
@@ -31,10 +32,12 @@ const AppPage: NextPage = () => {
   } = usePlacesAutocomplete({ debounce: 500 });
 
   const [isAddressLoading, setIsAddressLoading] = useState(false);
-  const [companies, setCompanies] = useState<CompanyInList[]>([]);
-  const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
-  const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
+
+  const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
+  const [companies, setCompanies] = useState<CompanyInList[]>([]);
 
   const minWidth = useMinWidth();
 
@@ -81,10 +84,15 @@ const AppPage: NextPage = () => {
       );
       setCompanies(nearbyCompanies);
     } catch (error) {
-      console.error(error);
-      toast.error(
-        'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
-      );
+      if (isAxiosError(error) && error.response.status === 404) {
+        toast.error('Nenhuma instituição foi encontrada :(', {
+          autoClose: 6000,
+        });
+      } else {
+        toast.error(
+          'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }

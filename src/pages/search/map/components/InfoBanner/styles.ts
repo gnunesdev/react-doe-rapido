@@ -75,7 +75,7 @@ export const BannerMobile = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   padding: 2rem;
 

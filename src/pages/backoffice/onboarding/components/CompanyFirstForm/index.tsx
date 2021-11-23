@@ -178,7 +178,7 @@ export function CompanyFirstForm() {
             name="street"
             inputSize="big"
             onChange={formik.handleChange}
-            label="Rua:"
+            label="Logradouro:"
             value={formik.values.street}
             error={formik.touched.street && formik.errors.street ? formik.errors.street : ''}
           />

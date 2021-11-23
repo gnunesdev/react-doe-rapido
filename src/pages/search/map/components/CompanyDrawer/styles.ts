@@ -81,6 +81,10 @@ export const CompanyInfoContainer = styled.div`
     }
 
     p {
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
       &:not(:first-child) {
         margin-top: 0.2rem;
       }

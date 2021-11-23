@@ -181,7 +181,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
               name="street"
               inputSize="big"
               onChange={formik.handleChange}
-              label="Rua:"
+              label="Logradouro:"
               value={formik.values.street}
               error={
                 formik.touched.street && formik.errors.street ? formik.errors.street : ''
@@ -193,7 +193,7 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
               name="number"
               inputSize="big"
               onChange={formik.handleChange}
-              label="Número:"
+              label="Logradouro:"
               value={formik.values.number}
               error={
                 formik.touched.number && formik.errors.number ? formik.errors.number : ''

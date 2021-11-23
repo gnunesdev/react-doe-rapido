@@ -47,7 +47,6 @@ export function CompanySecondForm() {
       email: '',
       image: '',
       needs: [],
-      acceptedTerms: false,
       acceptedPrivacy: false,
     },
     onSubmit: async () => {
@@ -160,7 +159,7 @@ export function CompanySecondForm() {
           ))}
         </NeedsContainer>
         <TermsContainer>
-          <Title size="small" description="Termos de aceite" />
+          <Title size="small" description="Termo de aceite" />
           {(Boolean(formik.errors.acceptedTerms) ||
             Boolean(formik.errors.acceptedPrivacy)) && (
             <Text
@@ -170,25 +169,13 @@ export function CompanySecondForm() {
             />
           )}
           <Checkbox
-            label="Aceita os termos de uso"
-            size="medium"
-            name="acceptedTerms"
-            onChange={formik.handleChange}
-            error={String(formik.errors.needs)}
-            checked={formik.values.acceptedTerms}
-          >
-            Aceito os termos de uso
-          </Checkbox>
-          <Checkbox
-            label="Aceita os termos de uso"
+            label="Aceito as políticas de privacidade"
             size="medium"
             name="acceptedPrivacy"
             onChange={formik.handleChange}
             error={String(formik.errors.needs)}
             checked={formik.values.acceptedPrivacy}
-          >
-            Aceito as políticas de privacidade
-          </Checkbox>
+          />
         </TermsContainer>
         <ButtonsContainer>
           <Button

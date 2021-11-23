@@ -49,6 +49,5 @@ export const CompanySecondFormValidationSchema = Yup.object({
   }),
   email: Yup.string().email('Digite um e-mail válido').required('Esse campo é obrigatório'),
   needs: Yup.array().min(1, 'Marque pelo menos uma necessidade'),
-  acceptedTerms: Yup.bool().isTrue('Você precisa aceitar os termos'),
   acceptedPrivacy: Yup.bool().isTrue('Você precisa aceitar os termos'),
 });

@@ -129,8 +129,8 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
               companyId={String(routes.query?.id)}
             />
           )}
-          <InfoBanner />
         </AnimatePresence>
+        <InfoBanner />
         <BackButton />
       </GoogleMap>
     </>
