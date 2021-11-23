@@ -12,6 +12,8 @@ export const AddressSuggestionsContainer = styled.div`
   width: 100%;
   top: 6.3rem;
 
+  z-index: 2;
+
   li {
     background-color: #fff;
     padding: 1.2rem 1rem;

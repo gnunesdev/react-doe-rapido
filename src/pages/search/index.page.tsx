@@ -49,7 +49,7 @@ const AppPage: NextPage = () => {
     setValue(description, false);
     clearSuggestions();
 
-    searchCompanys();
+    searchCompanys(description);
   }
 
   async function handleGetCurrentAddress() {
@@ -72,10 +72,10 @@ const AppPage: NextPage = () => {
     });
   }
 
-  async function searchCompanys(needs?: string[]) {
+  async function searchCompanys(description?: string, needs?: string[]) {
     try {
       setIsLoading(true);
-      const result = await getGeocode({ address: value });
+      const result = await getGeocode({ address: description ? description : value });
       const { lat, lng } = await getLatLng(result[0]);
       const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
         String(lat),
@@ -88,6 +88,7 @@ const AppPage: NextPage = () => {
         toast.error('Nenhuma instituição foi encontrada :(', {
           autoClose: 6000,
         });
+        setCompanies([]);
       } else {
         toast.error(
           'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
@@ -116,7 +117,7 @@ const AppPage: NextPage = () => {
     setNeedsFilters(needsToFilter);
 
     if (shouldSearch) {
-      searchCompanys(needsToFilter);
+      searchCompanys(undefined, needsToFilter);
     }
   }
 

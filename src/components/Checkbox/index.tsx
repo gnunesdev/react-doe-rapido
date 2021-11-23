@@ -22,7 +22,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   children,
   checked = false,
 }) => {
-  console.log(Boolean(error));
   return (
     <CheckboxContainer size={size} hasError={Boolean(error)}>
       <label>
