@@ -5,6 +5,7 @@ import { TitleStyled } from '~/components/Title/styles';
 import { small } from '~/styles/variables';
 
 export const CompanyDrawerContainer = styled.div`
+  overflow: auto;
   height: 100vh;
   width: 90%;
   background: ${(props) => props.theme.colors.background};

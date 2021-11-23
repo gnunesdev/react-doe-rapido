@@ -174,8 +174,8 @@ function CodeStep({ handleSetCodeValidated, password, email }: CodeStepProps) {
     <>
       <Text
         description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
-        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
-        isBold={true}
+        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.6'}
+        isBold={false}
       />
       <Form onSubmit={formik.handleSubmit}>
         <Input
