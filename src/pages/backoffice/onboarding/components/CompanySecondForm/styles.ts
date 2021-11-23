@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { InputContainer } from '~/components/Input/styles';
+import { TextStyled } from '~/components/Text/styles';
 import { TitleStyled } from '~/components/Title/styles';
 
 export const CompanySecondFormContainer = styled.div`
@@ -31,7 +32,7 @@ export const NeedsContainer = styled.div`
 
   margin-top: 2.4rem;
 
-  ${TitleStyled} {
+  ${TitleStyled}, ${TextStyled} {
     margin-bottom: 0.4rem;
   }
 `;
@@ -39,7 +40,7 @@ export const NeedsContainer = styled.div`
 export const TermsContainer = styled.div`
   margin-top: 2.4rem;
 
-  ${TitleStyled} {
+  ${TitleStyled}, ${TextStyled} {
     margin-bottom: 0.4rem;
   }
 `;

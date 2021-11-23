@@ -26,6 +26,7 @@ export const Input: React.VFC<InputProps> = ({
   error,
   mask,
   handleChangeModalInput,
+  maxLength = 524288,
   ...props
 }) => {
   return (
@@ -39,6 +40,7 @@ export const Input: React.VFC<InputProps> = ({
           onChange={onChange}
           onBlur={onBlur}
           value={value}
+          maxLength={maxLength}
           disabled={Boolean(handleChangeModalInput)}
           {...props}
         />

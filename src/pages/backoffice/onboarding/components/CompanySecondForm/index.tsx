@@ -2,6 +2,7 @@ import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useTheme } from 'styled-components';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
 import { CompanySecondFormValidationSchema } from '../../utils';
@@ -16,6 +17,7 @@ import {
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import { Input } from '~/components/Input';
+import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { UploadImage } from '~/components/UploadImage';
 import { CompanyNeedsMap } from '~/constants';
@@ -24,7 +26,7 @@ import { useUserContext } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
-import { clearMask } from '~/utils';
+import { clearMask, maskPhone } from '~/utils';
 import { fadeIn } from '~/utils/animations';
 
 export function CompanySecondForm() {
@@ -34,11 +36,13 @@ export function CompanySecondForm() {
   const { company } = useCompanyContext();
   const { user } = useUserContext();
 
+  const { colors } = useTheme();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      whats: '',
+      phoneWhatsapp: '',
       phone: '',
       email: '',
       image: '',
@@ -53,7 +57,7 @@ export function CompanySecondForm() {
         const companyData = {
           email: formik.values.email,
           phone: clearMask(formik.values.phone),
-          phoneWhatsapp: clearMask(formik.values.whats),
+          phoneWhatsapp: clearMask(formik.values.phoneWhatsapp),
           needs: formik.values.needs,
           stepOnboarding: 'finished',
           ...(formik.values.image && { image: formik.values.image }),
@@ -80,6 +84,11 @@ export function CompanySecondForm() {
     validationSchema: CompanySecondFormValidationSchema,
   });
 
+  function handleChangePhone(e: any, field: string) {
+    const valueMaskered = maskPhone(e.target.value);
+    formik.setFieldValue(field, valueMaskered);
+  }
+
   return (
     <CompanySecondFormContainer
       as={motion.div}
@@ -103,26 +112,24 @@ export function CompanySecondForm() {
           <Input
             name="phone"
             inputSize="big"
-            onChange={formik.handleChange}
+            onChange={(e) => handleChangePhone(e, 'phone')}
+            value={formik.values.phone}
+            maxLength={14}
             label="Telefone:"
-            mask={
-              clearMask(formik.values.phone).length >= 10
-                ? '(99)99999-9999'
-                : '(99)9999-9999'
-            }
             error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
           />
           <Input
             name="whats"
             inputSize="big"
-            onChange={formik.handleChange}
+            onChange={(e) => handleChangePhone(e, 'phoneWhatsapp')}
+            value={formik.values.phoneWhatsapp}
+            maxLength={14}
             label="Whatsapp (opcional):"
-            mask={
-              clearMask(formik.values.whats).length >= 10
-                ? '(99)99999-9999'
-                : '(99)9999-9999'
+            error={
+              formik.touched.phoneWhatsapp && formik.errors.phoneWhatsapp
+                ? formik.errors.phoneWhatsapp
+                : ''
             }
-            error={formik.touched.whats && formik.errors.whats ? formik.errors.whats : ''}
           />
         </InputRow>
 
@@ -132,6 +139,13 @@ export function CompanySecondForm() {
 
         <NeedsContainer>
           <Title size="small" description="Principais necessidades" />
+          {Boolean(formik.errors.needs) && (
+            <Text
+              description={String(formik.errors.needs)}
+              fontSize="1.4"
+              color={colors.red}
+            />
+          )}
           {Object.entries(CompanyNeedsMap).map(([needId, needValue]) => (
             <Checkbox
               key={needId}
@@ -147,6 +161,14 @@ export function CompanySecondForm() {
         </NeedsContainer>
         <TermsContainer>
           <Title size="small" description="Termos de aceite" />
+          {(Boolean(formik.errors.acceptedTerms) ||
+            Boolean(formik.errors.acceptedPrivacy)) && (
+            <Text
+              description="Você precisa aceitar os termos"
+              fontSize="1.4"
+              color={colors.red}
+            />
+          )}
           <Checkbox
             label="Aceita os termos de uso"
             size="medium"

@@ -22,8 +22,16 @@ export const EditCompanyFormValidator = Yup.object({
   district: Yup.string().required('Esse campo é obrigatório'),
   city: Yup.string().required('Esse campo é obrigatório'),
   state: Yup.string().required('Esse campo é obrigatório'),
-  phone: Yup.string().required('Esse campo é obrigatório'),
-  phoneWhatsapp: Yup.string(),
+  phone: Yup.string()
+    .required('Esse campo é obrigatório')
+    .test('validatePhone', 'Insira um número válido', (value) => {
+      const valueWithoutMask = clearMask(value);
+      return valueWithoutMask.length === 11 || valueWithoutMask.length === 10;
+    }),
+  phoneWhatsapp: Yup.string().test('validatePhone', 'Insira um número válido', (value) => {
+    const valueWithoutMask = clearMask(value);
+    return valueWithoutMask.length === 11 || valueWithoutMask.length === 10;
+  }),
   email: Yup.string().email('Digite um e-mail válido').required('Esse campo é obrigatório'),
   needs: Yup.array().min(1, 'Marque pelo menos uma necessidade'),
 });

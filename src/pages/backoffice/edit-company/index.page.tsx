@@ -29,7 +29,7 @@ import { useMinWidth } from '~/hooks/useMinWidth';
 import { api, setupAuthorizedApi } from '~/services/api';
 import { getAddressByCep, isAddress } from '~/services/cep';
 import { Breakpoint } from '~/styles/variables';
-import { clearMask } from '~/utils';
+import { clearMask, maskPhone } from '~/utils';
 import { STATE_LISTS } from '~/utils/address';
 import { withSSRAuth } from '~/utils/withSSRAuth';
 
@@ -54,10 +54,10 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
       district: company.district,
       city: company.city,
       state: company.state,
-      phone: company.phone,
+      phone: maskPhone(company.phone),
+      phoneWhatsapp: maskPhone(company.phoneWhatsapp),
       email: company.email,
       image: company.image,
-      phoneWhatsapp: company.phoneWhatsapp,
       needs: company.needs.map((needValue) => String(needValue)),
     },
     onSubmit: async () => {
@@ -120,6 +120,11 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
         'Ocorreu algum erro no servidor, verifique as informações ou tente novamente mais tarde.'
       );
     }
+  }
+
+  function handleChangePhone(e: any, field: string) {
+    const valueMaskered = maskPhone(e.target.value);
+    formik.setFieldValue(field, valueMaskered);
   }
 
   return (
@@ -230,27 +235,19 @@ const EditCompanyPage: NextPage<EditCompanyPageProps> = ({ company, user }) => {
             <Input
               name="phone"
               inputSize="big"
-              onChange={formik.handleChange}
-              label="Telefone:"
-              mask={
-                clearMask(formik.values.phone).length >= 10
-                  ? '(99)99999-9999'
-                  : '(99)9999-9999'
-              }
+              onChange={(e) => handleChangePhone(e, 'phone')}
               value={formik.values.phone}
+              maxLength={14}
+              label="Telefone:"
               error={formik.touched.phone && formik.errors.phone ? formik.errors.phone : ''}
             />
             <Input
               name="phoneWhatsapp"
               inputSize="big"
-              onChange={formik.handleChange}
-              label="Telefone:"
-              mask={
-                clearMask(formik.values.phoneWhatsapp).length >= 10
-                  ? '(99)99999-9999'
-                  : '(99)9999-9999'
-              }
+              onChange={(e) => handleChangePhone(e, 'phoneWhatsapp')}
+              label="Whatsapp (opcional):"
               value={formik.values.phoneWhatsapp}
+              maxLength={14}
               error={
                 formik.touched.phoneWhatsapp && formik.errors.phoneWhatsapp
                   ? formik.errors.phoneWhatsapp

@@ -38,15 +38,15 @@ https://dev.to/pascavld/15-websites-with-free-assets-for-web-developers-5328
 - [OK] Remover infowindow
 - [OK] Adicionar contatos no drawer
 - [OK] Performance
+- [OK] Mascara feia de telefone
+- [OK] Termos de uso
+- [OK] Adicionar toast para erros
+- [OK] Botão de loading
 
 - [Doing] Edit contact
 - [Doing] Pente fino layout desk + mobile
-- [Doing] Adicionar toast para erros
-- [Doing] Botão de loading
 
-- Mascara feia de telefone
 - Atualizar header após atualizar infos de contato
 - Animações forms no backoffice
 - Recuperação de senha
-- Termos de uso
 

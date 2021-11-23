@@ -69,8 +69,6 @@ export const UserName = styled.div`
   color: ${(props) => props.theme.foreground.primary};
   white-space: nowrap;
   overflow: hidden;
-  max-width: calc(100% - 50px);
-  text-overflow: ellipsis;
 `;
 
 export const UserIcon = styled.img`

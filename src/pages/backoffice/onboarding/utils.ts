@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import { clearMask } from '~/utils';
+
 export const ContactFormValidationSchema = Yup.object({
   name: Yup.string().required('Esse campo é obrigatório'),
   email: Yup.string().email('Digite um e-mail válido').required('Esse campo é obrigatório'),
@@ -35,8 +37,18 @@ export const CompanyFirstFormValidator = Yup.object({
 });
 
 export const CompanySecondFormValidationSchema = Yup.object({
-  phone: Yup.string().required('Esse campo é obrigatório'),
-  whats: Yup.string(),
+  phone: Yup.string()
+    .required('Esse campo é obrigatório')
+    .test('validatePhone', 'Insira um número válido', (value) => {
+      const valueWithoutMask = clearMask(value);
+      return valueWithoutMask.length === 11 || valueWithoutMask.length === 10;
+    }),
+  phoneWhatsapp: Yup.string().test('validatePhone', 'Insira um número válido', (value) => {
+    const valueWithoutMask = clearMask(value);
+    return value ? valueWithoutMask.length === 11 || valueWithoutMask.length === 10 : true;
+  }),
   email: Yup.string().email('Digite um e-mail válido').required('Esse campo é obrigatório'),
   needs: Yup.array().min(1, 'Marque pelo menos uma necessidade'),
+  acceptedTerms: Yup.bool().isTrue('Você precisa aceitar os termos'),
+  acceptedPrivacy: Yup.bool().isTrue('Você precisa aceitar os termos'),
 });

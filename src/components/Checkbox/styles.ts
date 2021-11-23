@@ -11,14 +11,10 @@ export const CheckboxContainer = styled.div<CheckboxContainerProps>`
 
   input {
     color: ${(props) => props.theme.colors.primary};
-    border: 1px solid;
     padding: 0 0.7rem;
 
     transition: all 0.175s ease-in;
     margin-right: 0.6rem;
-
-    border-color: ${(props) =>
-      props.hasError ? props.theme.colors.red : props.theme.colors.primary};
   }
 
   label {
