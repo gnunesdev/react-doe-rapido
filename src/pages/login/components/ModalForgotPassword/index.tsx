@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { ChangeInputCodeValidator, ChangePasswordValidator } from '../../constants/utils';
+import {
+  ChangeInputCodeValidator,
+  ForgotPasswordValidator,
+  SelectEmailValidator,
+} from '../../constants/utils';
 import { dropIn } from './animation';
 import { Form, ModalContainer, Overlay } from './styles';
 import { Button } from '~/components/Button';
@@ -11,11 +15,23 @@ import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 import { isAxiosError } from '~/utils/http';
+
+interface ModalForgotPasswordProps {
+  handleCloseModal: VoidFunction;
+}
+
+interface ChangeValueStepProps {
+  handleNewPasswordChosen: (password: string) => void;
+  email: string;
+}
+
+interface SelectEmailStepProps {
+  handleSelectEmail: (email: string) => void;
+}
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
@@ -23,27 +39,25 @@ interface CodeStepProps {
   email: string;
 }
 
-interface ModalChangePasswordProps {
-  handleCloseModal: VoidFunction;
-  user: User;
-}
+type Step = 'email' | 'password' | 'code';
 
-interface ChangeValueStepProps {
-  handleNewPasswordChosen: (newPassword: string) => void;
-  user: User;
-}
-
-export function ModalChangePassword({ handleCloseModal, user }: ModalChangePasswordProps) {
-  const [newPasswordChosen, setNewPasswordChosen] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
+export function ModalForgotPassword({ handleCloseModal }: ModalForgotPasswordProps) {
+  const [step, setStep] = useState<Step>('email');
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [selectedPassword, setSelectedPassword] = useState('');
   const minWidth = useMinWidth();
 
-  async function handleNewPasswordChosen(newPassword: string) {
-    setNewPasswordChosen(true);
-    setNewPassword(newPassword);
+  function handleEmailSelected(email: string) {
+    setSelectedEmail(email);
+    setStep('password');
   }
 
-  function handlePasswordChanged() {
+  function handleNewPasswordSelected(password: string) {
+    setSelectedPassword(password);
+    setStep('code');
+  }
+
+  function handlePasswordRecovered() {
     toast.success('Senha trocada com sucesso!');
     handleCloseModal();
   }
@@ -66,16 +80,21 @@ export function ModalChangePassword({ handleCloseModal, user }: ModalChangePassw
           exit="exit"
         >
           <Title
-            description="Editar senha"
+            description="Recuperar senha"
             size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
           />
-          {!newPasswordChosen ? (
-            <ChangeValueStep handleNewPasswordChosen={handleNewPasswordChosen} user={user} />
-          ) : (
+          {step === 'email' && <ChangeEmailStep handleSelectEmail={handleEmailSelected} />}
+          {step === 'password' && (
+            <ChangeValueStep
+              handleNewPasswordChosen={handleNewPasswordSelected}
+              email={selectedEmail}
+            />
+          )}
+          {step === 'code' && (
             <CodeStep
-              handleSetCodeValidated={handlePasswordChanged}
-              password={newPassword}
-              email={user.email}
+              handleSetCodeValidated={handlePasswordRecovered}
+              email={selectedEmail}
+              password={selectedPassword}
             />
           )}
         </ModalContainer>
@@ -84,25 +103,49 @@ export function ModalChangePassword({ handleCloseModal, user }: ModalChangePassw
   );
 }
 
-function ChangeValueStep({ handleNewPasswordChosen, user }: ChangeValueStepProps) {
+function ChangeEmailStep({ handleSelectEmail }: SelectEmailStepProps) {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    onSubmit: () => handleSelectEmail(formik.values.email),
+    validationSchema: SelectEmailValidator,
+  });
+
+  return (
+    <Form onSubmit={formik.handleSubmit}>
+      <Input
+        name="email"
+        label="E-mail:"
+        inputSize="big"
+        onChange={formik.handleChange}
+        type="text"
+        error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
+      />
+      <Button variant="primary" description="Confirmar" />
+    </Form>
+  );
+}
+
+function ChangeValueStep({ handleNewPasswordChosen, email }: ChangeValueStepProps) {
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       newPassword: '',
       confirmNewPassword: '',
     },
-    validationSchema: ChangePasswordValidator,
+    validationSchema: ForgotPasswordValidator,
     onSubmit: async () => {
       try {
         setIsLoading(true);
-        await publicApi.post('/email-change-password', { email: user.email });
+        await publicApi.post('/email-change-password', { email: email });
         handleNewPasswordChosen(formik.values.newPassword);
       } catch (error) {
         toast.error(
-          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          'Ocorreu algum erro, verifiique se as informações estão preenchidas corretamente e tente novamente.'
         );
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     },
   });
@@ -138,7 +181,7 @@ function ChangeValueStep({ handleNewPasswordChosen, user }: ChangeValueStepProps
   );
 }
 
-function CodeStep({ handleSetCodeValidated, password, email }: CodeStepProps) {
+function CodeStep({ handleSetCodeValidated, email, password }: CodeStepProps) {
   const minWidth = useMinWidth();
   const [isLoading, setLoading] = useState(false);
   const formik = useFormik({

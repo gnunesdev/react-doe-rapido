@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
 import { Link } from '../Link';
@@ -63,7 +62,7 @@ const InnerSidebar: React.VFC<InnerSidebarProps> = ({ isCollapsed, user }) => {
             <Link
               href={`/search/map?id=${user.companyId}&drawerId=${user.companyId}`}
               target="_blank"
-              label="Acessar instituição no app"
+              label="Acessar instituição no mapa"
             />
           </li>
           <li>

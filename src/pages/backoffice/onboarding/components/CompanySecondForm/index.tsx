@@ -168,13 +168,22 @@ export function CompanySecondForm() {
             />
           )}
           <Checkbox
-            label="Aceito as políticas de privacidade"
             size="medium"
             name="acceptedPrivacy"
             onChange={formik.handleChange}
             error={String(formik.errors.needs)}
             checked={formik.values.acceptedPrivacy}
-          />
+          >
+            Aceito as &nbsp;
+            <a
+              className="link"
+              href="https://storageaps.blob.core.windows.net/politica/POL%C3%8DTICA%20DE%20PRIVACIDADE.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              políticas de privacidade
+            </a>
+          </Checkbox>
         </TermsContainer>
         <ButtonsContainer>
           <Button

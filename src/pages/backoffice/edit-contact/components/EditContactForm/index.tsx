@@ -99,12 +99,12 @@ export function EditContactForm({ user }: EditContactFormProps) {
 
       <AnimatePresence>
         {isChangeEmailModalOpen && (
-          <ModalChangeEmail userId={user.id} handleCloseModal={handleToggleEmailModalOpen} />
+          <ModalChangeEmail handleCloseModal={handleToggleEmailModalOpen} />
         )}
 
         {isChangePasswordModalOpen && (
           <ModalChangePassword
-            userId={user.id}
+            user={user}
             handleCloseModal={handleTogglePasswordModalOpen}
           />
         )}

@@ -51,3 +51,12 @@ export const ButtonsContainer = styled.div`
     }
   }
 `;
+
+export const ForgotPassword = styled.button`
+  margin-top: 8px;
+  ${(props) => props.theme.typography.caption};
+  color: ${(props) => props.theme.colors.primary};
+  &:hover {
+    text-decoration: underline;
+  }
+`;

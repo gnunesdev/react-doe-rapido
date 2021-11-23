@@ -29,6 +29,7 @@ declare module 'styled-components' {
       title: string;
       body: string;
       body2: string;
+      caption: string;
     };
   }
 }
