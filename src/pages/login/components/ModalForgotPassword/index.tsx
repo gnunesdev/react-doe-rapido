@@ -145,7 +145,7 @@ function ChangeValueStep({ handleNewPasswordChosen, email }: ChangeValueStepProp
           'Ocorreu algum erro, verifiique se as informações estão preenchidas corretamente e tente novamente.'
         );
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     },
   });

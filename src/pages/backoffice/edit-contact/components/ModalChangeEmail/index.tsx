@@ -6,14 +6,12 @@ import { toast } from 'react-toastify';
 import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { dropIn } from './animation';
 import { Form, ModalContainer, Overlay } from './styles';
-import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
-import { User } from '~/context/useUser';
 import { useMinWidth } from '~/hooks/useMinWidth';
-import { api, publicApi } from '~/services/api';
+import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
 import { isAxiosError } from '~/utils/http';
 
