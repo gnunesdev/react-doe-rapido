@@ -30,7 +30,7 @@ export const EditCompanyFormValidator = Yup.object({
     }),
   phoneWhatsapp: Yup.string().test('validatePhone', 'Insira um número válido', (value) => {
     const valueWithoutMask = clearMask(value);
-    return valueWithoutMask.length === 11 || valueWithoutMask.length === 10;
+    return value ? valueWithoutMask.length === 11 || valueWithoutMask.length === 10 : true;
   }),
   email: Yup.string().email('Digite um e-mail válido').required('Esse campo é obrigatório'),
   needs: Yup.array().min(1, 'Marque pelo menos uma necessidade'),
