@@ -22,6 +22,7 @@ export const Overlay = styled.div`
 
 export const ModalContainer = styled.div`
   width: calc(100% - 48px);
+
   max-width: 620px;
   background: ${(props) => props.theme.colors.background};
   padding: 24px;

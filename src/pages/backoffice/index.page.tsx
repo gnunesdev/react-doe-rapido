@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import jwtDecode from 'jwt-decode';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -10,7 +11,7 @@ import { BackofficeContainer } from './components/BackofficeContainer';
 import { Card } from './components/Card';
 import { ModalDeleteAccount } from './components/ModalDeleteAccount';
 import { CardsContainer } from './styles';
-import { destroyCookies, JwtTokenResponse, signOut } from '~/context/useAuth';
+import { destroyCookies, JwtTokenResponse } from '~/context/useAuth';
 import { Company } from '~/context/useCompany';
 import { User, UserWithImage } from '~/context/useUser';
 import { setupAuthorizedApi } from '~/services/api';
@@ -61,9 +62,11 @@ const BackofficePage: NextPage<BackofficePageProps> = ({ user }) => {
             onClick={handleToggleModal}
           />
         </CardsContainer>
-        {isDeleteAccountModalOpen && (
-          <ModalDeleteAccount closeModal={handleToggleModal} userId={user.id} />
-        )}
+        <AnimatePresence>
+          {isDeleteAccountModalOpen && (
+            <ModalDeleteAccount closeModal={handleToggleModal} userId={user.id} />
+          )}
+        </AnimatePresence>
       </BackofficeContainer>
     </>
   );

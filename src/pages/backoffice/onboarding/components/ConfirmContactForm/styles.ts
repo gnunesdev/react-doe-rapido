@@ -27,7 +27,7 @@ export const ButtonsContainer = styled.div`
   flex-direction: column;
   margin-top: 3.2rem;
 
-  button {
+  ${ButtonContainer}, ${ButtonLinkContainer} {
     width: auto;
     &:not(:first-child) {
       margin-top: 8px;

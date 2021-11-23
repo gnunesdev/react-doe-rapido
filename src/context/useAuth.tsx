@@ -53,7 +53,6 @@ export function destroyCookies(context?: any) {
 
 export function signOut() {
   destroyCookies();
-
   Router.push('/login');
 }
 

@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { dropIn } from './animation';
 import { ModalContainer, Overlay } from './styles';
 import { Button } from '~/components/Button';
 import Modal from '~/components/Modal';
@@ -39,15 +41,28 @@ export function ModalDeleteAccount({ closeModal, userId }: ModalDeleteAccountPro
 
   return (
     <Modal>
-      <Overlay onClick={closeModal}>
-        <ModalContainer onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+      <Overlay
+        onClick={closeModal}
+        as={motion.div}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <ModalContainer
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          as={motion.div}
+          variants={dropIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
           <Title
-            description="Editar e-mail"
+            description="Excluir conta"
             size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
           />
           <Text
             description="Você tem certeza que quer excluir os dados da plataforma? Esta ação não poderá ser desfeita e você precisará efetuar um novo cadastro."
-            fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
+            fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.6'}
           />
           <Button
             variant="primary"
