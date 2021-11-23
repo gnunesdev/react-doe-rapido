@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { dropIn } from './animation';
 import { Form, ModalContainer, Overlay } from './styles';
+import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
