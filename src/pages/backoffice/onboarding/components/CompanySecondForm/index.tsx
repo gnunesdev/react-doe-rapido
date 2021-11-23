@@ -138,7 +138,7 @@ export function CompanySecondForm() {
 
         <NeedsContainer>
           <Title size="small" description="Principais necessidades" />
-          {Boolean(formik.errors.needs) && (
+          {formik.touched.needs && formik.errors.needs && (
             <Text
               description={String(formik.errors.needs)}
               fontSize="1.4"
@@ -154,13 +154,12 @@ export function CompanySecondForm() {
               value={needId}
               onChange={formik.handleChange}
               checked={formik.values.needs.includes(String(needId))}
-              error={String(formik.errors.needs)}
             />
           ))}
         </NeedsContainer>
         <TermsContainer>
           <Title size="small" description="Termo de aceite" />
-          {Boolean(formik.errors.acceptedPrivacy) && (
+          {formik.touched.acceptedPrivacy && formik.errors.acceptedPrivacy && (
             <Text
               description="Você precisa aceitar os termos"
               fontSize="1.4"
@@ -171,7 +170,6 @@ export function CompanySecondForm() {
             size="medium"
             name="acceptedPrivacy"
             onChange={formik.handleChange}
-            error={String(formik.errors.needs)}
             checked={formik.values.acceptedPrivacy}
           >
             Aceito as &nbsp;

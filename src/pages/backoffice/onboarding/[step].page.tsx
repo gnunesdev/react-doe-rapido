@@ -73,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       if (dataUser.data.stepOnboarding === STEPS.finished) {
         return {
           redirect: {
-            destination: `/backoffice`,
+            destination: `/backoffice?cameFromOnboarding=true`,
             permanent: false,
           },
         };

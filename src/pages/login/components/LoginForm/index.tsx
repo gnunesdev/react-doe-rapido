@@ -37,6 +37,7 @@ export function LoginForm() {
     validationSchema: LoginFormValidationSchema,
     onSubmit: async (values) => {
       try {
+        destroyCookies();
         setIsLoading(true);
         const user = { email: values.email, password: values.password };
         await signIn(user);

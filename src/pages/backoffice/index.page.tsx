@@ -31,6 +31,7 @@ const BackofficePage: NextPage<BackofficePageProps> = ({ user }) => {
       toast.success(
         'Você finalizou seu cadastro, sua instituição já está aparecendo para os possíveis doadores!'
       );
+      router.replace('/backoffice', undefined, { shallow: true });
     }
   });
 
