@@ -71,7 +71,7 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
           >
             <Header>
               <Title description={company.name} size="medium" color={foreground.primary} />
-              <Close onClick={() => handleCloseModal}>
+              <Close onClick={() => handleCloseModal()}>
                 <FaTimes color={foreground.primary} size={24} />
               </Close>
             </Header>
