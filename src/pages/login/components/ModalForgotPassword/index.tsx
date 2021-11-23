@@ -1,8 +1,13 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { ChangeInputCodeValidator, ForgotPasswordValidator } from '../../constants/utils';
+import {
+  ChangeInputCodeValidator,
+  ForgotPasswordValidator,
+  SelectEmailValidator,
+} from '../../constants/utils';
 import { dropIn } from './animation';
 import { Form, ModalContainer, Overlay } from './styles';
 import { Button } from '~/components/Button';
@@ -11,27 +16,50 @@ import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { publicApi } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
-
-interface CodeStepProps {
-  handleSetCodeValidated: VoidFunction;
-}
+import { isAxiosError } from '~/utils/http';
 
 interface ModalForgotPasswordProps {
   handleCloseModal: VoidFunction;
-  userId: number;
 }
 
 interface ChangeValueStepProps {
-  handleNewPasswordChosen: VoidFunction;
+  handleNewPasswordChosen: (password: string) => void;
+  email: string;
 }
 
+interface SelectEmailStepProps {
+  handleSelectEmail: (email: string) => void;
+}
+
+interface CodeStepProps {
+  handleSetCodeValidated: VoidFunction;
+  password: string;
+  email: string;
+}
+
+type Step = 'email' | 'password' | 'code';
+
 export function ModalForgotPassword({ handleCloseModal }: ModalForgotPasswordProps) {
-  const [newPasswordChosen, setNewPasswordChosen] = useState(false);
+  const [step, setStep] = useState<Step>('email');
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [selectedPassword, setSelectedPassword] = useState('');
   const minWidth = useMinWidth();
 
-  function handleNewPasswordChosen() {
-    setNewPasswordChosen(true);
+  function handleEmailSelected(email: string) {
+    setSelectedEmail(email);
+    setStep('password');
+  }
+
+  function handleNewPasswordSelected(password: string) {
+    setSelectedPassword(password);
+    setStep('code');
+  }
+
+  function handlePasswordRecovered() {
+    toast.success('Senha trocada com sucesso!');
+    handleCloseModal();
   }
 
   return (
@@ -52,13 +80,22 @@ export function ModalForgotPassword({ handleCloseModal }: ModalForgotPasswordPro
           exit="exit"
         >
           <Title
-            description="Editar senha"
+            description="Recuperar senha"
             size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
           />
-          {!newPasswordChosen ? (
-            <ChangeValueStep handleNewPasswordChosen={handleNewPasswordChosen} />
-          ) : (
-            <CodeStep handleSetCodeValidated={handleCloseModal} />
+          {step === 'email' && <ChangeEmailStep handleSelectEmail={handleEmailSelected} />}
+          {step === 'password' && (
+            <ChangeValueStep
+              handleNewPasswordChosen={handleNewPasswordSelected}
+              email={selectedEmail}
+            />
+          )}
+          {step === 'code' && (
+            <CodeStep
+              handleSetCodeValidated={handlePasswordRecovered}
+              email={selectedEmail}
+              password={selectedPassword}
+            />
           )}
         </ModalContainer>
       </Overlay>
@@ -66,45 +103,51 @@ export function ModalForgotPassword({ handleCloseModal }: ModalForgotPasswordPro
   );
 }
 
-function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
-  const minWidth = useMinWidth();
+function ChangeEmailStep({ handleSelectEmail }: SelectEmailStepProps) {
   const formik = useFormik({
     initialValues: {
-      code: '',
+      email: '',
     },
-    onSubmit: () => handleSetCodeValidated(),
-    validationSchema: ChangeInputCodeValidator,
+    onSubmit: () => handleSelectEmail(formik.values.email),
+    validationSchema: SelectEmailValidator,
   });
 
   return (
-    <>
-      <Text
-        description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
-        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
-        isBold={true}
+    <Form onSubmit={formik.handleSubmit}>
+      <Input
+        name="email"
+        label="E-mail:"
+        inputSize="big"
+        onChange={formik.handleChange}
+        type="text"
+        error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
       />
-      <Form onSubmit={formik.handleSubmit}>
-        <Input
-          name="code"
-          label="Código"
-          inputSize="big"
-          onChange={formik.handleChange}
-          error={formik.errors.code}
-        />
-        <Button variant="primary" description="Avançar" type="submit" />
-      </Form>
-    </>
+      <Button variant="primary" description="Confirmar" />
+    </Form>
   );
 }
 
-function ChangeValueStep({ handleNewPasswordChosen }: ChangeValueStepProps) {
+function ChangeValueStep({ handleNewPasswordChosen, email }: ChangeValueStepProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       newPassword: '',
       confirmNewPassword: '',
     },
-    onSubmit: () => handleNewPasswordChosen(),
     validationSchema: ForgotPasswordValidator,
+    onSubmit: async () => {
+      try {
+        setIsLoading(true);
+        await publicApi.post('/email-change-password', { email: email });
+        handleNewPasswordChosen(formik.values.newPassword);
+      } catch (error) {
+        toast.error(
+          'Ocorreu algum erro, verifiique se as informações estão preenchidas corretamente e tente novamente.'
+        );
+      } finally {
+        setIsLoading(true);
+      }
+    },
   });
 
   return (
@@ -133,7 +176,65 @@ function ChangeValueStep({ handleNewPasswordChosen }: ChangeValueStepProps) {
             : ''
         }
       />
-      <Button variant="primary" description="Confirmar edição" />
+      <Button variant="primary" description="Confirmar edição" isLoading={isLoading} />
     </Form>
+  );
+}
+
+function CodeStep({ handleSetCodeValidated, email, password }: CodeStepProps) {
+  const minWidth = useMinWidth();
+  const [isLoading, setLoading] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      code: '',
+    },
+    validationSchema: ChangeInputCodeValidator,
+    onSubmit: async () => {
+      try {
+        setLoading(true);
+        const data = {
+          password,
+          email,
+          code: +formik.values.code,
+        };
+        await publicApi.post('/change-password', data);
+        handleSetCodeValidated();
+      } catch (e) {
+        if (isAxiosError(e) && e.response.status === 400) {
+          toast.error('Código inválido ou expirado');
+        } else {
+          toast.error(
+            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
+
+  return (
+    <>
+      <Text
+        description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
+        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
+        isBold={true}
+      />
+      <Form onSubmit={formik.handleSubmit}>
+        <Input
+          name="code"
+          label="Código"
+          inputSize="big"
+          onChange={formik.handleChange}
+          error={formik.errors.code}
+        />
+        <Button
+          variant="primary"
+          description="Avançar"
+          type="submit"
+          isLoading={isLoading}
+        />
+      </Form>
+    </>
   );
 }

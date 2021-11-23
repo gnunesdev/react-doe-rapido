@@ -3,6 +3,7 @@ import styled, { css, DefaultTheme } from 'styled-components';
 interface ButtonContainerProps {
   variant: 'primary' | 'secondary' | 'tertiary';
   width: number | 'auto';
+  isLoading: boolean;
 }
 
 const ButtonVariants = {
@@ -45,7 +46,7 @@ const ButtonVariants = {
 };
 
 export const ButtonContainer = styled.button<ButtonContainerProps>`
-  width: ${(props) => `${props.width}px`};
+  width: ${(props) => (+props.width ? `${props.width}px` : props.width)};
   padding: 1.6rem;
 
   font-size: 1.8rem;
@@ -80,7 +81,14 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
     transform: skew(50deg);
     transition: 0.285s ease-in;
     width: 140%;
-    left: -160%;
+    left: ${(props) =>
+      props.isLoading
+        ? css`
+            ${'-20%'}
+          `
+        : css`
+            ${'-160%'}
+          `};
   }
 
   &:hover {

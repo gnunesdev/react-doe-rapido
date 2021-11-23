@@ -19,7 +19,13 @@ export const Button: React.FC<React.ComponentProps<'button'> & ButtonProps> = ({
   isLoading,
 }) => {
   return (
-    <ButtonContainer variant={variant} width={width} onClick={onClick} type={type}>
+    <ButtonContainer
+      variant={variant}
+      width={width}
+      onClick={isLoading ? undefined : onClick}
+      type={type}
+      isLoading={isLoading}
+    >
       {isLoading ? (
         <img src="/loading.svg" alt="Carregando" />
       ) : description ? (

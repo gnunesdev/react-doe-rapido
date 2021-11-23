@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
+import { ModalForgotPassword } from '../ModalForgotPassword';
 import {
   ButtonsContainer,
   LoginFormContainer,
@@ -26,6 +27,7 @@ export function LoginForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOnboardingLoading, setIsOnboardingLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +63,7 @@ export function LoginForm() {
   const minWidth = useMinWidth();
 
   function handleClickForgotPassword() {
-    console.log('Handle!');
+    setIsModalOpen(true);
   }
 
   return (
@@ -110,7 +112,11 @@ export function LoginForm() {
         </ForgotPassword>
       </LoginFormStyled>
 
-      <AnimatePresence></AnimatePresence>
+      <AnimatePresence>
+        {isModalOpen && (
+          <ModalForgotPassword handleCloseModal={() => setIsModalOpen(false)} />
+        )}
+      </AnimatePresence>
     </LoginFormContainer>
   );
 }
