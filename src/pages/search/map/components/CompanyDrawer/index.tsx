@@ -28,6 +28,10 @@ interface CompanyDrawerProps {
 export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDrawerProps) {
   const { foreground } = useTheme();
 
+  function handleCloseModal() {
+    closeModal();
+  }
+
   const [company, setCompany] = useState<Company>(companyData);
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
     company && (
       <Modal>
         <Overlay
-          onClick={closeModal}
+          onClick={() => handleCloseModal()}
           as={motion.div}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -67,7 +71,7 @@ export function CompanyDrawer({ closeModal, companyData, companyId }: CompanyDra
           >
             <Header>
               <Title description={company.name} size="medium" color={foreground.primary} />
-              <Close onClick={closeModal}>
+              <Close onClick={() => handleCloseModal}>
                 <FaTimes color={foreground.primary} size={24} />
               </Close>
             </Header>
