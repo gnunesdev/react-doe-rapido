@@ -160,8 +160,7 @@ export function CompanySecondForm() {
         </NeedsContainer>
         <TermsContainer>
           <Title size="small" description="Termo de aceite" />
-          {(Boolean(formik.errors.acceptedTerms) ||
-            Boolean(formik.errors.acceptedPrivacy)) && (
+          {Boolean(formik.errors.acceptedPrivacy) && (
             <Text
               description="Você precisa aceitar os termos"
               fontSize="1.4"
