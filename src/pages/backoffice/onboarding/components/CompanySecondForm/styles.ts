@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { CheckboxContainer } from '~/components/Checkbox/styles';
 import { InputContainer } from '~/components/Input/styles';
 import { TextStyled } from '~/components/Text/styles';
 import { TitleStyled } from '~/components/Title/styles';
@@ -42,6 +43,11 @@ export const TermsContainer = styled.div`
 
   ${TitleStyled}, ${TextStyled} {
     margin-bottom: 0.4rem;
+  }
+  ${CheckboxContainer} {
+    .link {
+      font-weight: bold;
+    }
   }
 `;
 

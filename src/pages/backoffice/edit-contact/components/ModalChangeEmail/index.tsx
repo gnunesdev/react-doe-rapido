@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { ChangeEmailValidator, ChangeInputCodeValidator } from '../../constants/utils';
 import { dropIn } from './animation';
@@ -11,27 +12,42 @@ import Modal from '~/components/Modal';
 import { Text } from '~/components/Text';
 import { Title } from '~/components/Title';
 import { useMinWidth } from '~/hooks/useMinWidth';
+import { api } from '~/services/api';
 import { Breakpoint } from '~/styles/variables';
+import { isAxiosError } from '~/utils/http';
 
 interface CodeStepProps {
   handleSetCodeValidated: VoidFunction;
+  email: string;
 }
 
 interface ChangeValueStepProps {
-  handleCloseModal: VoidFunction;
+  handleNewEmailChosen: (newEmail: string) => void;
 }
 
 interface ModalChangeEmailProps {
   handleCloseModal: VoidFunction;
-  userId: number;
 }
 
 export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
-  const [codeValidated, setCodeValidated] = useState(false);
+  const [newEmailChosen, setNewEmailChosen] = useState(false);
+  const [newEmail, setNewEmail] = useState('');
   const minWidth = useMinWidth();
 
+  async function handleNewEmailChosen(newEmail: string) {
+    try {
+      setNewEmailChosen(true);
+      setNewEmail(newEmail);
+    } catch (e) {
+      toast.error(
+        'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+      );
+    }
+  }
+
   function handleSetCodeValidated() {
-    setCodeValidated(true);
+    toast.success('E-mail trocado com sucesso!');
+    handleCloseModal();
   }
 
   return (
@@ -55,10 +71,10 @@ export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
             description="Editar e-mail"
             size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
           />
-          {!codeValidated ? (
-            <CodeStep handleSetCodeValidated={handleSetCodeValidated} />
+          {!newEmailChosen ? (
+            <ChangeValueStep handleNewEmailChosen={handleNewEmailChosen} />
           ) : (
-            <ChangeValueStep handleCloseModal={handleCloseModal} />
+            <CodeStep handleSetCodeValidated={handleSetCodeValidated} email={newEmail} />
           )}
         </ModalContainer>
       </Overlay>
@@ -66,61 +82,31 @@ export function ModalChangeEmail({ handleCloseModal }: ModalChangeEmailProps) {
   );
 }
 
-function CodeStep({ handleSetCodeValidated }: CodeStepProps) {
+function ChangeValueStep({ handleNewEmailChosen }: ChangeValueStepProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      code: '',
-    },
-    onSubmit: () => handleSetCodeValidated(),
-    validationSchema: ChangeInputCodeValidator,
-  });
-  const minWidth = useMinWidth();
-
-  return (
-    <>
-      <Text
-        description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
-        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.4'}
-        isBold={true}
-      />
-      <Form onSubmit={formik.handleSubmit}>
-        <Input
-          name="code"
-          label="Código"
-          inputSize="big"
-          onChange={formik.handleChange}
-          error={formik.errors.code}
-        />
-        <Button variant="primary" description="Avançar" type="submit" />
-      </Form>
-    </>
-  );
-}
-
-function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
-  const formik = useFormik({
-    initialValues: {
-      oldEmail: '',
       newEmail: '',
+      confirmNewEmail: '',
     },
     validationSchema: ChangeEmailValidator,
-    onSubmit: () => {
-      // console.log('123');
-      handleCloseModal();
+    onSubmit: async () => {
+      try {
+        setIsLoading(true);
+        await api.post('/email-change-login');
+        handleNewEmailChosen(formik.values.newEmail);
+      } catch (error) {
+        toast.error(
+          'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+        );
+      } finally {
+        setIsLoading(true);
+      }
     },
   });
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <Input
-        name="oldEmail"
-        label="E-mail antigo:"
-        inputSize="big"
-        onChange={formik.handleChange}
-        error={
-          formik.touched.oldEmail && formik.errors.oldEmail ? formik.errors.oldEmail : ''
-        }
-      />
       <Input
         name="newEmail"
         label="E-mail novo:"
@@ -130,7 +116,75 @@ function ChangeValueStep({ handleCloseModal }: ChangeValueStepProps) {
           formik.touched.newEmail && formik.errors.newEmail ? formik.errors.newEmail : ''
         }
       />
-      <Button variant="primary" description="Confirmar edição" />
+      <Input
+        name="confirmNewEmail"
+        label="Confirmar e-mail novo:"
+        inputSize="big"
+        onChange={formik.handleChange}
+        error={
+          formik.touched.confirmNewEmail && formik.errors.confirmNewEmail
+            ? formik.errors.confirmNewEmail
+            : ''
+        }
+      />
+
+      <Button variant="primary" description="Confirmar edição" isLoading={isLoading} />
     </Form>
+  );
+}
+
+function CodeStep({ handleSetCodeValidated, email }: CodeStepProps) {
+  const minWidth = useMinWidth();
+  const [isLoading, setLoading] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      code: '',
+    },
+    validationSchema: ChangeInputCodeValidator,
+    onSubmit: async () => {
+      try {
+        const data = {
+          email,
+          code: +formik.values.code,
+        };
+        await api.post('/change-login', data);
+        handleSetCodeValidated();
+      } catch (e) {
+        if (isAxiosError(e) && e.response.status === 401) {
+          toast.error('Código inválido ou expirado');
+        } else {
+          toast.error(
+            'Ocorreu algum erro no servidor, verifiique as informações ou tente novamente mais tarde.'
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    },
+  });
+
+  return (
+    <>
+      <Text
+        description="Enviamos um e-mail pra você com um código de liberação para que você altere a senha, por favor, insira-o abaixo:"
+        fontSize={minWidth(Breakpoint.small) ? '1.8' : '1.6'}
+        isBold={false}
+      />
+      <Form onSubmit={formik.handleSubmit}>
+        <Input
+          name="code"
+          label="Código"
+          inputSize="big"
+          onChange={formik.handleChange}
+          error={formik.errors.code}
+        />
+        <Button
+          variant="primary"
+          description="Avançar"
+          type="submit"
+          isLoading={isLoading}
+        />
+      </Form>
+    </>
   );
 }

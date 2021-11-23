@@ -1,11 +1,17 @@
 import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { LoginFormValidationSchema } from '../../utils';
-import { ButtonsContainer, LoginFormContainer, LoginFormStyled } from './styles';
+import { ModalForgotPassword } from '../ModalForgotPassword';
+import {
+  ButtonsContainer,
+  LoginFormContainer,
+  LoginFormStyled,
+  ForgotPassword,
+} from './styles';
 import { Button } from '~/components/Button';
 import { Input } from '~/components/Input';
 import { Title } from '~/components/Title';
@@ -21,6 +27,7 @@ export function LoginForm() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isOnboardingLoading, setIsOnboardingLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -55,6 +62,10 @@ export function LoginForm() {
 
   const minWidth = useMinWidth();
 
+  function handleClickForgotPassword() {
+    setIsModalOpen(true);
+  }
+
   return (
     <LoginFormContainer as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
       <Title
@@ -79,6 +90,9 @@ export function LoginForm() {
             formik.touched.password && formik.errors.password ? formik.errors.password : ''
           }
         />
+        <ForgotPassword type="button" onClick={handleClickForgotPassword}>
+          Esqueci minha senha
+        </ForgotPassword>
         <ButtonsContainer>
           <Button
             variant="primary"
@@ -97,6 +111,12 @@ export function LoginForm() {
           />
         </ButtonsContainer>
       </LoginFormStyled>
+
+      <AnimatePresence>
+        {isModalOpen && (
+          <ModalForgotPassword handleCloseModal={() => setIsModalOpen(false)} />
+        )}
+      </AnimatePresence>
     </LoginFormContainer>
   );
 }
