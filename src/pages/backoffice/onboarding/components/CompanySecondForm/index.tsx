@@ -88,6 +88,12 @@ export function CompanySecondForm() {
     formik.setFieldValue(field, valueMaskered);
   }
 
+  function handleBlurPhone() {
+    if (formik.values.phone && !formik.errors.phone && !formik.values.phoneWhatsapp) {
+      formik.setFieldValue('phoneWhatsapp', formik.values.phone);
+    }
+  }
+
   return (
     <CompanySecondFormContainer
       as={motion.div}
@@ -112,6 +118,7 @@ export function CompanySecondForm() {
             name="phone"
             inputSize="big"
             onChange={(e) => handleChangePhone(e, 'phone')}
+            onBlur={() => handleBlurPhone()}
             value={formik.values.phone}
             maxLength={14}
             label="Telefone:"
