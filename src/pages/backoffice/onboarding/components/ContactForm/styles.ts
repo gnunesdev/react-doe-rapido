@@ -10,13 +10,19 @@ export const ContactFormContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  .subtitle {
+    margin-top: 8px;
+    color: ${(props) => props.theme.colors.primary};
+    ${(props) => props.theme.typography.body}
+  }
+
   @media (min-width: ${small}) {
     max-width: 480px;
   }
 `;
 
 export const ContactFormStyled = styled.form`
-  margin-top: 1.8rem;
+  margin-top: 24px;
 
   ${InputContainer} {
     margin-bottom: 1.4rem;

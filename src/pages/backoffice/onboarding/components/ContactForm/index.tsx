@@ -73,9 +73,12 @@ export function ContactForm() {
       variants={fadeIn}
     >
       <Title
-        description="Cadastro de acesso:"
+        description="Cadastro do administrador"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
+      <div className="subtitle">
+        Vamo começar. Primeiro, cadastre as informações do administrador da instituição
+      </div>
       <ContactFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="name"

@@ -7,6 +7,11 @@ import { small } from '~/styles/variables';
 export const CompanyFirstFormContainer = styled.div`
   max-width: 1140px;
   width: 100%;
+  .subtitle {
+    margin-top: 8px;
+    color: ${(props) => props.theme.colors.primary};
+    ${(props) => props.theme.typography.body}
+  }
 `;
 
 export const CompanyFirstFormStyled = styled.form`

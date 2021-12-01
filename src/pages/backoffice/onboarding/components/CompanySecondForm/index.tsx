@@ -105,6 +105,9 @@ export function CompanySecondForm() {
         description="Cadastro de instituição:"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
+      <div className="subtitle">
+        Preencha agora mais alguns dados da instituição, e o processo será concluído
+      </div>
       <CompanySecondFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="email"

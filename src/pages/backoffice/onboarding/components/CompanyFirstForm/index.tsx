@@ -131,6 +131,10 @@ export function CompanyFirstForm() {
         description="Cadastro de instituição"
         size={minWidth(Breakpoint.small) ? 'big' : 'medium'}
       />
+      <div className="subtitle">
+        Agora que você já se cadastrou como um administrador e confirmou seu email, você pode
+        inserir e alterar os dados da instituição!
+      </div>
       <CompanyFirstFormStyled onSubmit={formik.handleSubmit}>
         <Input
           name="tradingName"
