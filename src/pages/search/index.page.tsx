@@ -38,11 +38,20 @@ const AppPage: NextPage = () => {
 
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
   const [companies, setCompanies] = useState<CompanyInList[]>([]);
+  const [range, setRange] = useState<number>(10);
 
   const minWidth = useMinWidth();
 
   function handleToggleFiltersModal() {
-    toggleFiltersModal((prevState) => !prevState);
+    toggleFiltersModal((prevState) => {
+      const state = !prevState ? 'open' : 'closed';
+      if (state === 'open') {
+        document.documentElement.style.overflow = 'hidden';
+      } else {
+        document.documentElement.style.overflow = 'auto';
+      }
+      return !prevState;
+    });
   }
 
   function handleSelect(description: string) {
@@ -75,12 +84,13 @@ const AppPage: NextPage = () => {
   async function searchCompanys(description?: string, needs?: string[]) {
     try {
       setIsLoading(true);
-      const result = await getGeocode({ address: description ? description : value });
+      const result = await getGeocode({ address: description || value });
       const { lat, lng } = await getLatLng(result[0]);
       const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
         String(lat),
         String(lng),
-        needs
+        needs,
+        range
       );
       setCompanies(nearbyCompanies);
     } catch (error) {
@@ -119,6 +129,10 @@ const AppPage: NextPage = () => {
     if (shouldSearch) {
       searchCompanys(undefined, needsToFilter);
     }
+  }
+
+  function handleChangeRange(range: number) {
+    setRange(range);
   }
 
   return (
@@ -179,9 +193,11 @@ const AppPage: NextPage = () => {
         {isFiltersModalOpen && (
           <FiltersModal
             needsFilters={needsFilters}
+            range={range}
             handleSelectNeedFilter={handleSelectNeedFilter}
             handleToggleFiltersModal={handleToggleFiltersModal}
             handleSearchCompanys={searchCompanys}
+            handleSelectRange={handleChangeRange}
           />
         )}
       </AnimatePresence>
