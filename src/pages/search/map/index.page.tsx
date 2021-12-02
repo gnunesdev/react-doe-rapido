@@ -7,11 +7,9 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { BackButton } from './components/BackButton';
 import { CompanyDrawer } from './components/CompanyDrawer';
 import { InfoBanner } from './components/InfoBanner';
-import { CompanyButton } from './styles';
 import { Header } from '~/components/Header';
 import { useMinWidth } from '~/hooks/useMinWidth';
 import { getCompanysToRenderInMap } from '~/services/map';
-import { Breakpoint } from '~/styles/variables';
 import { Company } from '~/types/Company';
 
 const containerStyle = {
@@ -26,8 +24,6 @@ interface MapPageProps {
 const MapPage: NextPage<MapPageProps> = ({ companies }) => {
   const routes = useRouter();
   const { drawerId } = routes.query;
-
-  const minWidth = useMinWidth();
 
   const centerScreen = useMemo(() => {
     return { lat: Number(companies[0].lat), lng: Number(companies[0].long) };
@@ -100,27 +96,10 @@ const MapPage: NextPage<MapPageProps> = ({ companies }) => {
             onClick={() => {
               panTo(Number(company.lat), Number(company.long));
               setSelectedCompany(company);
-              if (!minWidth(Breakpoint.small)) {
-                handleOpenDrawer(company);
-              }
+              handleOpenDrawer(company);
             }}
           />
         ))}
-        {selectedCompany && minWidth(Breakpoint.small) && (
-          <InfoWindow
-            position={{
-              lat: Number(selectedCompany.lat),
-              lng: Number(selectedCompany.long),
-            }}
-            onCloseClick={() => {
-              setSelectedCompany(null);
-            }}
-          >
-            <CompanyButton onClick={() => handleOpenDrawer()}>
-              {selectedCompany.name}
-            </CompanyButton>
-          </InfoWindow>
-        )}
         <AnimatePresence>
           {isDrawerOpen && selectedCompany && (
             <CompanyDrawer

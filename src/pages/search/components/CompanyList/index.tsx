@@ -21,7 +21,7 @@ export function CompanyList({ companys, needsSelected }: CompanyListProps) {
   function handleSeeOnMap(id: string) {
     const route = `/search/map?id=${id}${
       needsSelected.length ? `&needs=${String(needsSelected)}` : ''
-    }`;
+    }&drawerId=${id}`;
 
     routes.push(route);
   }

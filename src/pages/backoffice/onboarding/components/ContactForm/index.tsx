@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useOnboardingSteps } from '../../hooks/useOnboardingSteps';
@@ -18,7 +18,12 @@ import { fadeIn } from '~/utils/animations';
 import { isAxiosError } from '~/utils/http';
 
 export function ContactForm() {
-  const { goToNextStep } = useOnboardingSteps();
+  const { goToNextStep, resetStep } = useOnboardingSteps();
+
+  useEffect(() => {
+    resetStep();
+  }, []);
+
   const { updateUser } = useUserContext();
   const minWidth = useMinWidth();
 

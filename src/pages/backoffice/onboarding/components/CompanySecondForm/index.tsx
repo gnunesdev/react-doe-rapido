@@ -172,7 +172,7 @@ export function CompanySecondForm() {
             onChange={formik.handleChange}
             checked={formik.values.acceptedPrivacy}
           >
-            Aceito as &nbsp;
+            Aceito as&nbsp;
             <a
               className="link"
               href="https://storageaps.blob.core.windows.net/politica/POL%C3%8DTICA%20DE%20PRIVACIDADE.pdf"

@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 import { STEPS } from './../constants';
-import usePersistedState from '~/hooks/usePersistedState';
 
 interface OnboardingStepsProviderProps {
   children: ReactNode;
@@ -11,6 +10,7 @@ interface OnboardingStepsProviderProps {
 interface OnboardingStepsContextData {
   currentStep: any;
   goToNextStep: VoidFunction;
+  resetStep: VoidFunction;
 }
 
 const OnboardingStepsContext = createContext({} as OnboardingStepsContextData);
@@ -26,13 +26,17 @@ export const OnboardingStepsProvider = ({ children }: OnboardingStepsProviderPro
     [currentStep]
   );
 
+  const resetStep = () => {
+    setCurrentStep(STEPS.contact);
+  };
+
   const goToNextStep = () => {
     setCurrentStep(onboardingSteps[currentIndexStep + 1]);
     router.push(`/backoffice/onboarding/${onboardingSteps[currentIndexStep + 1]}`);
   };
 
   return (
-    <OnboardingStepsContext.Provider value={{ currentStep, goToNextStep }}>
+    <OnboardingStepsContext.Provider value={{ currentStep, goToNextStep, resetStep }}>
       {children}
     </OnboardingStepsContext.Provider>
   );
