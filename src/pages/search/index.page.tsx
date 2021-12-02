@@ -33,12 +33,13 @@ const AppPage: NextPage = () => {
 
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStartedToSearch, setIsStartedToSearch] = useState(false);
 
   const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
 
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
   const [companies, setCompanies] = useState<CompanyInList[]>([]);
-  const [range, setRange] = useState<number>(10);
+  const [range, setRange] = useState<number>(0);
 
   const minWidth = useMinWidth();
 
@@ -81,8 +82,13 @@ const AppPage: NextPage = () => {
     });
   }
 
-  async function searchCompanys(description?: string, needs?: string[]) {
+  async function searchCompanys(
+    description?: string,
+    needs?: string[],
+    rangeToSearch = range
+  ) {
     try {
+      setIsStartedToSearch(true);
       setIsLoading(true);
       const result = await getGeocode({ address: description || value });
       const { lat, lng } = await getLatLng(result[0]);
@@ -90,7 +96,7 @@ const AppPage: NextPage = () => {
         String(lat),
         String(lng),
         needs,
-        range
+        rangeToSearch * 1000
       );
       setCompanies(nearbyCompanies);
     } catch (error) {
@@ -123,7 +129,6 @@ const AppPage: NextPage = () => {
     } else {
       needsToFilter = [...needsFilters, needId];
     }
-
     setNeedsFilters(needsToFilter);
 
     if (shouldSearch) {
@@ -131,14 +136,17 @@ const AppPage: NextPage = () => {
     }
   }
 
-  function handleChangeRange(range: number) {
+  function handleChangeRange(range: number, shouldSearch?: boolean) {
     setRange(range);
+    if (shouldSearch) {
+      searchCompanys(undefined, needsFilters, range);
+    }
   }
 
   return (
     <PageContainer>
       <Header />
-      <SearchContainer showingResults={companies.length > 0 || isLoading}>
+      <SearchContainer showingResults={isStartedToSearch}>
         <SearchContent as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
           <Title
             description="Pesquisa de instituições"
@@ -158,11 +166,14 @@ const AppPage: NextPage = () => {
               <AddressSuggestions address={data} handleSelect={handleSelect} />
             )}
 
-            {companies.length > 0 || isLoading ? (
+            {isStartedToSearch ? (
               minWidth(Breakpoint.small) ? (
                 <Filters
                   needsSelected={needsFilters}
                   handleSelectFilter={handleSelectNeedFilter}
+                  handleChangeRange={handleChangeRange}
+                  maxRange={100}
+                  range={range}
                 />
               ) : (
                 <Button
@@ -194,6 +205,7 @@ const AppPage: NextPage = () => {
           <FiltersModal
             needsFilters={needsFilters}
             range={range}
+            maxRange={100}
             handleSelectNeedFilter={handleSelectNeedFilter}
             handleToggleFiltersModal={handleToggleFiltersModal}
             handleSearchCompanys={searchCompanys}

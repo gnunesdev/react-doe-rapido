@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import * as debounce from 'lodash.debounce';
 import { useState } from 'react';
 import { useTheme } from 'styled-components';
 
@@ -7,12 +8,14 @@ import { FiltersModalContainer, Overlay } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
 import Modal from '~/components/Modal';
+import { Slider } from '~/components/Slider';
 import { Title } from '~/components/Title';
 import { CompanyNeedsMap } from '~/constants';
 
 interface FiltersModalProps {
   needsFilters: string[];
   range: number;
+  maxRange: number;
   handleSelectNeedFilter: (needId: string, shouldSearch: boolean) => void;
   handleToggleFiltersModal: VoidFunction;
   handleSearchCompanys: (description: undefined, needs: string[]) => void;
@@ -22,16 +25,17 @@ interface FiltersModalProps {
 export function FiltersModal({
   needsFilters,
   range,
+  maxRange,
   handleSelectNeedFilter,
   handleToggleFiltersModal,
   handleSearchCompanys,
   handleSelectRange,
 }: FiltersModalProps) {
   const { foreground, colors } = useTheme();
-  const [kilometers, setKilometers] = useState(range || 100);
+  const [kilometers, setKilometers] = useState(range);
 
   function getRangeLabel() {
-    return kilometers >= 100 || kilometers === 0 ? 'Ilimitado' : `${kilometers} Km`;
+    return kilometers >= maxRange || kilometers === 0 ? 'Ilimitado' : `${kilometers} Km`;
   }
 
   function handleSearch() {
@@ -39,8 +43,7 @@ export function FiltersModal({
     handleSearchCompanys(undefined, needsFilters);
   }
 
-  function handleChangeRange(e: React.ChangeEvent<HTMLInputElement>) {
-    const range = +e.target.value;
+  function handleChangeRange(range: number) {
     setKilometers(range);
     handleSelectRange(range >= 100 ? 0 : range);
   }
@@ -84,14 +87,10 @@ export function FiltersModal({
           <section>
             <Title description="Raio de busca" size="medium" color={colors.primary} />
             <div className="range">
-              <input
-                className="range__slider"
-                onChange={handleChangeRange}
-                type="range"
-                value={kilometers}
-                min="1"
-                max="100"
-                id="myRange"
+              <Slider
+                handleChangeValue={handleChangeRange}
+                initialValue={kilometers || maxRange}
+                max={maxRange}
               />
               <div className="range__value">{getRangeLabel()}</div>
             </div>
