@@ -59,3 +59,7 @@ export const TermsContainer = styled.div`
 export const ButtonsContainer = styled.div`
   margin-top: 3rem;
 `;
+
+export const PhoneCheckboxRow = styled.div`
+  margin-top: 8px;
+`;

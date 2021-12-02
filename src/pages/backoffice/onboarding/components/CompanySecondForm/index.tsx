@@ -13,6 +13,7 @@ import {
   CompanySecondFormStyled,
   NeedsContainer,
   TermsContainer,
+  PhoneCheckboxRow,
 } from './styles';
 import { Button } from '~/components/Button';
 import { Checkbox } from '~/components/Checkbox';
@@ -39,6 +40,7 @@ export function CompanySecondForm() {
   const { colors } = useTheme();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [useSamePhone, setUseSamePhone] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -86,11 +88,25 @@ export function CompanySecondForm() {
   function handleChangePhone(e: any, field: string) {
     const valueMaskered = maskPhone(e.target.value);
     formik.setFieldValue(field, valueMaskered);
+
+    if (useSamePhone) {
+      if (field === 'phone') {
+        formik.setFieldValue('phoneWhatsapp', valueMaskered);
+      } else {
+        setUseSamePhone(false);
+      }
+    }
   }
 
-  function handleBlurPhone() {
-    if (formik.values.phone && !formik.errors.phone && !formik.values.phoneWhatsapp) {
-      formik.setFieldValue('phoneWhatsapp', formik.values.phone);
+  function handleChangeUseSamePhone(e: React.ChangeEvent<HTMLInputElement>) {
+    const useTheSame = !(e.target.value === 'true');
+    setUseSamePhone(useTheSame);
+    if (useTheSame) {
+      if (!formik.values.phone && formik.values.phoneWhatsapp) {
+        formik.setFieldValue('phone', formik.values.phoneWhatsapp);
+      } else {
+        formik.setFieldValue('phoneWhatsapp', formik.values.phone);
+      }
     }
   }
 
@@ -121,7 +137,6 @@ export function CompanySecondForm() {
             name="phone"
             inputSize="big"
             onChange={(e) => handleChangePhone(e, 'phone')}
-            onBlur={() => handleBlurPhone()}
             value={formik.values.phone}
             maxLength={14}
             label="Telefone:"
@@ -141,7 +156,16 @@ export function CompanySecondForm() {
             }
           />
         </InputRow>
-
+        <PhoneCheckboxRow>
+          <Checkbox
+            label="Usar o mesmo número para o whatsapp?"
+            size="medium"
+            name="isPhoneEqualsWhatsapp"
+            onChange={handleChangeUseSamePhone}
+            checked={useSamePhone}
+            value={useSamePhone + ''}
+          />
+        </PhoneCheckboxRow>
         <InputRow>
           <UploadImage onChange={(value) => formik.setFieldValue('image', value)} />
         </InputRow>
