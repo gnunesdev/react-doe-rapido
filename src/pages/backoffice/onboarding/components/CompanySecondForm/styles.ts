@@ -50,7 +50,7 @@ export const TermsContainer = styled.div`
     }
   }
 `;
-
+// comitada
 export const ButtonsContainer = styled.div`
   margin-top: 3rem;
 `;
