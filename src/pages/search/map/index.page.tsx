@@ -13,7 +13,7 @@ import { getCompanysToRenderInMap } from '~/services/map';
 import { Company } from '~/types/Company';
 
 const containerStyle = {
-  width: '100vw',
+  width: '100%',
   height: 'calc(100vh - 6.2rem)',
 };
 

@@ -20,11 +20,12 @@ export async function getAddressByGeolocation(
 export async function getCompanysByNearbyAddress(
   lat: string,
   long: string,
-  needs = []
+  needs: string[],
+  searchRadius: number
 ): Promise<AxiosResponse<CompanyInList[]>> {
   try {
     return await publicApi.post<CompanyInList[]>(
-      `queryCompanies?latitude=${lat}&longitude=${long}`,
+      `queryCompanies?latitude=${lat}&longitude=${long}&searchRadius=${searchRadius}`,
       {
         needs,
       }

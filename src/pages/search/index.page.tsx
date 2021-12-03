@@ -33,16 +33,26 @@ const AppPage: NextPage = () => {
 
   const [isAddressLoading, setIsAddressLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStartedToSearch, setIsStartedToSearch] = useState(false);
 
   const [isFiltersModalOpen, toggleFiltersModal] = useState(false);
 
   const [needsFilters, setNeedsFilters] = useState<Array<string>>([]);
   const [companies, setCompanies] = useState<CompanyInList[]>([]);
+  const [range, setRange] = useState<number>(0);
 
   const minWidth = useMinWidth();
 
   function handleToggleFiltersModal() {
-    toggleFiltersModal((prevState) => !prevState);
+    toggleFiltersModal((prevState) => {
+      const state = !prevState ? 'open' : 'closed';
+      if (state === 'open') {
+        document.documentElement.style.overflow = 'hidden';
+      } else {
+        document.documentElement.style.overflow = 'auto';
+      }
+      return !prevState;
+    });
   }
 
   function handleSelect(description: string) {
@@ -72,15 +82,21 @@ const AppPage: NextPage = () => {
     });
   }
 
-  async function searchCompanys(description?: string, needs?: string[]) {
+  async function searchCompanys(
+    description?: string,
+    needs?: string[],
+    rangeToSearch = range
+  ) {
     try {
+      setIsStartedToSearch(true);
       setIsLoading(true);
-      const result = await getGeocode({ address: description ? description : value });
+      const result = await getGeocode({ address: description || value });
       const { lat, lng } = await getLatLng(result[0]);
       const { data: nearbyCompanies } = await getCompanysByNearbyAddress(
         String(lat),
         String(lng),
-        needs
+        needs,
+        rangeToSearch * 1000
       );
       setCompanies(nearbyCompanies);
     } catch (error) {
@@ -113,7 +129,6 @@ const AppPage: NextPage = () => {
     } else {
       needsToFilter = [...needsFilters, needId];
     }
-
     setNeedsFilters(needsToFilter);
 
     if (shouldSearch) {
@@ -121,10 +136,17 @@ const AppPage: NextPage = () => {
     }
   }
 
+  function handleChangeRange(range: number, shouldSearch?: boolean) {
+    setRange(range);
+    if (shouldSearch) {
+      searchCompanys(undefined, needsFilters, range);
+    }
+  }
+
   return (
     <PageContainer>
       <Header />
-      <SearchContainer showingResults={companies.length > 0 || isLoading}>
+      <SearchContainer showingResults={isStartedToSearch}>
         <SearchContent as={motion.div} initial="hidden" animate="animate" variants={fadeIn}>
           <Title
             description="Pesquisa de instituições"
@@ -144,11 +166,14 @@ const AppPage: NextPage = () => {
               <AddressSuggestions address={data} handleSelect={handleSelect} />
             )}
 
-            {companies.length > 0 || isLoading ? (
+            {isStartedToSearch ? (
               minWidth(Breakpoint.small) ? (
                 <Filters
                   needsSelected={needsFilters}
                   handleSelectFilter={handleSelectNeedFilter}
+                  handleChangeRange={handleChangeRange}
+                  maxRange={100}
+                  range={range}
                 />
               ) : (
                 <Button
@@ -179,9 +204,12 @@ const AppPage: NextPage = () => {
         {isFiltersModalOpen && (
           <FiltersModal
             needsFilters={needsFilters}
+            range={range}
+            maxRange={100}
             handleSelectNeedFilter={handleSelectNeedFilter}
             handleToggleFiltersModal={handleToggleFiltersModal}
             handleSearchCompanys={searchCompanys}
+            handleSelectRange={handleChangeRange}
           />
         )}
       </AnimatePresence>

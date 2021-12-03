@@ -8,6 +8,11 @@ import { TitleStyled } from '~/components/Title/styles';
 export const CompanySecondFormContainer = styled.div`
   max-width: 1140px;
   width: 100%;
+  .subtitle {
+    margin-top: 8px;
+    color: ${(props) => props.theme.colors.primary};
+    ${(props) => props.theme.typography.body}
+  }
 `;
 
 export const CompanySecondFormStyled = styled.form`
@@ -53,4 +58,8 @@ export const TermsContainer = styled.div`
 
 export const ButtonsContainer = styled.div`
   margin-top: 3rem;
+`;
+
+export const PhoneCheckboxRow = styled.div`
+  margin-top: 8px;
 `;

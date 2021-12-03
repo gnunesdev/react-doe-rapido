@@ -19,3 +19,19 @@ export const FiltersSection = styled.div`
     }
   }
 `;
+
+export const SliderSection = styled.div`
+  margin-top: 8px;
+`;
+
+export const SliderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  .value {
+    min-width: 7.2rem;
+    margin-left: 8px;
+    text-align: center;
+    ${(props) => props.theme.typography.body}
+    color: ${(props) => props.theme.colors.primary}
+  }
+`;
