@@ -16,7 +16,7 @@ Com o gerenciador de dependências funcionando, no terminal, é preciso baixar e
 
 ```bash
 npm install
-# or
+# ou
 yarn install
 ```
 
@@ -24,7 +24,7 @@ Uma vez instaladas, basta rodar a aplicação:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
 ```
 
